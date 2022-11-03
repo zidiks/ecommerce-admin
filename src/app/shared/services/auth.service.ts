@@ -60,7 +60,7 @@ export class AuthService {
     if (login === 'zidiks' && password === '123') {
       return of({
         id: '343jn4l-34jkn343-n34kj334',
-        name: 'Владимир Миронов',
+        name: 'Тимофей Савельев',
         login: 'zidiks',
         role: Roles.Admin,
         token: '228',
@@ -77,7 +77,7 @@ export class AuthService {
     if (token === '228') {
       return of ({
         id: '343jn4l-34jkn343-n34kj334',
-        name: 'Владимир Миронов',
+        name: 'Тимофей Савельев',
         login: 'zidiks',
         role: Roles.Admin,
       });

@@ -2,7 +2,7 @@
   <tui-avatar
     size="xs"
     [rounded]="true"
-    text="Владимир Миронов"
+    [text]="(authService.currentUser$ | async)?.name || 'Неизвестно'"
   ></tui-avatar>
 </ng-template>
 
