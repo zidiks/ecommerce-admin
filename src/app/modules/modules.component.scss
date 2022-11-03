@@ -57,8 +57,13 @@
       display: flex;
       justify-content: center;
       h2 {
+        display: flex;
+        align-items: center;
         color: var(--tui-primary-active);
         font-size: 1.2rem;
+        tui-svg {
+          margin-right: 0.3rem;
+        }
       }
     }
     &__list {

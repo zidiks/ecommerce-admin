@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ModulesComponent } from "./modules.component";
+import { RolesGuard } from "../shared/router-guards/roles.guard";
+import { Roles } from "../shared/enums/roles.enum";
 
 const routes: Routes = [
   {
@@ -38,12 +40,12 @@ const routes: Routes = [
       {
         path: 'users',
         loadChildren: () => import('./users/users.module').then(m => m.UsersModule),
-        canActivate: [],
+        canActivate: [RolesGuard.forRoles(Roles.Admin)],
       },
       {
         path: 'settings',
         loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule),
-        canActivate: [],
+        canActivate: [RolesGuard.forRoles(Roles.Admin)],
       },
       {
         path: '**',

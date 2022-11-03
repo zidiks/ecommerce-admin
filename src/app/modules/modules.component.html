@@ -19,6 +19,7 @@
       tuiLink
       icon="tuiIconLogoutLarge"
       iconAlign="left"
+      (click)="authService.logout()"
     >
       Выйти
     </a>
@@ -29,7 +30,7 @@
   <div class="bar">
     <div class="bar__top">
       <div class="bar__logo">
-        <h2>Hue-Commerce</h2>
+        <h2><tui-svg src="tuiIconPiechartLarge"></tui-svg> Hue-Commerce</h2>
       </div>
       <div class="bar__list">
         <button
@@ -62,7 +63,7 @@
           [icon]="iconProfile"
         >
         <span>
-          {{ 'Владимир Миронов' }}
+          {{ (authService.currentUser$ | async)?.name || 'Неизвестно' }}
         </span>
         </button>
       </tui-hosted-dropdown>

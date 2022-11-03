@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { TUI_ARROW } from "@taiga-ui/kit";
 import { AppListItemModel } from "../shared/models/app-list-item.model";
+import { AuthService } from "../shared/services/auth.service";
 
 @Component({
   selector: 'app-modules',
@@ -52,4 +53,12 @@ export class ModulesComponent {
       route: '/settings',
     }
   ];
+
+  constructor(
+    public authService: AuthService
+  ) {
+    if (authService.currentUserValue) {
+      authService.updCurrentUser().subscribe();
+    }
+  }
 }
