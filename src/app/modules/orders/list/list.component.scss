@@ -1,5 +1,8 @@
 @import '~@taiga-ui/core/styles/taiga-ui-local';
-
+tui-table-pagination {
+  margin-top: 2rem;
+  padding: 0 0.5rem;
+}
 table {
   width: 100%;
   ::ng-deep {

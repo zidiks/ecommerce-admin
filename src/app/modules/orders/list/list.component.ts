@@ -1,13 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderModel, OrderStatus } from "../../../shared/models/order.model";
 import { TuiStatus } from "@taiga-ui/kit";
+import { tuiTablePaginationOptionsProvider } from "@taiga-ui/addon-table";
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss']
+  styleUrls: ['./list.component.scss'],
+  providers: [
+    tuiTablePaginationOptionsProvider({
+      showPages: true,
+    }),
+  ],
 })
 export class ListComponent implements OnInit {
+  public page = 0;
+  public size = 10;
   public orders: OrderModel[] = [
     {
       id: '0',

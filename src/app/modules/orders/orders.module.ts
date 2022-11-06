@@ -4,7 +4,7 @@ import { OrdersRoutingModule } from './orders-routing.module';
 import { OrdersComponent } from "./orders.component";
 import { TuiButtonModule, TuiFormatNumberPipeModule, TuiLinkModule } from "@taiga-ui/core";
 import { TuiBadgeModule, TuiBreadcrumbsModule } from "@taiga-ui/kit";
-import { TuiTableModule } from "@taiga-ui/addon-table";
+import { TuiTableModule, TuiTablePaginationModule } from "@taiga-ui/addon-table";
 import { ListComponent } from './list/list.component';
 import { DetailsComponent } from './details/details.component';
 
@@ -23,6 +23,7 @@ import { DetailsComponent } from './details/details.component';
     TuiTableModule,
     TuiFormatNumberPipeModule,
     TuiBadgeModule,
+    TuiTablePaginationModule,
   ]
 })
 export class OrdersModule { }
