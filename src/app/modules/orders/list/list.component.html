@@ -47,16 +47,28 @@
     tuiTr
   >
     <td
+      *tuiCell="'startDate'"
+      tuiTd
+    >
+      {{ item.startDate | date }}
+    </td>
+    <td
       *tuiCell="'total'"
       tuiTd
     >
-      {{ item.total | tuiFormatNumber }}
+      {{ item.total }} {{ 'USD' | tuiCurrency }}
     </td>
     <td
       *tuiCell="'customer'"
       tuiTd
     >
-      {{ item.customer.name }}
+      <div class="td-name">
+        <tui-avatar
+          size="xs"
+          [text]="item.customer.name"
+        ></tui-avatar>
+        {{ item.customer.name }}
+      </div>
     </td>
     <td
       *tuiCell="'status'"

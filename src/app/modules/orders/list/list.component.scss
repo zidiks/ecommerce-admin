@@ -5,6 +5,15 @@ tui-table-pagination {
 }
 table {
   width: 100%;
+  .td {
+    &-name {
+      display: flex;
+      align-items: center;
+      tui-avatar {
+        margin-right: 0.5rem;
+      }
+    }
+  }
   ::ng-deep {
     tbody,
     tr,
