@@ -22,19 +22,19 @@ export class ListComponent implements OnInit {
       startDate: 	1665064737,
       customer: {
         id: '0',
-        name: `Alex Inkin`,
+        name: `Владимир Миронов`,
       },
-      total: 320,
+      total: 320.30,
       status: OrderStatus.Delivery,
     },
     {
       id: '1',
-      startDate: 3242443242,
+      startDate: 1664054737,
       customer: {
         id: '0',
-        name: `Alex Inkin`,
+        name: `Гапеев Юрий`,
       },
-      total: 100,
+      total: 1100.20,
       status: OrderStatus.Paid,
     },
   ];

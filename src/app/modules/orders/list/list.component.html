@@ -50,13 +50,13 @@
       *tuiCell="'startDate'"
       tuiTd
     >
-      {{ item.startDate | date }}
+      {{ item.startDate * 1000  | date }}
     </td>
     <td
       *tuiCell="'total'"
       tuiTd
     >
-      {{ item.total }} {{ 'USD' | tuiCurrency }}
+      {{ item.total | tuiFormatNumber: {decimalLimit: 2, decimalSeparator: '.'} }} {{ 'RUB' | tuiCurrency }}
     </td>
     <td
       *tuiCell="'customer'"
