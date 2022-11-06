@@ -1,0 +1,72 @@
+<table
+  tuiTable
+  class="table"
+  [columns]="columns"
+>
+  <thead>
+  <tr tuiThGroup>
+    <th
+      tuiTh
+      *tuiHead="'id'"
+      [sorter]="null"
+    >
+      ID
+    </th>
+    <th
+      tuiTh
+      *tuiHead="'startDate'"
+    >
+      Дата
+    </th>
+    <th
+      tuiTh
+      *tuiHead="'customer'"
+    >
+      Покупатель
+    </th>
+    <th
+      tuiTh
+      *tuiHead="'total'"
+    >
+      Стоимость
+    </th>
+    <th
+      tuiTh
+      *tuiHead="'status'"
+    >
+      Статус
+    </th>
+  </tr>
+  </thead>
+  <tbody
+    tuiTbody
+    [data]="orders"
+  >
+  <tr
+    *ngFor="let item of orders"
+    tuiTr
+  >
+    <td
+      *tuiCell="'total'"
+      tuiTd
+    >
+      {{ item.total | tuiFormatNumber }}
+    </td>
+    <td
+      *tuiCell="'customer'"
+      tuiTd
+    >
+      {{ item.customer.name }}
+    </td>
+    <td
+      *tuiCell="'status'"
+      tuiTd
+    >
+      <tui-badge
+        [status]="statusData[item.status].color"
+        [value]="statusData[item.status].label"
+      ></tui-badge>
+    </td>
+  </tr>
+  </tbody>
+</table>

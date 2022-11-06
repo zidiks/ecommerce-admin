@@ -1,0 +1,24 @@
+@import '~@taiga-ui/core/styles/taiga-ui-local';
+
+table {
+  width: 100%;
+  ::ng-deep {
+    tbody,
+    tr,
+    td,
+    th {
+      border-color: transparent;
+    }
+    tr {
+      cursor: pointer;
+      &:not(:last-child) > td {
+        border-bottom: 1px solid var(--tui-base-03);
+        border-bottom-color: var(--tui-base-03);
+      }
+      &:hover > td {
+        background: var(--tui-base-02);
+      }
+    }
+  }
+}
+
