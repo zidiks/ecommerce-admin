@@ -5,7 +5,7 @@ import {
   TuiAlertModule,
   TuiButtonModule, TuiDialogModule,
   TuiHostedDropdownModule,
-  TuiLinkModule, TuiRootModule,
+  TuiLinkModule,
   TuiScrollbarModule,
   TuiSvgModule
 } from "@taiga-ui/core";

@@ -39,7 +39,7 @@ export class ListComponent implements OnInit {
     },
   ];
 
-  public statusData: Record<OrderStatus, { color: TuiStatus, label: string }> = {
+  public statusData: Record<string, { color: TuiStatus, label: string }> = {
     [OrderStatus.Pending]: {
       color: 'neutral',
       label: 'Ожидание',
@@ -55,6 +55,14 @@ export class ListComponent implements OnInit {
     [OrderStatus.Draft]: {
       color: 'error',
       label: 'Возврат'
+    },
+    [OrderStatus.Draft]: {
+      color: 'error',
+      label: 'Возврат'
+    },
+    [OrderStatus.Unknown]: {
+      color: 'neutral',
+      label: 'Неизвестно'
     }
   }
 
@@ -63,6 +71,18 @@ export class ListComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  public getStatusInfo(value: any): { color: TuiStatus, label: string } {
+    if (value && typeof value === 'string') {
+      const statusInfo = this.statusData[value];
+      if (statusInfo) {
+        return statusInfo;
+      }
+      return  this.statusData[OrderStatus.Unknown];
+    } else {
+      return this.statusData[OrderStatus.Unknown];
+    }
   }
 
 }

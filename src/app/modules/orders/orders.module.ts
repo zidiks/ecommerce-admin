@@ -8,6 +8,7 @@ import { TuiTableModule, TuiTablePaginationModule } from "@taiga-ui/addon-table"
 import { ListComponent } from './list/list.component';
 import { DetailsComponent } from './details/details.component';
 import { TuiCurrencyPipeModule } from "@taiga-ui/addon-commerce";
+import { TuiLetModule } from "@taiga-ui/cdk";
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { TuiCurrencyPipeModule } from "@taiga-ui/addon-commerce";
     TuiAvatarModule,
     TuiCurrencyPipeModule,
     TuiFormatDatePipeModule,
+    TuiLetModule,
   ]
 })
 export class OrdersModule { }

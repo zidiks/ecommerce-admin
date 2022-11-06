@@ -39,11 +39,12 @@
   </tr>
   </thead>
   <tbody
+    *tuiLet="orders | tuiTableSort as sortedData"
     tuiTbody
-    [data]="orders"
+    [data]="sortedData"
   >
   <tr
-    *ngFor="let item of orders"
+    *ngFor="let item of sortedData"
     tuiTr
   >
     <td
@@ -75,8 +76,9 @@
       tuiTd
     >
       <tui-badge
-        [status]="statusData[item.status].color"
-        [value]="statusData[item.status].label"
+        *tuiLet="getStatusInfo(item.status) as statusInfo"
+        [status]="statusInfo.color"
+        [value]="statusInfo.label"
       ></tui-badge>
     </td>
   </tr>

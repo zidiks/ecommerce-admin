@@ -13,4 +13,5 @@ export enum OrderStatus {
   Delivery = 'DELIVERY',
   Paid = 'PAID',
   Draft = 'DRAFT',
+  Unknown = 'UNKNOWN',
 }
