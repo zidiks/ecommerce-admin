@@ -1,7 +1,44 @@
 @import '~@taiga-ui/core/styles/taiga-ui-local';
+.orders {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  .header {
+    padding: 0.6rem 1rem;
+    background: var(--tui-base-01);
+    border-radius: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .content {
+    flex: 1 1 auto;
+    margin-top: 1rem;
+    padding: 1rem;
+    background: var(--tui-base-01);
+    border-radius: 1rem;
+  }
+}
 tui-table-pagination {
   margin-top: 2rem;
   padding: 0 0.5rem;
+}
+.table-empty {
+  cursor: default;
+  padding: 2rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  tui-svg {
+    color: var(--tui-base-05);
+    margin-top: 0.1rem;
+  }
+  span {
+    margin-left: 0.5rem;
+    font-size: 1.1rem;
+    color: var(--tui-base-05);
+  }
 }
 table {
   width: 100%;
@@ -22,8 +59,14 @@ table {
       border-color: transparent;
     }
     tr {
+      display: grid;
+      grid-template-columns: 1fr 2fr 3fr 2fr 2fr;
       cursor: pointer;
-      &:not(:last-child) > td {
+      &>td, th {
+        display: flex;
+        align-items: center;
+      }
+      &:not(:last-child) > td, th {
         border-bottom: 1px solid var(--tui-base-03);
         border-bottom-color: var(--tui-base-03);
       }

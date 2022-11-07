@@ -1,91 +1,178 @@
-<table
-  tuiTable
-  class="table"
-  [columns]="columns"
->
-  <thead>
-  <tr tuiThGroup>
-    <th
-      tuiTh
-      *tuiHead="'id'"
-      [sorter]="null"
+<div class="orders">
+  <div class="header">
+    <div class="header__title">
+      <tui-breadcrumbs  size="l">
+        <ng-container *ngFor="let item of breadcrumbs">
+          <a
+            *tuiItem
+            tuiLink
+            [routerLink]="item.routerLink"
+          >
+            {{ item.caption }}
+          </a>
+        </ng-container>
+      </tui-breadcrumbs>
+    </div>
+    <div class="header__actions">
+      <button
+        size="s"
+        tuiIconButton
+        type="button"
+        appearance="secondary"
+        icon="tuiIconRefresh"
+        class="tui-space_right-3"
+        (click)="refreshData()"
+      >
+      </button>
+      <button
+        size="s"
+        tuiButton
+        type="button"
+        appearance="secondary"
+        icon="tuiIconUpload"
+      >
+        Экспорт
+      </button>
+    </div>
+  </div>
+  <div class="content">
+    <table
+      tuiTable
+      class="table"
+      [columns]="columns"
     >
-      ID
-    </th>
-    <th
-      tuiTh
-      *tuiHead="'startDate'"
-    >
-      Дата
-    </th>
-    <th
-      tuiTh
-      *tuiHead="'customer'"
-    >
-      Покупатель
-    </th>
-    <th
-      tuiTh
-      *tuiHead="'total'"
-    >
-      Стоимость
-    </th>
-    <th
-      tuiTh
-      *tuiHead="'status'"
-    >
-      Статус
-    </th>
-  </tr>
-  </thead>
-  <tbody
-    *tuiLet="orders | tuiTableSort as sortedData"
-    tuiTbody
-    [data]="sortedData"
-  >
-  <tr
-    *ngFor="let item of sortedData"
-    tuiTr
-  >
-    <td
-      *tuiCell="'startDate'"
-      tuiTd
-    >
-      {{ item.startDate * 1000  | date }}
-    </td>
-    <td
-      *tuiCell="'total'"
-      tuiTd
-    >
-      {{ item.total | tuiFormatNumber: {decimalLimit: 2, decimalSeparator: '.'} }} {{ 'RUB' | tuiCurrency }}
-    </td>
-    <td
-      *tuiCell="'customer'"
-      tuiTd
-    >
-      <div class="td-name">
-        <tui-avatar
-          size="xs"
-          [text]="item.customer.name"
-        ></tui-avatar>
-        {{ item.customer.name }}
-      </div>
-    </td>
-    <td
-      *tuiCell="'status'"
-      tuiTd
-    >
-      <tui-badge
-        *tuiLet="getStatusInfo(item.status) as statusInfo"
-        [status]="statusInfo.color"
-        [value]="statusInfo.label"
-      ></tui-badge>
-    </td>
-  </tr>
-  </tbody>
-</table>
-<tui-table-pagination
-  [total]="orders.length"
-  [(page)]="page"
-  [(size)]="size"
-></tui-table-pagination>
+      <thead>
+      <tr tuiThGroup>
+        <th
+          tuiTh
+          *tuiHead="'id'"
+          [sorter]="null"
+        >
+          ID
+        </th>
+        <th
+          tuiTh
+          *tuiHead="'startDate'"
+        >
+          Дата
+        </th>
+        <th
+          tuiTh
+          *tuiHead="'customer'"
+        >
+          Покупатель
+        </th>
+        <th
+          tuiTh
+          *tuiHead="'total'"
+        >
+          Стоимость
+        </th>
+        <th
+          tuiTh
+          *tuiHead="'status'"
+        >
+          Статус
+        </th>
+      </tr>
+      </thead>
+      <tbody
+        *tuiLet="(orders || []) | tuiTableSort as sortedData"
+        tuiTbody
+        [data]="sortedData"
+      >
+      <tr
+        *ngFor="let item of sortedData"
+        tuiTr
+        [routerLink]="'/orders/details/' + item.id"
+      >
+        <td
+          *tuiCell="'startDate'"
+          tuiTd
+        >
+          {{ item.startDate * 1000  | date }}
+        </td>
+        <td
+          *tuiCell="'total'"
+          tuiTd
+        >
+          {{ item.total | tuiFormatNumber: {decimalLimit: 2, decimalSeparator: '.'} }} {{ 'RUB' | tuiCurrency }}
+        </td>
+        <td
+          *tuiCell="'customer'"
+          tuiTd
+        >
+          <div class="td-name">
+            <tui-avatar
+              size="xs"
+              [text]="item.customer.name"
+            ></tui-avatar>
+            {{ item.customer.name }}
+          </div>
+        </td>
+        <td
+          *tuiCell="'status'"
+          tuiTd
+        >
+          <tui-badge
+            *tuiLet="item.status | orderStatus as statusInfo"
+            [status]="statusInfo.color"
+            [value]="statusInfo.label"
+          ></tui-badge>
+        </td>
+      </tr>
+      <ng-container *ngIf="orders === null">
+        <tr
+          *ngFor="let item of [1, 2, 3]"
+          tuiTr
+        >
+          <td
+            *tuiCell="'id'"
+            tuiTd
+          >
+            <span class="tui-skeleton">***</span>
+          </td>
+          <td
+            *tuiCell="'startDate'"
+            tuiTd
+          >
+            <span class="tui-skeleton">**************</span>
+          </td>
+          <td
+            *tuiCell="'total'"
+            tuiTd
+          >
+            <span class="tui-skeleton">***********</span>
+          </td>
+          <td
+            *tuiCell="'customer'"
+            tuiTd
+          >
+            <span class="tui-skeleton">***********************</span>
+          </td>
+          <td
+            *tuiCell="'status'"
+            tuiTd
+          >
+            <span class="tui-skeleton">***************</span>
+          </td>
+        </tr>
+      </ng-container>
+      <ng-container *ngIf="orders?.length === 0">
+        <tr class="table-empty">
+          <tui-svg
+            src="tuiIconInfo"
+          ></tui-svg>
+          <span>Список пуст</span>
+        </tr>
+      </ng-container>
+
+      </tbody>
+    </table>
+    <tui-table-pagination
+      [total]="orders?.length || 0"
+      [(page)]="page"
+      [(size)]="size"
+    ></tui-table-pagination>
+  </div>
+</div>

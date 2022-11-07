@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { OrderModel, OrderStatus } from "../../../shared/models/order.model";
-import { TuiStatus } from "@taiga-ui/kit";
+import { OrderModel } from "../../../shared/models/order.model";
 import { tuiTablePaginationOptionsProvider } from "@taiga-ui/addon-table";
+import { OrdersService } from "../orders.service";
 
 @Component({
   selector: 'app-list',
@@ -16,73 +16,33 @@ import { tuiTablePaginationOptionsProvider } from "@taiga-ui/addon-table";
 export class ListComponent implements OnInit {
   public page = 0;
   public size = 10;
-  public orders: OrderModel[] = [
+  public orders: OrderModel[] | null = null;
+  public breadcrumbs = [
     {
-      id: '0',
-      startDate: 	1665064737,
-      customer: {
-        id: '0',
-        name: `Владимир Миронов`,
-      },
-      total: 320.30,
-      status: OrderStatus.Delivery,
+      caption: `Главная`,
+      routerLink: `/`,
     },
     {
-      id: '1',
-      startDate: 1664054737,
-      customer: {
-        id: '0',
-        name: `Гапеев Юрий`,
-      },
-      total: 1100.20,
-      status: OrderStatus.Paid,
+      caption: `Заказы`,
+      routerLink: `/orders`,
     },
   ];
 
-  public statusData: Record<string, { color: TuiStatus, label: string }> = {
-    [OrderStatus.Pending]: {
-      color: 'neutral',
-      label: 'Ожидание',
-    },
-    [OrderStatus.Delivery]: {
-      color: 'warning',
-      label: 'Доставка',
-    },
-    [OrderStatus.Paid]: {
-      color: 'success',
-      label: 'Оплачено',
-    },
-    [OrderStatus.Draft]: {
-      color: 'error',
-      label: 'Возврат'
-    },
-    [OrderStatus.Draft]: {
-      color: 'error',
-      label: 'Возврат'
-    },
-    [OrderStatus.Unknown]: {
-      color: 'neutral',
-      label: 'Неизвестно'
-    }
-  }
+  readonly columns = ['id', 'startDate', 'customer', 'total', 'status'];
 
-  readonly columns = Object.keys(this.orders[0]);
-
-  constructor() { }
+  constructor(
+    private ordersService: OrdersService,
+  ) { }
 
   ngOnInit(): void {
+    this.refreshData();
   }
 
-  public getStatusInfo(value: any): { color: TuiStatus, label: string } {
-    if (value && typeof value === 'string') {
-      const statusInfo = this.statusData[value];
-      if (statusInfo) {
-        return statusInfo;
-      }
-      return  this.statusData[OrderStatus.Unknown];
-    } else {
-      return this.statusData[OrderStatus.Unknown];
-    }
+  public refreshData(): void {
+    this.orders = null;
+    this.ordersService.getOrders().subscribe((res: OrderModel[]) => {
+      this.orders = res;
+    });
   }
 
 }

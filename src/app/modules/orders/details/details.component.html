@@ -1,1 +1,81 @@
-<p>details works!</p>
+<div class="orders">
+  <div class="header">
+    <div class="header__title">
+      <tui-breadcrumbs  size="l">
+        <ng-container *ngFor="let item of breadcrumbs">
+          <a
+            *tuiItem
+            tuiLink
+            [routerLink]="item.routerLink"
+          >
+            {{ item.caption }}
+          </a>
+        </ng-container>
+      </tui-breadcrumbs>
+    </div>
+    <div class="header__actions">
+
+    </div>
+  </div>
+  <div class="content" *ngIf="orderData else loader">
+    <div class="content_left">
+      <div class="content-part">
+        <div class="content-part__header">
+          <div class="content-part__title">
+            <h2>#{{ orderId }}</h2>
+            <tui-svg
+              (click)="copyToClipboard(orderId)"
+              tuiHint="Скопировать"
+              tuiHintDirection="top"
+              src="tuiIconCheckList"
+            ></tui-svg>
+          </div>
+          <div class="content-part__actions">
+            <ng-container *tuiLet="orderData.status | orderStatus as statusInfo">
+              <tui-badge
+                [status]="statusInfo.color"
+                [value]="statusInfo.label"
+              ></tui-badge>
+            </ng-container>
+          </div>
+        </div>
+        <div class="content-part__content">
+          adwda
+        </div>
+      </div>
+      <div class="content-part">
+        <div class="content-part__header">
+          <div class="content-part__title">
+            <h2>Товары</h2>
+          </div>
+          <div class="content-part__actions">
+
+          </div>
+        </div>
+        <div class="content-part__content">
+          adwda
+        </div>
+      </div>
+    </div>
+    <div class="content_right">
+      <div class="content-part">
+        <div class="content-part__header">
+          <div class="content-part__title">
+            <h2>История</h2>
+          </div>
+          <div class="content-part__actions">
+
+          </div>
+        </div>
+        <div class="content-part__content">
+          adwda
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #loader>
+    <tui-loader class="loader" size="xl">
+
+    </tui-loader>
+  </ng-template>
+</div>

@@ -6,13 +6,4 @@ import { Component } from '@angular/core';
   styleUrls: ['./orders.component.scss']
 })
 export class OrdersComponent {
-  breadcrumbs = [
-    {
-      caption: `Главная`,
-    },
-    {
-      caption: `Заказы`,
-      routerLink: `/orders`,
-    },
-  ];
 }
