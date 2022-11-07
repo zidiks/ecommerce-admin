@@ -7,7 +7,7 @@ import {
   TuiFormatDatePipeModule,
   TuiFormatNumberPipeModule, TuiHintModule,
   TuiLinkModule, TuiLoaderModule,
-  TuiSvgModule
+  TuiSvgModule, TuiTooltipModule
 } from "@taiga-ui/core";
 import { TuiAvatarModule, TuiBadgeModule, TuiBreadcrumbsModule } from "@taiga-ui/kit";
 import { TuiTableModule, TuiTablePaginationModule } from "@taiga-ui/addon-table";
@@ -41,6 +41,7 @@ import { OrderStatusModule } from "../../shared/pipes/order-status/order-status.
     TuiHintModule,
     TuiLoaderModule,
     OrderStatusModule,
+    TuiTooltipModule,
   ]
 })
 export class OrdersModule { }

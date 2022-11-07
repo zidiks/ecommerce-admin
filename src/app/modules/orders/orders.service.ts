@@ -1,11 +1,18 @@
 import { Injectable } from '@angular/core';
-import { OrderModel, OrderStatus } from "../../shared/models/order.model";
+import { DeliveryMethod, OrderModel, OrderStatus } from "../../shared/models/order.model";
 import { delay, Observable, of, take } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrdersService {
+  public fakeDeliveryMethods: DeliveryMethod[] = [
+    {
+      id: '0',
+      label: 'Европочта',
+      description: '«Европочта» - это быстроразвивающийся  почтовый сервис, который занимается доставкой посылок по всей Беларуси!',
+    }
+  ]
   public fakeData: OrderModel[] = [
     {
       id: '433232342',
@@ -13,7 +20,9 @@ export class OrdersService {
       customer: {
         id: '0',
         name: `Владимир Миронов`,
+        phone: '+375333896071'
       },
+      deliveryMethod: this.fakeDeliveryMethods[0],
       total: 320.30,
       status: OrderStatus.Delivery,
     },
@@ -23,8 +32,10 @@ export class OrdersService {
       customer: {
         id: '0',
         name: `Гапеев Юрий`,
+        phone: '+375293526078'
       },
       total: 1100.20,
+      deliveryMethod: this.fakeDeliveryMethods[0],
       status: OrderStatus.Paid,
     },
   ];

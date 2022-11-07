@@ -6,6 +6,7 @@ export interface OrderModel {
   customer: CustomerModel;
   total: number;
   status: OrderStatus;
+  deliveryMethod: DeliveryMethod;
 }
 
 export enum OrderStatus {
@@ -14,4 +15,10 @@ export enum OrderStatus {
   Paid = 'PAID',
   Draft = 'DRAFT',
   Unknown = 'UNKNOWN',
+}
+
+export interface DeliveryMethod {
+  id: string;
+  label: string;
+  description: string;
 }

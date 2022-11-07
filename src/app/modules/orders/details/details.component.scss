@@ -47,3 +47,32 @@
 .loader {
   margin-top: 4rem;
 }
+
+.customer {
+  display: flex;
+  &__part {
+    &:not(:last-child) {
+      border-right: 1px solid var(--tui-base-04);
+    }
+    padding-right: 1.4rem;
+    margin-right: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    h3 {
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      color:var(--tui-base-07);
+      font-weight: 300;
+    }
+    span {
+      margin-top: 0.15rem;
+      font-size: 1rem;
+      color: var(--tui-text-04);
+    }
+  }
+}
+
+.order-date {
+  color: var(--tui-base-07);
+  font-size: 0.9rem;
+}

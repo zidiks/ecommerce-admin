@@ -31,16 +31,33 @@
             ></tui-svg>
           </div>
           <div class="content-part__actions">
-            <ng-container *tuiLet="orderData.status | orderStatus as statusInfo">
-              <tui-badge
-                [status]="statusInfo.color"
-                [value]="statusInfo.label"
-              ></tui-badge>
-            </ng-container>
+
           </div>
         </div>
         <div class="content-part__content">
-          adwda
+          <div class="customer">
+            <div class="customer__part">
+              <h3>Статус</h3>
+              <ng-container *tuiLet="orderData.status | orderStatus as statusInfo">
+                <tui-badge
+                  [status]="statusInfo.color"
+                  [value]="statusInfo.label"
+                ></tui-badge>
+              </ng-container>
+            </div>
+            <div class="customer__part">
+              <h3>Дата</h3>
+              <span>{{ orderData.startDate * 1000 | date }}</span>
+            </div>
+            <div class="customer__part">
+              <h3>Имя</h3>
+              <span>{{ orderData.customer.name }}</span>
+            </div>
+            <div class="customer__part">
+              <h3>Телефон</h3>
+              <span>{{ orderData.customer.phone }}</span>
+            </div>
+          </div>
         </div>
       </div>
       <div class="content-part">
