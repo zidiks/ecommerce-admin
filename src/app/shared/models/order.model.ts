@@ -8,7 +8,10 @@ export interface OrderModel {
   customer: CustomerModel;
   total: number;
   status: OrderStatus;
-  deliveryMethod: DeliveryMethod;
+  delivery: {
+    deliveryMethod: DeliveryMethod;
+    deliveryAddress: string;
+  };
   historyList: OrderHistoryItem[];
 }
 

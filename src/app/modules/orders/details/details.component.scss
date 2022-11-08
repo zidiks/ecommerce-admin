@@ -41,6 +41,24 @@
       }
       &__content {
         margin-top: 1.2rem;
+        .delivery {
+          display: flex;
+          flex-direction: column;
+          &-box {
+            display: flex;
+            flex-direction: column;
+            &:not(:first-child) {
+              margin-top: 0.5rem;
+            }
+          }
+          &-param {
+            color: var(--tui-base-06);
+          }
+          &-value {
+            margin-top: 0.1rem;
+            color: var(--tui-text-01);
+          }
+        }
       }
     }
   }

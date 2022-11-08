@@ -24,13 +24,21 @@ export class OrdersService {
         name: `Владимир Миронов`,
         phone: '+375333896071'
       },
-      deliveryMethod: this.fakeDeliveryMethods[0],
+      delivery: {
+        deliveryMethod: this.fakeDeliveryMethods[0],
+        deliveryAddress: 'г. Минск, ул. Петра Глебки, 64',
+      },
       total: 320.30,
-      status: OrderStatus.Delivery,
+      status: OrderStatus.Paid,
       historyList: [
         {
           type: OrderHistory.Pending,
           time: 1665035737,
+        },
+        {
+          type: OrderHistory.Message,
+          details: 'Ожидайте звонка специалиста',
+          time: 1665055737,
         },
         {
           type: OrderHistory.OrderStart,
@@ -60,10 +68,21 @@ export class OrdersService {
         phone: '+375293526078'
       },
       total: 1100.20,
-      deliveryMethod: this.fakeDeliveryMethods[0],
-      status: OrderStatus.Paid,
+      delivery: {
+        deliveryMethod: this.fakeDeliveryMethods[0],
+        deliveryAddress: 'г. Минск, ул. Петра Мстиславца, 141',
+      },
+      status: OrderStatus.Pending,
       historyList: [
-
+        {
+          type: OrderHistory.Pending,
+          time: 1665035737,
+        },
+        {
+          type: OrderHistory.Message,
+          details: 'Ожидайте звонка специалиста',
+          time: 1665055737,
+        },
       ],
     },
   ];
@@ -75,6 +94,10 @@ export class OrdersService {
   }
 
   public getOrderById(id: string): Observable<OrderModel | undefined> {
-    return of(this.fakeData.find((item: OrderModel) => item.id === id)).pipe(delay(1000), take(1));
+    const data = this.fakeData.find((item: OrderModel) => item.id === id);
+    if (data) {
+      data.historyList = data.historyList.sort((a, b) => a.time - b.time);
+    }
+    return of(data).pipe(delay(1000), take(1));
   }
 }
