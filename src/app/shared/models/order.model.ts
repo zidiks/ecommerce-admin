@@ -1,17 +1,21 @@
 import { CustomerModel } from "./customer.model";
-import { OrderStatus } from "../enums/order-status.enum";
 import { OrderHistory } from "../enums/order-history.enum";
+import { StateColor } from "../enums/state-colors.enum";
 
 export interface OrderModel {
   id: string;
-  startDate: number;
+  orderCode: string;
   customer: CustomerModel;
-  total: number;
-  status: OrderStatus;
+  startDate: number;
+  state: OrderState;
   delivery: {
     deliveryMethod: DeliveryMethod;
     deliveryAddress: string;
   };
+  paymentMethod: PaymentMethod;
+  cartItems: CartItem[];
+  totalPrice: number;
+  totalDiscount: number;
   historyList: OrderHistoryItem[];
 }
 
@@ -25,5 +29,27 @@ export interface OrderHistoryItem {
   type: OrderHistory,
   details?: string;
   time: number;
+  //TO DO
   products?: any[];
+}
+
+export interface PaymentMethod {
+  id: string;
+  name: string;
+  description: string;
+  media: string;
+}
+
+export interface CartItem {
+  //TO DO
+  product: any;
+  count: number;
+  discount: number;
+}
+
+interface OrderState {
+  id: string;
+  label: string;
+  color: StateColor;
+  description?: string;
 }

@@ -96,7 +96,7 @@
           *tuiCell="'total'"
           tuiTd
         >
-          {{ item.total | tuiFormatNumber: {decimalLimit: 2, decimalSeparator: '.'} }} {{ 'RUB' | tuiCurrency }}
+          {{ item.totalPrice | tuiFormatNumber: {decimalLimit: 2, decimalSeparator: '.'} }} {{ 'RUB' | tuiCurrency }}
         </td>
         <td
           *tuiCell="'customer'"
@@ -115,7 +115,7 @@
           tuiTd
         >
           <tui-badge
-            *tuiLet="item.status | orderStatus as statusInfo"
+            *tuiLet="item.state as statusInfo"
             [status]="statusInfo.color"
             [value]="statusInfo.label"
           ></tui-badge>

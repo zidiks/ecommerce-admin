@@ -38,7 +38,7 @@
           <div class="customer">
             <div class="customer__part">
               <h3>Статус</h3>
-              <ng-container *tuiLet="orderData.status | orderStatus as statusInfo">
+              <ng-container *tuiLet="orderData.state as statusInfo">
                 <tui-badge
                   [status]="statusInfo.color"
                   [value]="statusInfo.label"

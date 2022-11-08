@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { DeliveryMethod, OrderModel } from "../../shared/models/order.model";
 import { delay, Observable, of, take } from "rxjs";
-import { OrderStatus } from "../../shared/enums/order-status.enum";
 import { OrderHistory } from "../../shared/enums/order-history.enum";
+import { StateColor } from "../../shared/enums/state-colors.enum";
 
 @Injectable({
   providedIn: 'root'
@@ -15,21 +15,36 @@ export class OrdersService {
       description: '«Европочта» - это быстроразвивающийся  почтовый сервис, который занимается доставкой посылок по всей Беларуси!',
     }
   ]
+
   public fakeData: OrderModel[] = [
     {
       id: '433232342',
-      startDate: 	1665064737,
+      orderCode: 'KMF43C5',
       customer: {
-        id: '0',
         name: `Владимир Миронов`,
         phone: '+375333896071'
+      },
+      startDate: 	1665064737,
+      state: {
+        id: '0',
+        label: 'Оплачено',
+        color: StateColor.Success,
       },
       delivery: {
         deliveryMethod: this.fakeDeliveryMethods[0],
         deliveryAddress: 'г. Минск, ул. Петра Глебки, 64',
       },
-      total: 320.30,
-      status: OrderStatus.Paid,
+      paymentMethod: {
+        id: '0',
+        name: 'При получении',
+        description: 'Оплата при получении доставки',
+        media: 'url...',
+      },
+      cartItems: [
+
+      ],
+      totalPrice: 300.00,
+      totalDiscount: 0,
       historyList: [
         {
           type: OrderHistory.Pending,
@@ -57,32 +72,6 @@ export class OrdersService {
           type: OrderHistory.OrderDone,
           time: 1665275737,
         }
-      ],
-    },
-    {
-      id: '234262433',
-      startDate: 1664054737,
-      customer: {
-        id: '0',
-        name: `Гапеев Юрий`,
-        phone: '+375293526078'
-      },
-      total: 1100.20,
-      delivery: {
-        deliveryMethod: this.fakeDeliveryMethods[0],
-        deliveryAddress: 'г. Минск, ул. Петра Мстиславца, 141',
-      },
-      status: OrderStatus.Pending,
-      historyList: [
-        {
-          type: OrderHistory.Pending,
-          time: 1665035737,
-        },
-        {
-          type: OrderHistory.Message,
-          details: 'Ожидайте звонка специалиста',
-          time: 1665055737,
-        },
       ],
     },
   ];

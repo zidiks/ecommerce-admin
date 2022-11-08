@@ -18,7 +18,6 @@ import { ListComponent } from './list/list.component';
 import { DetailsComponent } from './details/details.component';
 import { TuiCurrencyPipeModule } from "@taiga-ui/addon-commerce";
 import { TuiLetModule } from "@taiga-ui/cdk";
-import { OrderStatusModule } from "../../shared/pipes/order-status/order-status.module";
 import { OrderHistoryModule } from "../../shared/pipes/order-history/order-history.module";
 
 @NgModule({
@@ -45,7 +44,6 @@ import { OrderHistoryModule } from "../../shared/pipes/order-history/order-histo
     TuiHintModule,
     TuiLoaderModule,
     TuiTooltipModule,
-    OrderStatusModule,
     OrderHistoryModule,
   ]
 })
