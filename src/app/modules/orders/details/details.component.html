@@ -85,7 +85,27 @@
           </div>
         </div>
         <div class="content-part__content">
-          adwda
+          <div class="history" *ngFor="let historyItem of orderData.historyList">
+            <ng-container *tuiLet="historyItem.type | orderHistory as historyType">
+              <div class="history__title">
+                <div class="history__left">
+                  <tui-svg [style.color]="'var(--' + historyType.color + ')'" [src]="historyType.icons"></tui-svg>
+                </div>
+                <div class="history__right-title">
+                  <span>{{ historyType.label }}</span>
+                </div>
+              </div>
+              <div class="history__details">
+                <div class="history__left">
+                  <div class="history__line"></div>
+                </div>
+                <div class="history__right">
+                  <span class="history__date">{{ historyItem.time * 1000 | date : 'medium' }}</span>
+                  <span *ngIf="historyItem.details" class="history__text">{{ historyItem.details }}</span>
+                </div>
+              </div>
+            </ng-container>
+          </div>
         </div>
       </div>
     </div>

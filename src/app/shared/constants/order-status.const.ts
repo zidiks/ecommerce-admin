@@ -1,5 +1,5 @@
 import { TuiStatus } from "@taiga-ui/kit";
-import { OrderStatus } from "../models/order.model";
+import { OrderStatus } from "../enums/order-status.enum";
 
 export const statusData: Record<string, { color: TuiStatus, label: string }> = {
   [OrderStatus.Pending]: {

@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { TuiStatus } from "@taiga-ui/kit";
-import { OrderStatus } from "../../models/order.model";
 import { statusData } from "../../constants/order-status.const";
+import { OrderStatus } from "../../enums/order-status.enum";
 
 @Pipe({
   name: 'orderStatus'

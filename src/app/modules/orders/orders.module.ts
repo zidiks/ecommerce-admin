@@ -5,9 +5,12 @@ import { OrdersComponent } from "./orders.component";
 import {
   TuiButtonModule,
   TuiFormatDatePipeModule,
-  TuiFormatNumberPipeModule, TuiHintModule,
-  TuiLinkModule, TuiLoaderModule,
-  TuiSvgModule, TuiTooltipModule
+  TuiFormatNumberPipeModule,
+  TuiHintModule,
+  TuiLinkModule,
+  TuiLoaderModule,
+  TuiSvgModule,
+  TuiTooltipModule
 } from "@taiga-ui/core";
 import { TuiAvatarModule, TuiBadgeModule, TuiBreadcrumbsModule } from "@taiga-ui/kit";
 import { TuiTableModule, TuiTablePaginationModule } from "@taiga-ui/addon-table";
@@ -16,6 +19,7 @@ import { DetailsComponent } from './details/details.component';
 import { TuiCurrencyPipeModule } from "@taiga-ui/addon-commerce";
 import { TuiLetModule } from "@taiga-ui/cdk";
 import { OrderStatusModule } from "../../shared/pipes/order-status/order-status.module";
+import { OrderHistoryModule } from "../../shared/pipes/order-history/order-history.module";
 
 @NgModule({
   declarations: [
@@ -40,8 +44,9 @@ import { OrderStatusModule } from "../../shared/pipes/order-status/order-status.
     TuiSvgModule,
     TuiHintModule,
     TuiLoaderModule,
-    OrderStatusModule,
     TuiTooltipModule,
+    OrderStatusModule,
+    OrderHistoryModule,
   ]
 })
 export class OrdersModule { }
