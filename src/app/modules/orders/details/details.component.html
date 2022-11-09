@@ -95,7 +95,7 @@
                   <div class="product__price-total" [class.product__price-total-through]="cartItem.discount">
                     <tui-money
                       currency="RUB"
-                      [value]=" cartItem.count * cartItem.product.price"
+                      [value]="cartItem.count * cartItem.product.price"
                     ></tui-money>
                   </div>
                 </div>
@@ -109,6 +109,30 @@
                     ></tui-money>
                   </div>
                 </div>
+              </div>
+            </div>
+            <div class="total">
+              <div class="total__line total__line-number" *ngIf="orderData.totalDiscount">
+                <span class="total__line-name">Первичная стоимость</span>
+                <span class="total__line-value">
+                  <tui-money
+                    currency="RUB"
+                    [value]="orderData.subTotalPrice"
+                  ></tui-money>
+                </span>
+              </div>
+              <div class="total__line total__line-discount" *ngIf="orderData.totalDiscount">
+                <span class="total__line-name">Общая скидка</span>
+                <span class="total__line-value">{{ orderData.totalDiscount | tuiFormatNumber }}%</span>
+              </div>
+              <div class="total__line total__line-total">
+                <span class="total__line-name">Итоговая стоимость</span>
+                <span class="total__line-value">
+                  <tui-money
+                    currency="RUB"
+                    [value]="orderData.totalPrice"
+                  ></tui-money>
+                </span>
               </div>
             </div>
           </div>

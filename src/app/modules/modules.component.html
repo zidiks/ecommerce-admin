@@ -27,51 +27,55 @@
 </ng-template>
 
 <div class="apps">
-  <div class="bar">
-    <div class="bar__top">
-      <div class="bar__logo">
-        <h2><tui-svg src="tuiIconPiechartLarge"></tui-svg> Hue-Commerce</h2>
+  <div class="bar-wrapper">
+    <div class="bar">
+      <div class="bar__top">
+        <div class="bar__logo">
+          <h2><tui-svg src="tuiIconPiechartLarge"></tui-svg> Hue-Commerce</h2>
+        </div>
+        <div class="bar__list">
+          <button
+            *ngFor="let app of appsList"
+            tuiButton
+            type="button"
+            class="list-item"
+            size="m"
+            appearance="flat"
+            [routerLink]="app.route"
+            [pseudoActive]="rla.isActive"
+            routerLinkActive
+            #rla="routerLinkActive"
+            [icon]="app.icon"
+            [disabled]="!!app.disabled"
+          >
+            {{ app.name }}
+          </button>
+        </div>
       </div>
-      <div class="bar__list">
-        <button
-          *ngFor="let app of appsList"
-          tuiButton
-          type="button"
-          class="list-item"
-          size="m"
-          appearance="flat"
-          [routerLink]="app.route"
-          [pseudoActive]="rla.isActive"
-          routerLinkActive
-          #rla="routerLinkActive"
-          [icon]="app.icon"
-          [disabled]="!!app.disabled"
+      <div class="bar__bottom">
+        <tui-hosted-dropdown
+          tuiDropdownLimitWidth="fixed"
+          [content]="dropdownProfile"
         >
-          {{ app.name }}
-        </button>
-      </div>
-    </div>
-    <div class="bar__bottom">
-      <tui-hosted-dropdown
-        tuiDropdownLimitWidth="fixed"
-        [content]="dropdownProfile"
-      >
-        <button
-          tuiButton
-          type="button"
-          [pseudoActive]="true"
-          [icon]="iconProfile"
-        >
+          <button
+            tuiButton
+            type="button"
+            [pseudoActive]="true"
+            [icon]="iconProfile"
+          >
         <span>
           {{ (authService.currentUser$ | async)?.name || 'Неизвестно' }}
         </span>
-        </button>
-      </tui-hosted-dropdown>
+          </button>
+        </tui-hosted-dropdown>
+      </div>
     </div>
   </div>
   <div class="content">
-    <div class="content__box">
-      <router-outlet></router-outlet>
-    </div>
+    <tui-scrollbar class="content__box">
+      <div class="content__box-inner">
+        <router-outlet></router-outlet>
+      </div>
+    </tui-scrollbar>
   </div>
 </div>

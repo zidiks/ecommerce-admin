@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ModulesComponent } from './modules.component';
 import {
   TuiAlertModule,
-  TuiButtonModule, TuiDialogModule,
+  TuiButtonModule,
+  TuiDialogModule,
   TuiHostedDropdownModule,
   TuiLinkModule,
   TuiScrollbarModule,
@@ -26,6 +27,7 @@ import { ModulesRoutingModule } from "./modules-routing.module";
     TuiAvatarModule,
     TuiHostedDropdownModule,
     TuiLinkModule,
+    TuiScrollbarModule,
     TuiScrollbarModule,
   ]
 })

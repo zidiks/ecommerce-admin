@@ -15,6 +15,7 @@ export interface OrderModel {
   };
   paymentMethod: PaymentMethod;
   cartItems: CartItem[];
+  subTotalPrice: number;
   totalPrice: number;
   totalDiscount: number;
   historyList: OrderHistoryItem[];
