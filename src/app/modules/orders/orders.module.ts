@@ -16,7 +16,7 @@ import { TuiAvatarModule, TuiBadgeModule, TuiBreadcrumbsModule } from "@taiga-ui
 import { TuiTableModule, TuiTablePaginationModule } from "@taiga-ui/addon-table";
 import { ListComponent } from './list/list.component';
 import { DetailsComponent } from './details/details.component';
-import { TuiCurrencyPipeModule } from "@taiga-ui/addon-commerce";
+import { TuiCurrencyPipeModule, TuiMoneyModule } from "@taiga-ui/addon-commerce";
 import { TuiLetModule } from "@taiga-ui/cdk";
 import { OrderHistoryModule } from "../../shared/pipes/order-history/order-history.module";
 
@@ -45,6 +45,7 @@ import { OrderHistoryModule } from "../../shared/pipes/order-history/order-histo
     TuiLoaderModule,
     TuiTooltipModule,
     OrderHistoryModule,
+    TuiMoneyModule,
   ]
 })
 export class OrdersModule { }

@@ -70,7 +70,48 @@
           </div>
         </div>
         <div class="content-part__content">
-          adwda
+          <div class="products">
+            <div class="product" *ngFor="let cartItem of orderData.cartItems">
+              <div class="product__img">
+                <tui-avatar
+                  [avatarUrl]="cartItem.product.media[0]"
+                >
+                </tui-avatar>
+              </div>
+              <div class="product__name">
+                <span>{{ cartItem.product.name }}</span>
+              </div>
+              <div class="product__spacer">
+              </div>
+              <div class="product__price">
+                <div class="product__price-line">
+                  <div class="product__price-number">
+                    <tui-money
+                      currency="RUB"
+                      [value]="cartItem.product.price"
+                    ></tui-money>
+                  </div>
+                  <div class="product__price-count">x {{ cartItem.count }}</div>
+                  <div class="product__price-total" [class.product__price-total-through]="cartItem.discount">
+                    <tui-money
+                      currency="RUB"
+                      [value]=" cartItem.count * cartItem.product.price"
+                    ></tui-money>
+                  </div>
+                </div>
+                <div class="product__price-line" *ngIf="cartItem.discount">
+                  <div class="product__discount">
+                    <span class="product__discount-percent">-{{ cartItem.discount | tuiFormatNumber }}%</span>
+                    <tui-money
+                      class="product__discount-value"
+                      currency="RUB"
+                      [value]="(cartItem.count * cartItem.product.price) * ((100 - cartItem.discount) / 100)"
+                    ></tui-money>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="content-part">
@@ -85,12 +126,27 @@
           <div class="delivery">
             <div class="delivery-box">
               <span class="delivery-param">Способ доставки</span>
-              <span class="delivery-value">{{ orderData.delivery.deliveryMethod.label }}</span>
+              <span class="delivery-value">{{ orderData.delivery.deliveryMethod.name }}</span>
             </div>
             <div class="delivery-box">
               <span class="delivery-param">Адрес доставки</span>
               <span class="delivery-value">{{ orderData.delivery.deliveryAddress }}</span>
             </div>
+          </div>
+        </div>
+      </div>
+      <div class="content-part">
+        <div class="content-part__header">
+          <div class="content-part__title">
+            <h2>Оплата</h2>
+          </div>
+          <div class="content-part__actions">
+          </div>
+        </div>
+        <div class="content-part__content">
+          <div class="payment">
+            <span class="payment__name">{{ orderData.paymentMethod.name }}</span>
+            <span class="payment__description">{{ orderData.paymentMethod.description }}</span>
           </div>
         </div>
       </div>

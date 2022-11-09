@@ -96,6 +96,95 @@
   font-size: 0.9rem;
 }
 
+.products {
+  display: flex;
+  flex-direction: column;
+  .product {
+    &:not(:last-child) {
+      margin-bottom: 1rem;
+    }
+    display: flex;
+    padding: 0.5rem;
+    border-radius: 1rem;
+    &:hover {
+      background: var(--tui-base-02);
+    }
+    &>div {
+      display: flex;
+      align-items: center;
+    }
+    &__discount {
+      margin-left: 9rem;
+      display: flex;
+      flex-direction: column;
+      &-percent {
+        color: var(--tui-success-fill);
+        font-weight: 600;
+      }
+      &-value {
+        color: var(--tui-text-01);
+        font-weight: 600;
+        font-size: 1.1rem;
+      }
+    }
+    &__img {
+      margin-right: 1rem;
+    }
+    &__price {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding-right: .5rem;
+      &-line {
+        width: 100%;
+        display: flex;
+      }
+      &-number {
+        min-width: 6rem;
+        display: flex;
+        justify-content: flex-end;
+      }
+      &-count {
+        display: flex;
+        justify-content: center;
+        min-width: 3rem;
+        color:var(--tui-base-07);
+        font-weight: 300;
+      }
+      &-total {
+        display: flex;
+        min-width: 8rem;
+        color: var(--tui-text-01);
+        font-weight: 600;
+        font-size: 1.1rem;
+        &-through {
+          font-weight: 500;
+          text-decoration: line-through;
+        }
+      }
+    }
+    &__name {
+      padding-right: 2rem;
+    }
+    &__spacer {
+      flex: 1 1 auto;
+    }
+  }
+}
+
+.payment {
+  display: flex;
+  flex-direction: column;
+  &__name {
+    color: var(--tui-text-01);
+  }
+  &__description {
+    color: var(--tui-text-03);
+    font-size: 0.9rem;
+  }
+}
+
 .history {
   &:not(:last-child) > .history__details {
     &> .history__left > .history__line {

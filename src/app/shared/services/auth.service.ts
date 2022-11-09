@@ -77,7 +77,7 @@ export class AuthService {
     if (token === '228') {
       return of ({
         id: '343jn4l-34jkn343-n34kj334',
-        name: 'Тимофей Савельев',
+        name: 'Миронов Владимир',
         login: 'zidiks',
         role: Roles.Admin,
       });

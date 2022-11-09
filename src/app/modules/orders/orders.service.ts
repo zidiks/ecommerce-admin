@@ -11,8 +11,9 @@ export class OrdersService {
   public fakeDeliveryMethods: DeliveryMethod[] = [
     {
       id: '0',
-      label: 'Европочта',
+      name: 'Европочта',
       description: '«Европочта» - это быстроразвивающийся  почтовый сервис, который занимается доставкой посылок по всей Беларуси!',
+      media: 'url..',
     }
   ]
 
@@ -41,7 +42,42 @@ export class OrdersService {
         media: 'url...',
       },
       cartItems: [
-
+        {
+          product: {
+            name: 'Игровой монитор Xiaomi Mi Curved Gaming Monitor 34 XMMNTWQ34 (китайская версия)',
+            media: [
+              'https://content2.onliner.by/catalog/device/main@2/04dc2028bcdec4ec68e7104727a6417f.jpeg',
+              'https://content2.onliner.by/catalog/device/main@2/53efc4024780d11f063452ed7ab4afc8.jpeg',
+            ],
+            price: 1068,
+            brand: {
+              id: '0',
+              name: 'Xiaomi',
+              description: 'Guano',
+              origin: 'China',
+            }
+          },
+          count: 2,
+          discount: 30,
+        },
+        {
+          product: {
+            name: 'Видеокарта ASUS TUF Gaming GeForce RTX 3080 Ti OC Edition 12GB GDDR6X',
+            media: [
+              'https://content2.onliner.by/catalog/device/main/326b60046da9ccc7af88ab178aa7f165.jpeg',
+              'https://content2.onliner.by/catalog/device/main/db8195d33fce3d3ee48afe255e288eab.jpeg',
+            ],
+            price: 4696.36,
+            brand: {
+              id: '1',
+              name: 'NVIDIA',
+              description: 'Американская технологическая компания, разработчик графических процессоров и систем на чипе.',
+              origin: 'США',
+            }
+          },
+          count: 1,
+          discount: 0,
+        }
       ],
       totalPrice: 300.00,
       totalDiscount: 0,
