@@ -43,6 +43,11 @@ export class DetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.refreshData();
+  }
+
+  public refreshData(): void {
+    this.orderData = null;
     this.orderService.getOrderById(this.orderId).subscribe((res: OrderModel | undefined) => {
       this.orderData = res || null;
     });
