@@ -79,9 +79,9 @@ export class OrdersService {
           discount: 0,
         }
       ],
-      subTotalPrice: 6832.36,
-      totalPrice: 6191.56,
-      totalDiscount: 5,
+      subTotalPrice: 6191.56,
+      totalPrice: 5572.40,
+      totalDiscount: 10,
       historyList: [
         {
           type: OrderHistory.Pending,
