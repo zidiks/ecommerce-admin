@@ -7,7 +7,8 @@ import { ApiLoadingState } from "../../../shared/enums/api-loading-state.enum";
 import { TuiDialogService } from "@taiga-ui/core";
 import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
 import { CategoryDialogComponent } from "./category-dialog/category-dialog.component";
-import { CategoryDialogDataModel } from "../../../shared/models/category-dialog-data.model";
+import { setCategoryChildParent } from "../../../shared/functions/set-category-child-parent.func";
+import { SubmitService } from "../../../shared/services/submit.service";
 
 @Component({
   selector: 'app-category-list',
@@ -32,6 +33,7 @@ export class CategoryListComponent implements OnInit {
     @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
     @Inject(Injector) private readonly injector: Injector,
     private categoriesService: CategoriesService,
+    private submitService: SubmitService,
   ) { }
 
   ngOnInit(): void {
@@ -41,6 +43,9 @@ export class CategoryListComponent implements OnInit {
   public refreshData(): void {
     this.categoriesData = undefined;
     this.categoriesService.getCategories().subscribe((res: CategoryModel[] | null) => {
+      if (res) {
+        res.forEach((category: CategoryModel) => setCategoryChildParent(category));
+      }
       this.categoriesData = res;
     })
   }
@@ -66,7 +71,6 @@ export class CategoryListComponent implements OnInit {
   }
 
   public showEditDialog(category: CategoryModel): void {
-      console.log(category);
     const dialog = this.dialogService.open<CategoryBaseModel>(
       new PolymorpheusComponent(CategoryDialogComponent, this.injector),
       {
@@ -85,5 +89,16 @@ export class CategoryListComponent implements OnInit {
       },
     });
   }
+
+  showDeleteDialog(id: string, title: string): void {
+    this.submitService.submitDialog('Удалить', `Вы действительно хотите удалить категорию: ${title}?`).subscribe({
+      next: (res) => {
+        if (res) {
+          console.log('Delete category with id', id);
+        }
+      },
+    })
+  }
+
 
 }

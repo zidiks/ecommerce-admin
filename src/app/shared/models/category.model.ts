@@ -6,7 +6,14 @@ export interface CategoryModel {
   media: string[];
   children?: CategoryModel[];
   productTypeId?: string;
-  parentName?: string;
+  parent?: CategoryParentModel;
+}
+
+export interface CategoryParentModel {
+  id: string;
+  name: string;
+  handle: string;
+  description?: string;
 }
 
 export interface CategoryBaseModel {

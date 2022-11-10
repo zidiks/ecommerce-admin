@@ -13,6 +13,7 @@ import { CategoryDialogDataModel } from "../../../../shared/models/category-dial
 export class CategoryDialogComponent implements OnInit {
 
   public formGroup: FormGroup = this.formBuilder.group( {
+    parent: [ this.parentData?.name || this.categoryData?.parent?.name || 'Корень каталога' ],
     name : [ this.categoryData?.name || null, Validators.required ],
     handle : [ this.categoryData?.handle, Validators.required ],
     description : [ this.categoryData?.description || '' ],
@@ -21,7 +22,7 @@ export class CategoryDialogComponent implements OnInit {
   constructor(
     @Inject(POLYMORPHEUS_CONTEXT) private readonly context: TuiDialogContext<any, CategoryDialogDataModel>,
     private formBuilder: FormBuilder,
-  ) { }
+  ) {}
 
   get categoryData(): Partial<CategoryModel> | undefined {
     return this.context.data.categoryData;

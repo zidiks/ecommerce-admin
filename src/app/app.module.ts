@@ -1,4 +1,4 @@
-import { TUI_SANITIZER, TuiAlertModule, TuiDialogModule, TuiRootModule } from "@taiga-ui/core";
+import { TUI_SANITIZER, TuiAlertModule, TuiButtonModule, TuiDialogModule, TuiRootModule } from "@taiga-ui/core";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -10,22 +10,25 @@ import { TUI_LANGUAGE, TUI_RUSSIAN_LANGUAGE } from '@taiga-ui/i18n';
 import { of } from "rxjs";
 import localeRu from '@angular/common/locales/ru';
 import { registerLocaleData } from "@angular/common";
+import { SubmitComponent } from './shared/components/submit/submit.component';
 
 registerLocaleData(localeRu, 'ru');
 
 @NgModule({
   declarations: [
     AppComponent,
+    SubmitComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    TuiRootModule,
-    TuiAlertModule,
-    TuiDialogModule,
-],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        TuiRootModule,
+        TuiAlertModule,
+        TuiDialogModule,
+        TuiButtonModule,
+    ],
   providers: [
     {
       provide: TUI_SANITIZER,
