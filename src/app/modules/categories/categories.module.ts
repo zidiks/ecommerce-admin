@@ -3,8 +3,15 @@ import { CommonModule } from '@angular/common';
 import { CategoriesComponent } from './categories.component';
 import { CategoriesRoutingModule } from "./categories-routing.module";
 import { CategoryListComponent } from './category-list/category-list.component';
-import { TuiBreadcrumbsModule, TuiTreeModule } from "@taiga-ui/kit";
-import { TuiButtonModule, TuiLinkModule, TuiLoaderModule, TuiSvgModule } from "@taiga-ui/core";
+import { TuiBreadcrumbsModule, TuiDataListDropdownManagerModule, TuiTreeModule } from "@taiga-ui/kit";
+import {
+  TuiButtonModule,
+  TuiDataListModule,
+  TuiDropdownModule,
+  TuiLinkModule,
+  TuiLoaderModule,
+  TuiSvgModule
+} from "@taiga-ui/core";
 import { ApiLoadingStateModule } from "../../shared/pipes/api-loading-state/api-loading-state.module";
 
 @NgModule({
@@ -22,6 +29,9 @@ import { ApiLoadingStateModule } from "../../shared/pipes/api-loading-state/api-
     TuiTreeModule,
     TuiSvgModule,
     TuiLoaderModule,
+    TuiDataListModule,
+    TuiDataListDropdownManagerModule,
+    TuiDropdownModule,
   ]
 })
 export class CategoriesModule { }

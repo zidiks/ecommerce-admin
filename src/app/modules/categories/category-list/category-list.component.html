@@ -50,7 +50,7 @@
           let-value
           let-node="node"
         >
-          <div class="category-item">
+          <div class="category-item"  tuiDropdownContext [tuiDropdown]="contextMenu">
             <tui-svg
               *ngIf="!value.children?.length"
               src="tuiIconBookmark">
@@ -70,3 +70,33 @@
     </ng-container>
   </ng-container>
 </div>
+
+<ng-template
+  #contextMenu
+>
+  <tui-data-list
+    role="menu"
+    tuiDataListDropdownManager
+    class="context-menu"
+  >
+    <button
+      tuiOption
+    >
+      Изменить
+      <tui-svg
+        class="icon"
+        src="tuiIconDraft"
+      ></tui-svg>
+    </button>
+    <button
+      tuiOption
+      class="context-delete"
+    >
+      Удалить
+      <tui-svg
+        class="icon"
+        src="tuiIconTrash"
+      ></tui-svg>
+    </button>
+  </tui-data-list>
+</ng-template>
