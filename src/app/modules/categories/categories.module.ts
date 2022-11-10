@@ -3,21 +3,24 @@ import { CommonModule } from '@angular/common';
 import { CategoriesComponent } from './categories.component';
 import { CategoriesRoutingModule } from "./categories-routing.module";
 import { CategoryListComponent } from './category-list/category-list.component';
-import { TuiBreadcrumbsModule, TuiDataListDropdownManagerModule, TuiTreeModule } from "@taiga-ui/kit";
+import { TuiBreadcrumbsModule, TuiDataListDropdownManagerModule, TuiInputModule, TuiTreeModule } from "@taiga-ui/kit";
 import {
   TuiButtonModule,
-  TuiDataListModule,
+  TuiDataListModule, TuiDialogModule,
   TuiDropdownModule,
   TuiLinkModule,
   TuiLoaderModule,
-  TuiSvgModule
+  TuiSvgModule, TuiTextfieldControllerModule
 } from "@taiga-ui/core";
 import { ApiLoadingStateModule } from "../../shared/pipes/api-loading-state/api-loading-state.module";
+import { CategoryDialogComponent } from './category-list/category-dialog/category-dialog.component';
+import { ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
     CategoriesComponent,
     CategoryListComponent,
+    CategoryDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -32,6 +35,10 @@ import { ApiLoadingStateModule } from "../../shared/pipes/api-loading-state/api-
     TuiDataListModule,
     TuiDataListDropdownManagerModule,
     TuiDropdownModule,
+    TuiDialogModule,
+    ReactiveFormsModule,
+    TuiInputModule,
+    TuiTextfieldControllerModule,
   ]
 })
 export class CategoriesModule { }

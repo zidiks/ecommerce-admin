@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, Injector, OnInit } from '@angular/core';
 import { CategoryModel } from "../../../shared/models/category.model";
 import { ApiDataModel } from "../../../shared/models/api-data.model";
 import { CategoriesService } from "../categories.service";
 import { EMPTY_ARRAY, TuiHandler } from "@taiga-ui/cdk";
 import { ApiLoadingState } from "../../../shared/enums/api-loading-state.enum";
+import { TuiDialogService } from "@taiga-ui/core";
+import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
+import { CategoryDialogComponent } from "./category-dialog/category-dialog.component";
 
 @Component({
   selector: 'app-category-list',
@@ -25,6 +28,8 @@ export class CategoryListComponent implements OnInit {
   ];
 
   constructor(
+    @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
+    @Inject(Injector) private readonly injector: Injector,
     private categoriesService: CategoriesService,
   ) { }
 
@@ -39,7 +44,20 @@ export class CategoryListComponent implements OnInit {
     })
   }
 
-  readonly handler: TuiHandler<CategoryModel, readonly CategoryModel[]> = item =>
-    item.children || EMPTY_ARRAY;
+  readonly handler: TuiHandler<CategoryModel, readonly CategoryModel[]> = item => item.children || EMPTY_ARRAY;
+
+  public showAddDialog(): void {
+    const editThemeDialog = this.dialogService.open<any>(
+      new PolymorpheusComponent(CategoryDialogComponent, this.injector)
+    );
+    editThemeDialog.subscribe({
+      next: data => {
+        console.info(`Dialog emitted data = ${data}`);
+      },
+      complete: () => {
+        console.info(`Dialog closed`);
+      },
+    });
+  }
 
 }

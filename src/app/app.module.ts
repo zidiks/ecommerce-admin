@@ -1,4 +1,4 @@
-import { TUI_SANITIZER, TuiAlertModule, TuiRootModule } from "@taiga-ui/core";
+import { TUI_SANITIZER, TuiAlertModule, TuiDialogModule, TuiRootModule } from "@taiga-ui/core";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -24,6 +24,7 @@ registerLocaleData(localeRu, 'ru');
     HttpClientModule,
     TuiRootModule,
     TuiAlertModule,
+    TuiDialogModule,
 ],
   providers: [
     {
