@@ -15,7 +15,7 @@ import { ModulesRoutingModule } from "./modules-routing.module";
 
 @NgModule({
   declarations: [
-    ModulesComponent
+    ModulesComponent,
   ],
   imports: [
     CommonModule,

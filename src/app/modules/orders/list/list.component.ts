@@ -5,7 +5,7 @@ import { OrdersService } from "../orders.service";
 import { ApiDataModel } from "../../../shared/models/api-data.model";
 
 @Component({
-  selector: 'app-list',
+  selector: 'app-category-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
   providers: [
