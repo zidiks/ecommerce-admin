@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { OrderModel } from "../../../shared/models/order.model";
 import { tuiTablePaginationOptionsProvider } from "@taiga-ui/addon-table";
 import { OrdersService } from "../orders.service";
+import { ApiDataModel } from "../../../shared/models/api-data.model";
 
 @Component({
   selector: 'app-list',
@@ -16,7 +17,7 @@ import { OrdersService } from "../orders.service";
 export class ListComponent implements OnInit {
   public page = 0;
   public size = 10;
-  public orders: OrderModel[] | null = null;
+  public ordersData: ApiDataModel<OrderModel[]>;
   public breadcrumbs = [
     {
       caption: `Главная`,
@@ -39,9 +40,9 @@ export class ListComponent implements OnInit {
   }
 
   public refreshData(): void {
-    this.orders = null;
-    this.ordersService.getOrders().subscribe((res: OrderModel[]) => {
-      this.orders = res;
+    this.ordersData = undefined;
+    this.ordersService.getOrders().subscribe((res: OrderModel[] | null) => {
+      this.ordersData = res;
     });
   }
 

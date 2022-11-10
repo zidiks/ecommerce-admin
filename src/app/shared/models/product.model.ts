@@ -1,4 +1,4 @@
-import { ProductPropertyValue } from "./product-property.model";
+import { ProductPropertyValueModel } from "./product-property.model";
 
 export interface ProductModel {
   id: string;
@@ -9,7 +9,7 @@ export interface ProductModel {
   description: string;
   categoriesIds: string[];
   productTypeId: string;
-  productProps: ProductPropertyValue[];
+  productProps: ProductPropertyValueModel[];
 }
 
 export interface ProductShortModel {

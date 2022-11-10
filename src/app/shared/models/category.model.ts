@@ -1,5 +1,3 @@
-import { ProductType } from "./product-property.model";
-
 export interface CategoryModel {
   id: string;
   name: string;
@@ -7,5 +5,5 @@ export interface CategoryModel {
   description?: string;
   media: string[];
   children?: CategoryModel[];
-  productType?: ProductType;
+  productTypeId?: string;
 }

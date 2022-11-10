@@ -119,7 +119,7 @@ export class OrdersService {
 
   constructor() { }
 
-  public getOrders(): Observable<OrderModel[]> {
+  public getOrders(): Observable<OrderModel[] | null> {
     return of(this.fakeData).pipe(delay(1000), take(1));
   }
 

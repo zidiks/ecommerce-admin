@@ -35,6 +35,7 @@
     </div>
   </div>
   <div class="content">
-
+    <span *ngIf="categoriesData | apiLoadingState">Loading...</span>
+    {{ categoriesData }}
   </div>
 </div>

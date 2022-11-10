@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { CategoryModel } from "../../../shared/models/category.model";
+import { ApiDataModel } from "../../../shared/models/api-data.model";
+import { CategoriesService } from "../categories.service";
 
 @Component({
   selector: 'app-list',
@@ -6,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
+  public categoriesData: ApiDataModel<CategoryModel[]>;
 
   public breadcrumbs = [
     {
@@ -18,9 +22,14 @@ export class ListComponent implements OnInit {
     },
   ];
 
-  constructor() { }
+  constructor(
+    private categoriesService: CategoriesService,
+  ) { }
 
   ngOnInit(): void {
+    this.categoriesService.getCategories().subscribe((res: CategoryModel[] | null) => {
+      this.categoriesData = res;
+    })
   }
 
 }

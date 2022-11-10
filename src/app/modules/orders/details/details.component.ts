@@ -4,6 +4,7 @@ import { Clipboard } from '@angular/cdk/clipboard';
 import { TuiAlertService, TuiNotification } from "@taiga-ui/core";
 import { OrderModel } from "../../../shared/models/order.model";
 import { OrdersService } from "../orders.service";
+import { ApiDataModel } from "../../../shared/models/api-data.model";
 
 @Component({
   selector: 'app-details',
@@ -13,7 +14,7 @@ import { OrdersService } from "../orders.service";
 export class DetailsComponent implements OnInit {
   public breadcrumbs;
   public orderId;
-  public orderData: OrderModel | null = null;
+  public orderData: ApiDataModel<OrderModel>;
   constructor(
     private route: ActivatedRoute,
     private clipboard: Clipboard,
@@ -47,7 +48,7 @@ export class DetailsComponent implements OnInit {
   }
 
   public refreshData(): void {
-    this.orderData = null;
+    this.orderData = undefined;
     this.orderService.getOrderById(this.orderId).subscribe((res: OrderModel | undefined) => {
       this.orderData = res || null;
     });
