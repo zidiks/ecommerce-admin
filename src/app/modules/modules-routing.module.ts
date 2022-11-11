@@ -38,6 +38,11 @@ const routes: Routes = [
         canActivate: [],
       },
       {
+        path: 'brands',
+        loadChildren: () => import('./brands/brands.module').then(m => m.BrandsModule),
+        canActivate: [],
+      },
+      {
         path: 'users',
         loadChildren: () => import('./users/users.module').then(m => m.UsersModule),
         canActivate: [RolesGuard.forRoles(Roles.Admin)],

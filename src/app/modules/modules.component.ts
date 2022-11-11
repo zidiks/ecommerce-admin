@@ -28,6 +28,11 @@ export class ModulesComponent {
       route: '/categories',
     },
     {
+      icon: 'tuiIconStar',
+      name: 'Бренды',
+      route: '/brands',
+    },
+    {
       icon: 'tuiIconComment',
       name: 'Новости',
       route: '/news',
