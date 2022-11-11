@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
 import { TuiDialogContext } from "@taiga-ui/core";
@@ -10,13 +10,13 @@ import { CategoryDialogDataModel } from "../../../../shared/models/category-dial
   templateUrl: './category-dialog.component.html',
   styleUrls: ['./category-dialog.component.scss']
 })
-export class CategoryDialogComponent implements OnInit {
+export class CategoryDialogComponent {
 
   public formGroup: FormGroup = this.formBuilder.group( {
     parent: [ this.parentData?.name || this.categoryData?.parent?.name || 'Корень каталога' ],
-    name : [ this.categoryData?.name || null, Validators.required ],
+    name : [ this.categoryData?.name, Validators.required ],
     handle : [ this.categoryData?.handle, Validators.required ],
-    description : [ this.categoryData?.description || '' ],
+    description : [ this.categoryData?.description ],
   } );
 
   constructor(
@@ -30,9 +30,6 @@ export class CategoryDialogComponent implements OnInit {
 
   get parentData(): CategoryModel | undefined {
     return this.context.data.parentData;
-  }
-
-  ngOnInit(): void {
   }
 
 }
