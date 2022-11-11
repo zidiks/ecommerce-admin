@@ -21,6 +21,7 @@
         appearance="secondary"
         icon="tuiIconPlus"
         class="tui-space_right-3"
+        (click)="showAddDialog()"
       >
       </button>
       <button
@@ -83,6 +84,7 @@
             role="menu"
             tuiDataListDropdownManager
             class="context-menu"
+            (click)="showEditDialog(item); dropdown.toggle(false)"
           >
             <button
               tuiOption

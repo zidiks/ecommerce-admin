@@ -3,7 +3,13 @@ import { CommonModule } from '@angular/common';
 import { CategoriesComponent } from './categories.component';
 import { CategoriesRoutingModule } from "./categories-routing.module";
 import { CategoryListComponent } from './category-list/category-list.component';
-import { TuiBreadcrumbsModule, TuiDataListDropdownManagerModule, TuiInputModule, TuiTreeModule } from "@taiga-ui/kit";
+import {
+  TuiBreadcrumbsModule,
+  TuiDataListDropdownManagerModule,
+  TuiInputModule,
+  TuiTextAreaModule,
+  TuiTreeModule
+} from "@taiga-ui/kit";
 import {
   TuiButtonModule,
   TuiDataListModule, TuiDialogModule,
@@ -39,6 +45,7 @@ import { ReactiveFormsModule } from "@angular/forms";
     ReactiveFormsModule,
     TuiInputModule,
     TuiTextfieldControllerModule,
+    TuiTextAreaModule,
   ]
 })
 export class CategoriesModule { }

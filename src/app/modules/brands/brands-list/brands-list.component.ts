@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, Injector, OnInit } from '@angular/core';
 import { BrandsService } from "../brands.service";
 import { tuiTablePaginationOptionsProvider } from "@taiga-ui/addon-table";
 import { ApiDataModel } from "../../../shared/models/api-data.model";
 import { BrandModel } from "../../../shared/models/brand.model";
 import { SubmitService } from "../../../shared/services/submit.service";
+import { PolymorpheusComponent } from "@tinkoff/ng-polymorpheus";
+import { TuiDialogService } from "@taiga-ui/core";
+import { BrandDialogComponent } from "./brand-dialog/brand-dialog.component";
 
 @Component({
   selector: 'app-brands-list',
@@ -33,6 +36,8 @@ export class BrandsListComponent implements OnInit {
   readonly columns = ['name', 'origin', 'description'];
 
   constructor(
+    @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
+    @Inject(Injector) private readonly injector: Injector,
     private brandsService: BrandsService,
     private submitService: SubmitService,
   ) { }
@@ -45,6 +50,41 @@ export class BrandsListComponent implements OnInit {
     this.brandsData = undefined;
     this.brandsService.getBrands().subscribe((res: BrandModel[] | null) => {
       this.brandsData = res;
+    });
+  }
+
+  public showAddDialog(): void {
+    const dialog = this.dialogService.open<null>(
+      new PolymorpheusComponent(BrandDialogComponent, this.injector),
+      {
+        label: 'Бренд',
+      }
+    );
+    dialog.subscribe({
+      next: data => {
+        console.info(`Dialog emitted data = ${data}`);
+      },
+      complete: () => {
+        console.info(`Dialog closed`);
+      },
+    });
+  }
+
+  public showEditDialog(brand: BrandModel): void {
+    const dialog = this.dialogService.open<BrandModel>(
+      new PolymorpheusComponent(BrandDialogComponent, this.injector),
+      {
+        label: 'Бренд',
+        data: brand,
+      }
+    );
+    dialog.subscribe({
+      next: data => {
+        console.info(`Dialog emitted data = ${data}`);
+      },
+      complete: () => {
+        console.info(`Dialog closed`);
+      },
     });
   }
 
