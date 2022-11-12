@@ -1,0 +1,51 @@
+<div class="types">
+  <div class="header">
+    <div class="header__title">
+      <tui-breadcrumbs  size="l">
+        <ng-container *ngFor="let item of breadcrumbs">
+          <a
+            *tuiItem
+            tuiLink
+            [routerLink]="item.routerLink"
+          >
+            {{ item.caption }}
+          </a>
+        </ng-container>
+      </tui-breadcrumbs>
+    </div>
+    <div class="header__actions">
+      <button
+        size="s"
+        tuiIconButton
+        type="button"
+        appearance="secondary"
+        icon="tuiIconPlus"
+        class="tui-space_right-3"
+      >
+      </button>
+      <button
+        size="s"
+        tuiIconButton
+        type="button"
+        appearance="secondary"
+        icon="tuiIconRefresh"
+        class="tui-space_right-3"
+        (click)="refreshData()"
+      >
+      </button>
+    </div>
+  </div>
+  <ng-container [ngSwitch]="typesData | apiLoadingStateValue">
+    <div class="content" *ngSwitchCase="apiLoadingState.Success">
+
+    </div>
+    <div class="content" *ngSwitchCase="apiLoadingState.Empty">
+      Empty data...
+    </div>
+    <ng-container *ngSwitchCase="apiLoadingState.Pending">
+      <tui-loader class="loader" size="xl">
+
+      </tui-loader>
+    </ng-container>
+  </ng-container>
+</div>
