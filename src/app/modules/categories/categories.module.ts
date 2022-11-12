@@ -4,11 +4,11 @@ import { CategoriesComponent } from './categories.component';
 import { CategoriesRoutingModule } from "./categories-routing.module";
 import { CategoryListComponent } from './category-list/category-list.component';
 import {
-  TuiBreadcrumbsModule,
-  TuiDataListDropdownManagerModule,
-  TuiInputModule,
-  TuiTextAreaModule,
-  TuiTreeModule
+    TuiBreadcrumbsModule,
+    TuiDataListDropdownManagerModule,
+    TuiInputModule, TuiSelectModule,
+    TuiTextAreaModule,
+    TuiTreeModule
 } from "@taiga-ui/kit";
 import {
   TuiButtonModule,
@@ -21,6 +21,7 @@ import {
 import { ApiLoadingStateModule } from "../../shared/pipes/api-loading-state/api-loading-state.module";
 import { CategoryDialogComponent } from './category-list/category-dialog/category-dialog.component';
 import { ReactiveFormsModule } from "@angular/forms";
+import { TuiLetModule } from "@taiga-ui/cdk";
 
 @NgModule({
   declarations: [
@@ -46,6 +47,8 @@ import { ReactiveFormsModule } from "@angular/forms";
     TuiInputModule,
     TuiTextfieldControllerModule,
     TuiTextAreaModule,
+    TuiSelectModule,
+    TuiLetModule,
   ]
 })
 export class CategoriesModule { }
