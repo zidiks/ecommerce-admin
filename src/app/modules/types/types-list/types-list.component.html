@@ -37,7 +37,23 @@
   </div>
   <ng-container [ngSwitch]="typesData | apiLoadingStateValue">
     <div class="content" *ngSwitchCase="apiLoadingState.Success">
-
+      <div class="types-list">
+        <button
+          tuiAction
+          class="no-shadow"
+          *ngFor="let item of typesData"
+        >
+          <tui-marker-icon
+            size="s"
+            src="tuiIconCode"
+            class="tui-island__marker"
+          ></tui-marker-icon>
+          <section>
+            <h3 class="header tui-text_body-s">{{ item.name }}</h3>
+            <p class="description tui-text_body-xs">Элементов: {{ item.propertiesLength }}</p>
+          </section>
+        </button>
+      </div>
     </div>
     <div class="content" *ngSwitchCase="apiLoadingState.Empty">
       Empty data...

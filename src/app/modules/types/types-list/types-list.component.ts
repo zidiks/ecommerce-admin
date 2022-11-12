@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiDataModel } from "../../../shared/models/api-data.model";
 import { ApiLoadingState } from "../../../shared/enums/api-loading-state.enum";
-import { ProductTypeModel } from "../../../shared/models/product-property.model";
+import { ProductTypePrevModel } from "../../../shared/models/product-property.model";
 import { TypesService } from "../types.service";
 
 @Component({
@@ -10,7 +10,7 @@ import { TypesService } from "../types.service";
   styleUrls: ['./types-list.component.scss']
 })
 export class TypesListComponent implements OnInit {
-  public typesData: ApiDataModel<ProductTypeModel[]>;
+  public typesData: ApiDataModel<ProductTypePrevModel[]>;
   public apiLoadingState = ApiLoadingState;
   public breadcrumbs = [
     {
@@ -33,7 +33,7 @@ export class TypesListComponent implements OnInit {
 
   public refreshData(): void {
     this.typesData = undefined;
-    this.typesService.getTypes().subscribe((res: ProductTypeModel[] | null) => {
+    this.typesService.getTypes().subscribe((res: ProductTypePrevModel[] | null) => {
       this.typesData = res || null;
     })
   }

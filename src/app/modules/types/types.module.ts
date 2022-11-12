@@ -4,7 +4,7 @@ import { TypesComponent } from './types.component';
 import { TypesRoutingModule } from "./types-routing.module";
 import { TypesListComponent } from './types-list/types-list.component';
 import { TypeDetailsComponent } from './type-details/type-details.component';
-import { TuiBreadcrumbsModule } from "@taiga-ui/kit";
+import { TuiActionModule, TuiBreadcrumbsModule, TuiMarkerIconModule } from "@taiga-ui/kit";
 import { TuiButtonModule, TuiLinkModule, TuiLoaderModule } from "@taiga-ui/core";
 import { ApiLoadingStateModule } from "../../shared/pipes/api-loading-state/api-loading-state.module";
 
@@ -15,7 +15,15 @@ import { ApiLoadingStateModule } from "../../shared/pipes/api-loading-state/api-
     TypeDetailsComponent
   ],
   imports: [
-    CommonModule, TypesRoutingModule, TuiBreadcrumbsModule, TuiLinkModule, TuiButtonModule, ApiLoadingStateModule, TuiLoaderModule,
+    CommonModule,
+    TypesRoutingModule,
+    TuiBreadcrumbsModule,
+    TuiLinkModule,
+    TuiButtonModule,
+    ApiLoadingStateModule,
+    TuiLoaderModule,
+    TuiActionModule,
+    TuiMarkerIconModule,
   ]
 })
 export class TypesModule { }
