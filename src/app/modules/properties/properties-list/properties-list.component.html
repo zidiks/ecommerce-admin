@@ -1,1 +1,155 @@
-<p>properties-list works!</p>
+<div class="properties">
+  <div class="header">
+    <div class="header__title">
+      <tui-breadcrumbs  size="l">
+        <ng-container *ngFor="let item of breadcrumbs">
+          <a
+            *tuiItem
+            tuiLink
+            [routerLink]="item.routerLink"
+          >
+            {{ item.caption }}
+          </a>
+        </ng-container>
+      </tui-breadcrumbs>
+    </div>
+    <div class="header__actions">
+      <button
+        size="s"
+        tuiIconButton
+        type="button"
+        appearance="secondary"
+        icon="tuiIconPlus"
+        class="tui-space_right-3"
+      >
+      </button>
+      <button
+        size="s"
+        tuiIconButton
+        type="button"
+        appearance="secondary"
+        icon="tuiIconRefresh"
+        class="tui-space_right-3"
+        (click)="refreshData()"
+      >
+      </button>
+    </div>
+  </div>
+  <div class="content">
+    <table
+      tuiTable
+      class="table"
+      [columns]="columns"
+    >
+      <thead>
+      <tr tuiThGroup>
+        <th
+          tuiTh
+          *tuiHead="'name'"
+        >
+          Название
+        </th>
+        <th
+          tuiTh
+          *tuiHead="'type'"
+        >
+          Тип
+        </th>
+        <th
+          tuiTh
+          *tuiHead="'showCard'"
+        >
+          Для карточек
+        </th>
+        <th
+          tuiTh
+          *tuiHead="'showFilter'"
+        >
+          Для фильтров
+        </th>
+      </tr>
+      </thead>
+      <tbody
+        *tuiLet="(propertiesData || []) | tuiTableSort as sortedData"
+        tuiTbody
+        [data]="sortedData"
+      >
+      <tr
+        *ngFor="let item of sortedData"
+        tuiTr
+        [routerLink]="'/properties/details/' + item.id"
+      >
+        <td
+          *tuiCell="'name'"
+          tuiTd
+        >
+          {{ item.name }}
+        </td>
+        <td
+          *tuiCell="'type'"
+          tuiTd
+        >
+          {{ item.type }}
+        </td>
+        <td
+          *tuiCell="'showCard'"
+          tuiTd
+        >
+          {{ item.showCard }}
+        </td>
+        <td
+          *tuiCell="'showFilter'"
+          tuiTd
+        >
+          {{ item.showFilter }}
+        </td>
+      </tr>
+      <ng-container *ngIf="propertiesData | apiLoadingState">
+        <tr
+          *ngFor="let item of [1, 2, 3]"
+          tuiTr
+        >
+          <td
+            *tuiCell="'name'"
+            tuiTd
+          >
+            <span class="tui-skeleton">***************************</span>
+          </td>
+          <td
+            *tuiCell="'type'"
+            tuiTd
+          >
+            <span class="tui-skeleton">*************</span>
+          </td>
+          <td
+            *tuiCell="'showCard'"
+            tuiTd
+          >
+            <span class="tui-skeleton">****</span>
+          </td>
+          <td
+            *tuiCell="'showFilter'"
+            tuiTd
+          >
+            <span class="tui-skeleton">****</span>
+          </td>
+        </tr>
+      </ng-container>
+      <ng-container *ngIf="propertiesData | apiLoadingState : 'Empty'">
+        <tr class="table-empty">
+          <tui-svg
+            src="tuiIconInfo"
+          ></tui-svg>
+          <span>Список пуст</span>
+        </tr>
+      </ng-container>
+
+      </tbody>
+    </table>
+    <tui-table-pagination
+      [total]="propertiesData?.length || 0"
+      [(page)]="page"
+      [(size)]="size"
+    ></tui-table-pagination>
+  </div>
+</div>

@@ -37,10 +37,9 @@ export class PropertiesService {
   }
 
   public getPropertiesByIds(ids: string[]): ProductTypePropertyModel[] {
-    const data = ids.map((id: string) => this.fakeProperties
+    return ids.map((id: string) => this.fakeProperties
       .find((item: ProductTypePropertyModel) => item.id === id))
       .filter((item: ProductTypePropertyModel | undefined) => !!item) as ProductTypePropertyModel[];
-    return data;
   }
 
   public getPropertyById(id: string): Observable<ProductTypePropertyModel | undefined> {
