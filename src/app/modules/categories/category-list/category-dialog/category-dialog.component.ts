@@ -6,7 +6,7 @@ import { CategoryModel } from "../../../../shared/models/category.model";
 import { CategoryDialogDataModel } from "../../../../shared/models/category-dialog-data.model";
 import { TypesService } from "../../../types/types.service";
 import { Observable } from "rxjs";
-import { ProductTypePrevModel } from "../../../../shared/models/product-property.model";
+import { ProductTypePrevModel } from "../../../../shared/models/type-property.model";
 import { TuiContextWithImplicit, tuiPure, TuiStringHandler } from "@taiga-ui/cdk";
 
 @Component({

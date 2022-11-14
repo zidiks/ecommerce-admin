@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiDataModel } from "../../../shared/models/api-data.model";
 import { ApiLoadingState } from "../../../shared/enums/api-loading-state.enum";
-import { ProductTypePrevModel } from "../../../shared/models/product-property.model";
+import { ProductTypePrevModel } from "../../../shared/models/type-property.model";
 import { TypesService } from "../types.service";
 
 @Component({

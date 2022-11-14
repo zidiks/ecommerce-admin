@@ -6,6 +6,12 @@ export interface ProductTypeModel {
   properties: ProductTypePropertyModel[];
 }
 
+export interface ProductTypeBaseModel {
+  id: string;
+  name: string;
+  properties: string[];
+}
+
 export interface ProductTypePrevModel {
   id: string;
   name: string;
@@ -17,6 +23,7 @@ export interface ProductTypePropertyModel {
   showCard: boolean;
   showFilter: boolean;
   name: string;
+  description?: string;
   type: ProductTypePropertyType;
   options?: ProductTypePropertyOptionModel[];
 }

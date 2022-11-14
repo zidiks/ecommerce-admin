@@ -38,6 +38,11 @@ export class ModulesComponent {
       route: '/news',
     },
     {
+      icon: 'tuiIconFilter',
+      name: 'Свойства',
+      route: '/properties',
+    },
+    {
       icon: 'tuiIconCode',
       name: 'Сущности',
       route: '/types',

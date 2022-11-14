@@ -43,6 +43,11 @@ const routes: Routes = [
         canActivate: [],
       },
       {
+        path: 'properties',
+        loadChildren: () => import('./properties/properties.module').then(m => m.PropertiesModule),
+        canActivate: [],
+      },
+      {
         path: 'users',
         loadChildren: () => import('./users/users.module').then(m => m.UsersModule),
         canActivate: [RolesGuard.forRoles(Roles.Admin)],
