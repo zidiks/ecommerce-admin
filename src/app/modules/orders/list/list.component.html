@@ -170,6 +170,7 @@
       </tbody>
     </table>
     <tui-table-pagination
+      *ngIf="ordersData | apiLoadingState : 'Success'"
       [total]="ordersData?.length || 0"
       [(page)]="page"
       [(size)]="size"

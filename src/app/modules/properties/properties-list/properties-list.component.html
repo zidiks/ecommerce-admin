@@ -83,25 +83,49 @@
           *tuiCell="'name'"
           tuiTd
         >
-          {{ item.name }}
+          <span tuiHintAppearance="onDark" tuiHintDirection="top-right" [tuiHint]="item.description">{{ item.name }}</span>
         </td>
         <td
           *tuiCell="'type'"
           tuiTd
         >
-          {{ item.type }}
+          <tui-badge
+            tuiHintAppearance="onDark"
+            tuiHintDirection="top"
+            *ngIf="item.type | productProperty as productPropData else errorBadge"
+            [tuiHint]="productPropData.description"
+            [style.background-color]="'var(--tui-support-' + productPropData.color + ')'"
+            status="custom"
+            [value]="productPropData.name"
+          ></tui-badge>
+          <ng-template  #errorBadge>
+            <tui-badge
+              status="error"
+              value="Неизвестно"
+            ></tui-badge>
+          </ng-template>
         </td>
         <td
           *tuiCell="'showCard'"
           tuiTd
         >
-          {{ item.showCard }}
+          <tui-marker-icon
+            new
+            [mode]="item.showCard ? 'success' : 'error'"
+            size="xxs"
+            [src]="item.showCard ? 'tuiIconCheckLarge' : 'tuiIconCloseLarge'"
+          ></tui-marker-icon>
         </td>
         <td
           *tuiCell="'showFilter'"
           tuiTd
         >
-          {{ item.showFilter }}
+          <tui-marker-icon
+            new
+            [mode]="item.showFilter ? 'success' : 'error'"
+            size="xxs"
+            [src]="item.showFilter ? 'tuiIconCheckLarge' : 'tuiIconCloseLarge'"
+          ></tui-marker-icon>
         </td>
       </tr>
       <ng-container *ngIf="propertiesData | apiLoadingState">
@@ -147,6 +171,7 @@
       </tbody>
     </table>
     <tui-table-pagination
+      *ngIf="propertiesData | apiLoadingState : 'Success'"
       [total]="propertiesData?.length || 0"
       [(page)]="page"
       [(size)]="size"

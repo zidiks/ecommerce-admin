@@ -10,7 +10,7 @@ export class PropertiesService {
   public fakeProperties: ProductTypePropertyModel[] = [
     {
       id: 'd97da77c-29af-44a0-ab3a-9611faf91635',
-      showCard: true,
+      showCard: false,
       showFilter: true,
       name: 'Тип',
       description: 'Тип парфюмерного продукта',
@@ -27,6 +27,14 @@ export class PropertiesService {
           value: 'perfume',
         }
       ],
+    },
+    {
+      id: 'd97da77c-29af-44a0-ab3a-9611faf91635',
+      showCard: true,
+      showFilter: true,
+      name: 'Цвет',
+      description: 'Цвет продукта',
+      type: ProductTypePropertyType.Color,
     }
   ];
 

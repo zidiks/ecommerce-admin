@@ -5,4 +5,5 @@ export enum ProductTypePropertyType {
   NumberInput,
   NumberSelect,
   CheckBox,
+  Color,
 }

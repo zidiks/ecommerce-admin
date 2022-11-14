@@ -167,6 +167,7 @@
       </tbody>
     </table>
     <tui-table-pagination
+      *ngIf="brandsData | apiLoadingState : 'Success'"
       [total]="brandsData?.length || 0"
       [(page)]="page"
       [(size)]="size"
