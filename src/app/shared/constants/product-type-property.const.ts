@@ -5,10 +5,12 @@ export const productsTypesPropertiesData: Record<ProductTypePropertyType, Produc
   [ProductTypePropertyType.StringMultiSelect]: {
     name: 'Множественный строковый выбор',
     description: 'Можно задать для свойства несколько строковых значений из заранее созданного списка',
+    options: true,
   },
   [ProductTypePropertyType.StringSelect]: {
     name: 'Строковый выбор',
     description: 'Можно задать для свойства одно строковое значение из заранее созданного списка',
+    options: true,
   },
   [ProductTypePropertyType.StringInput]: {
     name: 'Произвольная строка',
@@ -21,6 +23,7 @@ export const productsTypesPropertiesData: Record<ProductTypePropertyType, Produc
   [ProductTypePropertyType.NumberSelect]: {
     name: 'Числовой выбор',
     description: 'Можно задать для свойства одно числовое значение из заранее созданного списка',
+    options: true,
   },
   [ProductTypePropertyType.CheckBox]: {
     name: 'Флаг',

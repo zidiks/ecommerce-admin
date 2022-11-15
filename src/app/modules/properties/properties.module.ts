@@ -6,8 +6,8 @@ import { PropertiesListComponent } from './properties-list/properties-list.compo
 import { PropertiesDetailsComponent } from './properties-details/properties-details.component';
 import {
   TuiBadgeModule,
-  TuiBreadcrumbsModule,
-  TuiInputModule,
+  TuiBreadcrumbsModule, TuiCheckboxLabeledModule,
+  TuiInputModule, TuiInputTagModule,
   TuiMarkerIconModule, TuiSelectModule,
   TuiTextAreaModule
 } from "@taiga-ui/kit";
@@ -30,28 +30,30 @@ import { ReactiveFormsModule } from "@angular/forms";
     PropertiesListComponent,
     PropertiesDetailsComponent
   ],
-  imports: [
-    CommonModule,
-    PropertiesRoutingModule,
-    TuiBreadcrumbsModule,
-    TuiButtonModule,
-    TuiLinkModule,
-    TuiTableModule,
-    TuiLetModule,
-    ApiLoadingStateModule,
-    TuiSvgModule,
-    TuiTablePaginationModule,
-    TuiMarkerIconModule,
-    ProductPropertyModule,
-    TuiBadgeModule,
-    TuiHintModule,
-    ReactiveFormsModule,
-    TuiInputModule,
-    TuiTextAreaModule,
-    TuiSelectModule,
-    TuiTextfieldControllerModule,
-    TuiDataListModule,
-    TuiLoaderModule,
-  ]
+    imports: [
+        CommonModule,
+        PropertiesRoutingModule,
+        TuiBreadcrumbsModule,
+        TuiButtonModule,
+        TuiLinkModule,
+        TuiTableModule,
+        TuiLetModule,
+        ApiLoadingStateModule,
+        TuiSvgModule,
+        TuiTablePaginationModule,
+        TuiMarkerIconModule,
+        ProductPropertyModule,
+        TuiBadgeModule,
+        TuiHintModule,
+        ReactiveFormsModule,
+        TuiInputModule,
+        TuiTextAreaModule,
+        TuiSelectModule,
+        TuiTextfieldControllerModule,
+        TuiDataListModule,
+        TuiLoaderModule,
+        TuiCheckboxLabeledModule,
+        TuiInputTagModule,
+    ]
 })
 export class PropertiesModule { }

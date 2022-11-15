@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { AbstractControl, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { TuiContextWithImplicit, tuiPure, TuiStringHandler } from "@taiga-ui/cdk";
 import {
   ProductTypePropertyDataModel,
@@ -25,7 +25,7 @@ export class PropertiesDetailsComponent implements OnInit {
     showCard: [false],
     showFilter: [false],
     type: [null, Validators.required],
-    options:this.formBuilder.array([]),
+    options: [],
   });
 
   constructor(
@@ -43,14 +43,17 @@ export class PropertiesDetailsComponent implements OnInit {
         routerLink: `/properties`,
       },
       {
-        caption: `Детали`,
+        caption: `${!this.propertyId ? 'Новое свойство' : 'Детали'}`,
         routerLink: `/properties/${this.propertyId}`,
       }
     ];
   }
 
   ngOnInit(): void {
+    this.formGroup.valueChanges.subscribe(res => console.log(res));
   }
+
+  public get f(): { [key: string]: AbstractControl; } { return this.formGroup.controls; }
 
   private get productTypePropertyTypes(): ProductTypePropertyItemModel[] {
     return Object.entries(productsTypesPropertiesData).map(([key, value]: [string, ProductTypePropertyDataModel]) => {

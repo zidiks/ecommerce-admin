@@ -12,6 +12,10 @@ const routes: Routes = [
         component: PropertiesListComponent,
       },
       {
+        path: 'new',
+        component: PropertiesDetailsComponent,
+      },
+      {
         path: 'details/:id',
         component: PropertiesDetailsComponent,
       },

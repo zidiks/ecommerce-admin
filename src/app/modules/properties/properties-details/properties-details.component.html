@@ -16,6 +16,17 @@
     <div class="header__actions">
       <button
         size="s"
+        tuiButton
+        type="button"
+        appearance="secondary"
+        icon="tuiIconCheck"
+        class="tui-space_right-3"
+      >
+        {{ !propertyId ? 'Добавить' : 'Сохранить' }}
+      </button>
+      <button
+        *ngIf="propertyId"
+        size="s"
         tuiIconButton
         type="button"
         appearance="secondary"
@@ -72,9 +83,31 @@
             Описание
           </tui-text-area>
         </div>
+        <div class="tui-form__row tui-form__row_checkboxes tui-space_bottom-2">
+          <tui-checkbox-labeled
+            formControlName="showCard"
+            size="l"
+            class="tui-form__checkbox"
+          >
+            Отображать в карточках товаров
+          </tui-checkbox-labeled>
+          <tui-checkbox-labeled
+            formControlName="showFilter"
+            size="l"
+            class="tui-form__checkbox"
+          >
+            Отображать в фильтрах подбора
+          </tui-checkbox-labeled>
+        </div>
     </div>
-    <div class="content">
-        <h3 class="tui-form__header tui-form__header_margin-top_none">Значения</h3>
+    <div class="content" *ngIf="(f['type']?.valueChanges | async | productProperty)?.options">
+        <h3 class="tui-form__header tui-form__header_margin-top_none">Значения свойства</h3>
+        <tui-input-tag
+          formControlName="options"
+          [tuiTextfieldLabelOutside]="true"
+        >
+          Введите возможные значения
+        </tui-input-tag>
     </div>
   </form>
 </div>
