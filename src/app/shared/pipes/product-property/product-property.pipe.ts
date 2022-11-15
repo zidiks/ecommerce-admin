@@ -9,8 +9,8 @@ import { productsTypesPropertiesData } from "../../constants/product-type-proper
 export class ProductPropertyPipe implements PipeTransform {
 
   transform(value: string): ProductTypePropertyDataModel | undefined {
-    if (Object.values(ProductTypePropertyType).includes(value)) {
-      return productsTypesPropertiesData[value];
+    if (Object.values(ProductTypePropertyType).includes(value as ProductTypePropertyType)) {
+      return productsTypesPropertiesData[value as ProductTypePropertyType];
     }
     return undefined;
   }

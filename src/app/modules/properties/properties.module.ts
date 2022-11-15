@@ -8,10 +8,16 @@ import {
   TuiBadgeModule,
   TuiBreadcrumbsModule,
   TuiInputModule,
-  TuiMarkerIconModule,
+  TuiMarkerIconModule, TuiSelectModule,
   TuiTextAreaModule
 } from "@taiga-ui/kit";
-import { TuiButtonModule, TuiHintModule, TuiLinkModule, TuiSvgModule } from "@taiga-ui/core";
+import {
+  TuiButtonModule, TuiDataListModule,
+  TuiHintModule,
+  TuiLinkModule, TuiLoaderModule,
+  TuiSvgModule,
+  TuiTextfieldControllerModule
+} from "@taiga-ui/core";
 import { TuiTableModule, TuiTablePaginationModule } from "@taiga-ui/addon-table";
 import { TuiLetModule } from "@taiga-ui/cdk";
 import { ApiLoadingStateModule } from "../../shared/pipes/api-loading-state/api-loading-state.module";
@@ -42,6 +48,10 @@ import { ReactiveFormsModule } from "@angular/forms";
     ReactiveFormsModule,
     TuiInputModule,
     TuiTextAreaModule,
+    TuiSelectModule,
+    TuiTextfieldControllerModule,
+    TuiDataListModule,
+    TuiLoaderModule,
   ]
 })
 export class PropertiesModule { }

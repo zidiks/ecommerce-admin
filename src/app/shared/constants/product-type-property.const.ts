@@ -1,7 +1,7 @@
 import { ProductTypePropertyType } from "../enums/product-property.enum";
 import { ProductTypePropertyDataModel } from "../models/product-type-property-data.model";
 
-export const productsTypesPropertiesData: Record<string, ProductTypePropertyDataModel> = {
+export const productsTypesPropertiesData: Record<ProductTypePropertyType, ProductTypePropertyDataModel> = {
   [ProductTypePropertyType.StringMultiSelect]: {
     name: 'Множественный строковый выбор',
     description: 'Можно задать для продукта несколько строковых значений из заранее созданного списка',

@@ -37,11 +37,31 @@
             </tui-input>
           </div>
           <div class="tui-form__multi-field">
-            <tui-input
-              formControlName="description"
+            <tui-select
+              *tuiLet="typesList as items"
+              [valueContent]="items ? stringify(items) : loading"
+              formControlName="type"
+              [tuiTextfieldLabelOutside]="!items?.length"
             >
-              Описание
-            </tui-input>
+              Сущность
+              <ng-template tuiDataList>
+                <tui-data-list *ngIf="items?.length; else loading">
+                  <button
+                    [tuiHint]="item.description"
+                    tuiHintAppearance="onDark"
+                    tuiHintDirection="left"
+                    *ngFor="let item of items"
+                    tuiOption
+                    [value]="item.key"
+                  >
+                    {{ item.name }}
+                  </button>
+                </tui-data-list>
+              </ng-template>
+              <ng-template #loading>
+                <tui-loader size="m" class="tui-space_vertical-3 loader"></tui-loader>
+              </ng-template>
+            </tui-select>
           </div>
         </div>
         <div class="tui-form__row">
