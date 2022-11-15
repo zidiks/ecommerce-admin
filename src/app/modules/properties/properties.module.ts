@@ -4,12 +4,19 @@ import { PropertiesComponent } from './properties.component';
 import { PropertiesRoutingModule } from "./properties-routing.module";
 import { PropertiesListComponent } from './properties-list/properties-list.component';
 import { PropertiesDetailsComponent } from './properties-details/properties-details.component';
-import { TuiBadgeModule, TuiBreadcrumbsModule, TuiMarkerIconModule } from "@taiga-ui/kit";
+import {
+  TuiBadgeModule,
+  TuiBreadcrumbsModule,
+  TuiInputModule,
+  TuiMarkerIconModule,
+  TuiTextAreaModule
+} from "@taiga-ui/kit";
 import { TuiButtonModule, TuiHintModule, TuiLinkModule, TuiSvgModule } from "@taiga-ui/core";
 import { TuiTableModule, TuiTablePaginationModule } from "@taiga-ui/addon-table";
 import { TuiLetModule } from "@taiga-ui/cdk";
 import { ApiLoadingStateModule } from "../../shared/pipes/api-loading-state/api-loading-state.module";
 import { ProductPropertyModule } from "../../shared/pipes/product-property/product-property.module";
+import { ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -32,6 +39,9 @@ import { ProductPropertyModule } from "../../shared/pipes/product-property/produ
     ProductPropertyModule,
     TuiBadgeModule,
     TuiHintModule,
+    ReactiveFormsModule,
+    TuiInputModule,
+    TuiTextAreaModule,
   ]
 })
 export class PropertiesModule { }

@@ -25,7 +25,36 @@
       </button>
     </div>
   </div>
-  <div class="content">
-    Здесь будет что-то...
-  </div>
+  <form [formGroup]="formGroup">
+    <div class="content">
+        <h3 class="tui-form__header tui-form__header_margin-top_none">Общее</h3>
+        <div class="tui-form__row tui-form__row_multi-fields">
+          <div class="tui-form__multi-field">
+            <tui-input
+              formControlName="name"
+            >
+              Название
+            </tui-input>
+          </div>
+          <div class="tui-form__multi-field">
+            <tui-input
+              formControlName="description"
+            >
+              Описание
+            </tui-input>
+          </div>
+        </div>
+        <div class="tui-form__row">
+          <tui-text-area
+            formControlName="description"
+            [expandable]="true"
+          >
+            Описание
+          </tui-text-area>
+        </div>
+    </div>
+    <div class="content">
+        <h3 class="tui-form__header tui-form__header_margin-top_none">Значения</h3>
+    </div>
+  </form>
 </div>

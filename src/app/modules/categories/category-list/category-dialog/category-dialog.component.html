@@ -32,10 +32,11 @@
         *tuiLet="typesList | async as items"
         [valueContent]="items ? stringify(items) : loading"
         formControlName="type"
+        [tuiTextfieldLabelOutside]="!items?.length"
       >
         Сущность
         <ng-template tuiDataList>
-          <tui-data-list *ngIf="items; else loading">
+          <tui-data-list *ngIf="items?.length; else loading">
             <button
               *ngFor="let item of items"
               tuiOption
@@ -46,7 +47,7 @@
           </tui-data-list>
         </ng-template>
         <ng-template #loading>
-          <tui-loader class="tui-space_vertical-3 loader"></tui-loader>
+          <tui-loader size="m" class="tui-space_vertical-3 loader"></tui-loader>
         </ng-template>
       </tui-select>
       <tui-text-area

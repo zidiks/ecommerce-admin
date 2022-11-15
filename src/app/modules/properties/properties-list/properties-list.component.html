@@ -94,10 +94,11 @@
             tuiHintDirection="top"
             *ngIf="item.type | productProperty as productPropData else errorBadge"
             [tuiHint]="productPropData.description"
-            [style.background-color]="'var(--tui-support-' + productPropData.color + ')'"
-            status="custom"
+            status="info"
             [value]="productPropData.name"
-          ></tui-badge>
+          >
+            <tui-svg src="tuiIconTooltip"></tui-svg>
+          </tui-badge>
           <ng-template  #errorBadge>
             <tui-badge
               status="error"
