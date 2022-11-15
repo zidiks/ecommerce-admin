@@ -21,7 +21,7 @@ export class PropertiesService {
       ],
     },
     {
-      id: 'd97da77c-29af-44a0-ab3a-9611faf91635',
+      id: '9ea66bad-9f65-4ae0-ac16-2fc89e143379',
       showCard: true,
       showFilter: true,
       name: 'Цвет',

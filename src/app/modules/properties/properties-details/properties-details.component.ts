@@ -80,7 +80,7 @@ export class PropertiesDetailsComponent implements OnInit {
   }
 
   public tagWordsValidator(tag: string): boolean {
-    return !/\d/.test(tag);
+    return true;
   }
 
   public ngOnInit(): void {
