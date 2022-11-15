@@ -16,16 +16,8 @@ export class PropertiesService {
       description: 'Тип парфюмерного продукта',
       type: ProductTypePropertyType.StringSelect,
       options: [
-        {
-          id: '6afd89d8-d8bb-41be-87d1-6d22a26b1d99',
-          label: 'Дезодорант',
-          value: 'deodorant',
-        },
-        {
-          id: '69185e69-b943-46d8-b15c-04a6546a27d7',
-          label: 'Духи',
-          value: 'perfume',
-        }
+        'Дезодорант',
+        'Духи',
       ],
     },
     {

@@ -25,21 +25,14 @@ export interface ProductTypePropertyModel {
   name: string;
   description?: string;
   type: ProductTypePropertyType;
-  options?: ProductTypePropertyOptionModel[];
+  options?: (string | number)[];
 }
 
 export interface ProductPropertyValueModel {
   id: string;
   name: string;
   type: ProductTypePropertyType;
-  InternalValue?: string | number | boolean;
-  ExternalValue?: ProductTypePropertyOptionModel[];
-}
-
-export interface ProductTypePropertyOptionModel {
-  id: string;
-  label?: string;
-  value: string | number;
+  value?: string | number | boolean;
 }
 
 
