@@ -1,7 +1,7 @@
 import { CustomerModel } from "./customer.model";
 import { OrderHistory } from "../enums/order-history.enum";
 import { StateColor } from "../enums/state-colors.enum";
-import { ProductShortModel } from "./product.model";
+import { ProductPrevModel } from "./product.model";
 
 export interface OrderModel {
   id: string;
@@ -32,7 +32,7 @@ export interface OrderHistoryItem {
   type: OrderHistory,
   details?: string;
   time: number;
-  products?: ProductShortModel[];
+  products?: ProductPrevModel[];
 }
 
 export interface PaymentMethod {
@@ -43,7 +43,7 @@ export interface PaymentMethod {
 }
 
 export interface CartItem {
-  product: ProductShortModel;
+  product: ProductPrevModel;
   count: number;
   discount: number;
 }

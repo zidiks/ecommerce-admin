@@ -1,5 +1,3 @@
-import { ProductPropertyValueModel } from "./type-property.model";
-
 export interface ProductModel {
   id: string;
   name: string;
@@ -9,14 +7,19 @@ export interface ProductModel {
   description: string;
   categoriesIds: string[];
   productTypeId: string;
-  productProps: ProductPropertyValueModel[];
+  productProps: {
+    productTypePropertyId: string;
+    value: string | string[] | number | boolean;
+  }[];
 }
 
-export interface ProductShortModel {
+export interface ProductPrevModel {
+  id: string;
   name: string;
   media: string[];
   price: number;
   brand: Brand;
+  description?: string;
 }
 
 export interface Brand {

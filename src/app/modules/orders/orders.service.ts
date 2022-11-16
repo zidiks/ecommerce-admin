@@ -44,6 +44,7 @@ export class OrdersService {
       cartItems: [
         {
           product: {
+            id: '5aac8609-4f22-48e4-b8ce-3652fbb59e42',
             name: 'Игровой монитор Xiaomi Mi Curved Gaming Monitor 34 XMMNTWQ34 (китайская версия)',
             media: [
               'https://content2.onliner.by/catalog/device/main@2/04dc2028bcdec4ec68e7104727a6417f.jpeg',
@@ -62,6 +63,7 @@ export class OrdersService {
         },
         {
           product: {
+            id: 'ff27bf4c-09ee-40ad-9a6d-bf997c1a5aea',
             name: 'Видеокарта ASUS TUF Gaming GeForce RTX 3080 Ti OC Edition 12GB GDDR6X',
             media: [
               'https://content2.onliner.by/catalog/device/main/326b60046da9ccc7af88ab178aa7f165.jpeg',
