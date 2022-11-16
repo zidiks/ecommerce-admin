@@ -3,6 +3,7 @@ import { ProductTypePropertyType } from "../enums/product-property.enum";
 export interface ProductTypeModel {
   id: string;
   name: string;
+  description?: string;
   properties: ProductTypePropertyModel[];
 }
 
@@ -15,6 +16,7 @@ export interface ProductTypeBaseModel {
 export interface ProductTypePrevModel {
   id: string;
   name: string;
+  description?: string;
   propertiesLength: number;
 }
 

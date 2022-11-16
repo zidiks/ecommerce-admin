@@ -1,8 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, Injector, OnInit } from '@angular/core';
 import { ApiDataModel } from "../../../shared/models/api-data.model";
 import { ApiLoadingState } from "../../../shared/enums/api-loading-state.enum";
-import { ProductTypePrevModel } from "../../../shared/models/type-property.model";
+import { ProductTypeModel, ProductTypePrevModel } from "../../../shared/models/type-property.model";
 import { TypesService } from "../types.service";
+import { PolymorpheusComponent } from "@tinkoff/ng-polymorpheus";
+import { TuiDialogService } from "@taiga-ui/core";
+import { SubmitService } from "../../../shared/services/submit.service";
+import { TypesDialogComponent } from "./types-dialog/types-dialog.component";
 
 @Component({
   selector: 'app-types-list',
@@ -24,7 +28,10 @@ export class TypesListComponent implements OnInit {
   ];
 
   constructor(
+    @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
+    @Inject(Injector) private readonly injector: Injector,
     private typesService: TypesService,
+    private submitService: SubmitService,
   ) { }
 
   ngOnInit(): void {
@@ -35,6 +42,51 @@ export class TypesListComponent implements OnInit {
     this.typesData = undefined;
     this.typesService.getTypes().subscribe((res: ProductTypePrevModel[] | null) => {
       this.typesData = res || null;
+    })
+  }
+
+  public showAddDialog(): void {
+    const dialog = this.dialogService.open<null>(
+      new PolymorpheusComponent(TypesDialogComponent, this.injector),
+      {
+        label: 'Сущность',
+      }
+    );
+    dialog.subscribe({
+      next: data => {
+        console.info(`Dialog emitted data = ${data}`);
+      },
+      complete: () => {
+        console.info(`Dialog closed`);
+      },
+    });
+  }
+
+  public showEditDialog(type: ProductTypePrevModel): void {
+    const dialog = this.dialogService.open<ProductTypeModel>(
+      new PolymorpheusComponent(TypesDialogComponent, this.injector),
+      {
+        label: 'Сущность',
+        data: type,
+      }
+    );
+    dialog.subscribe({
+      next: data => {
+        console.info(`Dialog emitted data = ${data}`);
+      },
+      complete: () => {
+        console.info(`Dialog closed`);
+      },
+    });
+  }
+
+  showDeleteDialog(id: string, title: string): void {
+    this.submitService.submitDialog('Удалить', `Вы действительно хотите удалить сущность: ${title}?`).subscribe({
+      next: (res) => {
+        if (res) {
+          console.log('Delete type with id', id);
+        }
+      },
     })
   }
 

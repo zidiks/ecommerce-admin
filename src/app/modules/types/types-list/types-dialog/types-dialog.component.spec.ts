@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TypeDetailsComponent } from './type-details.component';
+import { TypesDialogComponent } from './types-dialog.component';
 
-describe('TypeDetailsComponent', () => {
-  let component: TypeDetailsComponent;
-  let fixture: ComponentFixture<TypeDetailsComponent>;
+describe('TypesDialogComponent', () => {
+  let component: TypesDialogComponent;
+  let fixture: ComponentFixture<TypesDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TypeDetailsComponent ]
+      declarations: [ TypesDialogComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TypeDetailsComponent);
+    fixture = TestBed.createComponent(TypesDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

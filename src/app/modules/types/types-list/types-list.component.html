@@ -21,6 +21,7 @@
         appearance="secondary"
         icon="tuiIconPlus"
         class="tui-space_right-3"
+        (click)="showAddDialog()"
       >
       </button>
       <button
@@ -38,21 +39,55 @@
   <ng-container [ngSwitch]="typesData | apiLoadingStateValue">
     <div class="content" *ngSwitchCase="apiLoadingState.Success">
       <div class="types-list">
-        <button
-          tuiAction
-          class="no-shadow"
-          *ngFor="let item of typesData"
-        >
-          <tui-marker-icon
-            size="s"
-            src="tuiIconCode"
-            class="tui-island__marker"
-          ></tui-marker-icon>
-          <section>
-            <h3 class="header tui-text_body-s">{{ item.name }}</h3>
-            <p class="description tui-text_body-xs">Элементов: {{ item.propertiesLength }}</p>
-          </section>
-        </button>
+          <button
+            tuiAction
+            *ngFor="let item of typesData"
+            class="no-shadow"
+            #dropdown="tuiDropdown"
+            tuiDropdownContext
+            [tuiDropdown]="contextMenu"
+          >
+            <ng-template
+              #contextMenu
+            >
+              <tui-data-list
+                role="menu"
+                tuiDataListDropdownManager
+                class="context-menu"
+                (click)="showEditDialog(item); dropdown.toggle(false)"
+              >
+                <button
+                  tuiOption
+                >
+                  Изменить
+                  <tui-svg
+                    class="icon"
+                    src="tuiIconDraft"
+                  ></tui-svg>
+                </button>
+                <button
+                  tuiOption
+                  class="context-delete"
+                  (click)="showDeleteDialog(item.id, item.name); dropdown.toggle(false)"
+                >
+                  Удалить
+                  <tui-svg
+                    class="icon"
+                    src="tuiIconTrash"
+                  ></tui-svg>
+                </button>
+              </tui-data-list>
+            </ng-template>
+            <tui-marker-icon
+              size="s"
+              src="tuiIconCode"
+              class="tui-island__marker"
+            ></tui-marker-icon>
+            <section>
+              <h3 class="header tui-text_body-s">{{ item.name }}</h3>
+              <p class="description tui-text_body-xs">Элементов: {{ item.propertiesLength }}</p>
+            </section>
+          </button>
       </div>
     </div>
     <div class="content" *ngSwitchCase="apiLoadingState.Empty">
