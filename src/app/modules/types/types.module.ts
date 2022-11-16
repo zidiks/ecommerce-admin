@@ -5,9 +5,11 @@ import { TypesRoutingModule } from "./types-routing.module";
 import { TypesListComponent } from './types-list/types-list.component';
 import {
   TuiActionModule,
-  TuiBreadcrumbsModule, TuiDataListDropdownManagerModule,
+  TuiBreadcrumbsModule,
+  TuiDataListDropdownManagerModule, TuiDataListWrapperModule,
   TuiInputModule,
   TuiMarkerIconModule,
+  TuiMultiSelectModule,
   TuiTextAreaModule
 } from "@taiga-ui/kit";
 import {
@@ -20,6 +22,7 @@ import {
 import { ApiLoadingStateModule } from "../../shared/pipes/api-loading-state/api-loading-state.module";
 import { TypesDialogComponent } from './types-list/types-dialog/types-dialog.component';
 import { ReactiveFormsModule } from "@angular/forms";
+import { TuiLetModule } from "@taiga-ui/cdk";
 
 @NgModule({
   declarations: [
@@ -45,6 +48,9 @@ import { ReactiveFormsModule } from "@angular/forms";
     TuiDropdownModule,
     TuiSvgModule,
     TuiDataListModule,
+    TuiMultiSelectModule,
+    TuiDataListWrapperModule,
+    TuiLetModule,
   ]
 })
 export class TypesModule { }

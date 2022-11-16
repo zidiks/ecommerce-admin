@@ -1,5 +1,6 @@
 <tui-loader
-  [showLoader]="typesData | apiLoadingState"
+  *tuiLet="propertiesData$ | async as propertiesData"
+  [showLoader]="[typesData, propertiesData] | apiLoadingState : 'Pending' : true"
   [overlay]="true"
   size="xl"
 >
@@ -12,6 +13,23 @@
       >
         Название
       </tui-input>
+      <tui-multi-select
+        tuiTextfieldSize="m"
+        [tuiTextfieldLabelOutside]="true"
+        *tuiLet="items$ | async as items"
+        class="tui-space_top-3 tui-space_bottom-5"
+        formControlName="properties"
+        [stringify]="(stringify$ | async)!"
+        (searchChange)="onSearch($event)"
+      >
+        Свойства
+        <tui-data-list-wrapper
+          *tuiDataList
+          tuiMultiSelectGroup
+          [items]="items"
+          [itemContent]="(stringify$ | async)!"
+        ></tui-data-list-wrapper>
+      </tui-multi-select>
       <tui-text-area
         tuiTextfieldSize="m"
         class="tui-space_top-3 tui-space_bottom-5"
