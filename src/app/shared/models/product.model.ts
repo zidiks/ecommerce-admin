@@ -25,6 +25,6 @@ export interface ProductPrevModel {
 export interface Brand {
   id: string;
   name: string;
-  description: string;
+  description?: string;
   origin: string;
 }

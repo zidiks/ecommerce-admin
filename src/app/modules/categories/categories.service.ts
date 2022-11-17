@@ -43,6 +43,13 @@ export class CategoriesService {
           ],
         }
       ],
+    },
+    {
+      id: '77d13a08-917f-4e6d-882d-c132c4fc6520',
+      name: 'Видеокарты',
+      handle: 'gpu',
+      media: [],
+      productTypeId: 'd74a7db7-941f-4121-83f9-2db86710c523',
     }
   ];
 

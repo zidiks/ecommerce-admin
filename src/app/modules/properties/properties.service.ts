@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ProductTypePropertyModel } from "../../shared/models/type-property.model";
 import { ProductTypePropertyType } from "../../shared/enums/product-property.enum";
-import { delay, Observable, of, take } from "rxjs";
+import { delay, Observable, of } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +33,7 @@ export class PropertiesService {
   constructor() { }
 
   public getProperties(): Observable<ProductTypePropertyModel[]> {
-    return of(this.fakeProperties).pipe(delay(1000), take(1));
+    return of(this.fakeProperties).pipe(delay(1000));
   }
 
   public getPropertiesByIds(ids: string[]): ProductTypePropertyModel[] {
@@ -44,6 +44,6 @@ export class PropertiesService {
 
   public getPropertyById(id: string): Observable<ProductTypePropertyModel | undefined> {
     const data = this.fakeProperties.find((item: ProductTypePropertyModel) => item.id === id);
-    return of(data).pipe(delay(1000), take(1));
+    return of(data).pipe(delay(1000));
   }
 }

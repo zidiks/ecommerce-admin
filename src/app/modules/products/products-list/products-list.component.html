@@ -1,7 +1,7 @@
-<div class="properties">
+<div class="products">
   <div class="header">
     <div class="header__title">
-      <tui-breadcrumbs  size="l">
+      <tui-breadcrumbs size="l">
         <ng-container *ngFor="let item of breadcrumbs">
           <a
             *tuiItem
@@ -21,7 +21,7 @@
         appearance="secondary"
         icon="tuiIconPlus"
         class="tui-space_right-3"
-        routerLink="/properties/new"
+        routerLink="/products/new"
       >
       </button>
       <button
@@ -46,91 +46,66 @@
       <tr tuiThGroup>
         <th
           tuiTh
+          *tuiHead="'media'"
+          [sorter]="null"
+        >
+        </th>
+        <th
+          tuiTh
           *tuiHead="'name'"
         >
           Название
         </th>
         <th
           tuiTh
-          *tuiHead="'type'"
+          *tuiHead="'price'"
         >
-          Тип
+          Цена
         </th>
         <th
           tuiTh
-          *tuiHead="'showCard'"
+          *tuiHead="'brand'"
         >
-          Для карточек
-        </th>
-        <th
-          tuiTh
-          *tuiHead="'showFilter'"
-        >
-          Для фильтров
+          Бренд
         </th>
       </tr>
       </thead>
       <tbody
-        *tuiLet="(propertiesData || []) | tuiTableSort as sortedData"
+        *tuiLet="(productsData || []) | tuiTableSort as sortedData"
         tuiTbody
         [data]="sortedData"
       >
       <tr
         *ngFor="let item of sortedData"
         tuiTr
-        [routerLink]="'/properties/details/' + item.id"
+        [routerLink]="'/products/details/' + item.id"
       >
+        <td
+          *tuiCell="'media'"
+          tuiTd
+        >
+          <img class="product-item-img" [src]="item.media[0]" [alt]="item.name">
+        </td>
         <td
           *tuiCell="'name'"
           tuiTd
         >
-          <span tuiHintAppearance="onDark" tuiHintDirection="top-right" [tuiHint]="item.description">{{ item.name }}</span>
+          {{ item.name }}
         </td>
         <td
-          *tuiCell="'type'"
+          *tuiCell="'price'"
           tuiTd
         >
-          <tui-badge
-            tuiHintAppearance="onDark"
-            tuiHintDirection="top"
-            *ngIf="item.type | productProperty as productPropData else errorBadge"
-            [tuiHint]="productPropData.description"
-            status="info"
-            [value]="productPropData.name"
-          >
-            <tui-svg src="tuiIconTooltip"></tui-svg>
-          </tui-badge>
-          <ng-template  #errorBadge>
-            <tui-badge
-              status="error"
-              value="Неизвестно"
-            ></tui-badge>
-          </ng-template>
+          {{ item.price | tuiFormatNumber: {decimalLimit: 2, decimalSeparator: '.'} }} {{ 'RUB' | tuiCurrency }}
         </td>
         <td
-          *tuiCell="'showCard'"
+          *tuiCell="'brand'"
           tuiTd
         >
-          <tui-marker-icon
-            new
-            [mode]="item.showCard ? 'success' : 'error'"
-            size="xxs"
-            [src]="item.showCard ? 'tuiIconCheckLarge' : 'tuiIconCloseLarge'"
-          ></tui-marker-icon>
-        </td>
-        <td
-          *tuiCell="'showFilter'"
-          tuiTd
-        >
-          <tui-marker-icon
-            new
-            [mode]="item.showFilter ? 'success' : 'error'"
-            size="xxs"
-            [src]="item.showFilter ? 'tuiIconCheckLarge' : 'tuiIconCloseLarge'"
-          ></tui-marker-icon>
+          {{ item.brand.name }}
         </td>
       </tr>
-      <ng-container *ngIf="propertiesData | apiLoadingState">
+      <ng-container *ngIf="productsData | apiLoadingState">
         <tr
           *ngFor="let item of [1, 2, 3]"
           tuiTr
@@ -145,7 +120,7 @@
           </ng-container>
         </tr>
       </ng-container>
-      <ng-container *ngIf="propertiesData | apiLoadingState : 'Empty'">
+      <ng-container *ngIf="productsData | apiLoadingState : 'Empty'">
         <tr class="table-empty">
           <tui-svg
             src="tuiIconInfo"
@@ -153,12 +128,11 @@
           <span>Список пуст</span>
         </tr>
       </ng-container>
-
       </tbody>
     </table>
     <tui-table-pagination
-      *ngIf="propertiesData | apiLoadingState : 'Success'"
-      [total]="propertiesData?.length || 0"
+      *ngIf="productsData | apiLoadingState : 'Success'"
+      [total]="productsData?.length || 0"
       [(page)]="page"
       [(size)]="size"
     ></tui-table-pagination>

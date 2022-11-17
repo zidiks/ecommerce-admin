@@ -31,7 +31,7 @@ export class TypesDialogComponent {
 
   private readonly properties$ = this.propertiesService.getProperties().pipe(
     shareReplay({bufferSize: 1, refCount: true}),
-  )
+  );
 
   private readonly search$ = new Subject<string>();
 

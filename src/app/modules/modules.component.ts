@@ -19,7 +19,7 @@ export class ModulesComponent {
     },
     {
       icon: 'tuiIconFile',
-      name: 'Продукты',
+      name: 'Товары',
       route: '/products',
     },
     {

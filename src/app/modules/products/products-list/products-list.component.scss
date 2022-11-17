@@ -1,5 +1,5 @@
 @import '~@taiga-ui/core/styles/taiga-ui-local';
-.properties {
+.products {
   display: flex;
   flex-flow: column;
   height: 100%;
@@ -60,7 +60,7 @@ table {
     }
     tr {
       display: grid;
-      grid-template-columns: 3fr 2fr 1fr 1fr;
+      grid-template-columns: 4rem 3fr 1fr 1fr;
       cursor: pointer;
       &>td, th {
         display: flex;
@@ -77,9 +77,11 @@ table {
   }
 }
 
-.property-type-badge {
-  background: var(--tui-info-bg);
-  color: var(--tui-text-01);
+.product-item-img {
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 0.2rem;
+  object-fit: cover;
 }
 
 .tui-skeleton {

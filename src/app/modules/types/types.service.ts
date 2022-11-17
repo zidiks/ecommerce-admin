@@ -20,7 +20,16 @@ export class TypesService {
       id: '6c2bdf75-274e-4337-a766-cc746910eb25',
       name: 'Подарочный набор',
       properties: [
-        '9ea66bad-9f65-4ae0-ac16-2fc89e143379'
+        '9ea66bad-9f65-4ae0-ac16-2fc89e143379',
+        'd97da77c-29af-44a0-ab3a-9611faf91635',
+      ]
+    },
+    {
+      id: 'd74a7db7-941f-4121-83f9-2db86710c523',
+      name: 'Видеокарта',
+      properties: [
+        '9ea66bad-9f65-4ae0-ac16-2fc89e143379',
+        'd97da77c-29af-44a0-ab3a-9611faf91635',
       ]
     }
   ];

@@ -135,24 +135,14 @@
           *ngFor="let item of [1, 2, 3]"
           tuiTr
         >
-          <td
-            *tuiCell="'name'"
-            tuiTd
-          >
-            <span class="tui-skeleton">****************</span>
-          </td>
-          <td
-            *tuiCell="'origin'"
-            tuiTd
-          >
-            <span class="tui-skeleton">**********</span>
-          </td>
-          <td
-            *tuiCell="'description'"
-            tuiTd
-          >
-            <span class="tui-skeleton">****************************************</span>
-          </td>
+          <ng-container *ngFor="let column of columns">
+            <td
+              *tuiCell="column"
+              tuiTd
+            >
+              <span class="tui-skeleton"></span>
+            </td>
+          </ng-container>
         </tr>
       </ng-container>
       <ng-container *ngIf="brandsData | apiLoadingState : 'Empty'">

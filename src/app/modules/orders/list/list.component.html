@@ -126,36 +126,14 @@
           *ngFor="let item of [1, 2, 3]"
           tuiTr
         >
-          <td
-            *tuiCell="'id'"
-            tuiTd
-          >
-            <span class="tui-skeleton">***</span>
-          </td>
-          <td
-            *tuiCell="'startDate'"
-            tuiTd
-          >
-            <span class="tui-skeleton">**************</span>
-          </td>
-          <td
-            *tuiCell="'total'"
-            tuiTd
-          >
-            <span class="tui-skeleton">***********</span>
-          </td>
-          <td
-            *tuiCell="'customer'"
-            tuiTd
-          >
-            <span class="tui-skeleton">***********************</span>
-          </td>
-          <td
-            *tuiCell="'status'"
-            tuiTd
-          >
-            <span class="tui-skeleton">***************</span>
-          </td>
+          <ng-container *ngFor="let column of columns">
+            <td
+              *tuiCell="column"
+              tuiTd
+            >
+              <span class="tui-skeleton"></span>
+            </td>
+          </ng-container>
         </tr>
       </ng-container>
       <ng-container *ngIf="ordersData | apiLoadingState : 'Empty'">
