@@ -51,6 +51,6 @@ import { TuiLetModule } from "@taiga-ui/cdk";
     TuiMultiSelectModule,
     TuiDataListWrapperModule,
     TuiLetModule,
-  ]
+  ],
 })
 export class TypesModule { }

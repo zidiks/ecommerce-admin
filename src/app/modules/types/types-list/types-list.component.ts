@@ -50,6 +50,7 @@ export class TypesListComponent implements OnInit {
       new PolymorpheusComponent(TypesDialogComponent, this.injector),
       {
         label: 'Сущность',
+        size: 'l',
       }
     );
     dialog.subscribe({
@@ -67,6 +68,7 @@ export class TypesListComponent implements OnInit {
       new PolymorpheusComponent(TypesDialogComponent, this.injector),
       {
         label: 'Сущность',
+        size: 'l',
         data: type,
       }
     );
