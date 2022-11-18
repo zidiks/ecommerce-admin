@@ -5,7 +5,7 @@ export interface ProductModel {
   price: number;
   brand: Brand;
   description: string;
-  categoriesIds: string[];
+  categoryId: string;
   productTypeId: string;
   productProps: {
     productTypePropertyId: string;

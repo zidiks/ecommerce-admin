@@ -22,9 +22,7 @@ export class ProductsService {
         origin: 'США',
       },
       description: 'NVIDIA GeForce RTX 3080 Ti 12 ГБ GDDR6X LHR, базовая частота 1370 МГц, макс. частота 1785 МГц, 10240sp, 80 RT-ядер, частота памяти 19000 МГц, 384 бит, доп. питание: 8+8 pin, 2.7 слота, HDMI, DisplayPort, трассировка лучей',
-      categoriesIds: [
-        '77d13a08-917f-4e6d-882d-c132c4fc6520',
-      ],
+      categoryId: '77d13a08-917f-4e6d-882d-c132c4fc6520',
       productTypeId: 'd74a7db7-941f-4121-83f9-2db86710c523',
       productProps: [
 

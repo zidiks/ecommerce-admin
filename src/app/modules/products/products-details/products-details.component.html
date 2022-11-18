@@ -1,1 +1,47 @@
-<p>products-details works!</p>
+<div class="product">
+  <div class="header">
+    <div class="header__title">
+      <tui-breadcrumbs  size="l">
+        <ng-container *ngFor="let item of breadcrumbs">
+          <a
+            *tuiItem
+            tuiLink
+            [routerLink]="item.routerLink"
+          >
+            {{ item.caption }}
+          </a>
+        </ng-container>
+      </tui-breadcrumbs>
+    </div>
+    <div class="header__actions">
+      <button
+        size="s"
+        tuiButton
+        type="button"
+        appearance="secondary"
+        icon="tuiIconCheck"
+        class="tui-space_right-3"
+      >
+        {{ !productId ? 'Добавить' : 'Сохранить' }}
+      </button>
+      <button
+        *ngIf="productId"
+        size="s"
+        tuiIconButton
+        type="button"
+        appearance="secondary"
+        icon="tuiIconRefresh"
+        class="tui-space_right-3"
+      >
+      </button>
+    </div>
+  </div>
+  <form [formGroup]="formGroup" *ngIf="(!(productData | apiLoadingState)) else loader">
+
+  </form>
+  <ng-template #loader>
+    <tui-loader class="loader" size="xl">
+
+    </tui-loader>
+  </ng-template>
+</div>

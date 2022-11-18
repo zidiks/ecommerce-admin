@@ -58,7 +58,7 @@ export class PropertiesDetailsComponent implements OnInit {
       },
       {
         caption: `${!this.propertyId ? 'Новое свойство' : 'Детали'}`,
-        routerLink: `/properties/${this.propertyId}`,
+        routerLink: `/properties/details/${this.propertyId}`,
       }
     ];
   }
