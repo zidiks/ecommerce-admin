@@ -36,8 +36,8 @@ export class ProductsService {
     return of(this.fakeProducts).pipe(delay(1000));
   }
 
-  public getProductById(id: string): Observable<ProductModel | undefined> {
+  public getProductById(id: string): Observable<ProductModel | null> {
     const data = this.fakeProducts.find((item: ProductModel) => item.id === id);
-    return of(data).pipe(delay(1000));
+    return of(data || null).pipe(delay(1000));
   }
 }

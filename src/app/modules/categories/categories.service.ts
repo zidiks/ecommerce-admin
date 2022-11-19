@@ -6,7 +6,7 @@ import { delay, Observable, of, take } from "rxjs";
   providedIn: 'root'
 })
 export class CategoriesService {
-    public fakeCategories: CategoryModel[] = [
+    private fakeCategories: CategoryModel[] = [
     {
       id: '3a436051-771f-4014-99ee-19e20e661a69',
       name: 'Парфюм',

@@ -1,9 +1,11 @@
+import { BrandModel } from "./brand.model";
+
 export interface ProductModel {
   id: string;
   name: string;
   media: string[];
   price: number;
-  brand: Brand;
+  brand: BrandModel;
   description: string;
   categoryId: string;
   productTypeId: string;
@@ -18,13 +20,6 @@ export interface ProductPrevModel {
   name: string;
   media: string[];
   price: number;
-  brand: Brand;
+  brand: BrandModel;
   description?: string;
-}
-
-export interface Brand {
-  id: string;
-  name: string;
-  description?: string;
-  origin: string;
 }

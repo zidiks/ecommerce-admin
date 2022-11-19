@@ -38,7 +38,7 @@ export class TypesService {
     private propertiesService: PropertiesService,
   ) { }
 
-  public getTypes(): Observable<ProductTypePrevModel[]> {
+  public getTypes(): Observable<ProductTypePrevModel[] | null> {
     return of(this.fakeTypes.map((type: ProductTypeBaseModel) => ({ id: type.id, name: type.name, propertiesLength: type.properties.length } as ProductTypePrevModel))).pipe(delay(1000), take(1));
   }
 

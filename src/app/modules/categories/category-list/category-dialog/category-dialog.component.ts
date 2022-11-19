@@ -15,7 +15,7 @@ import { TuiContextWithImplicit, tuiPure, TuiStringHandler } from "@taiga-ui/cdk
   styleUrls: ['./category-dialog.component.scss']
 })
 export class CategoryDialogComponent {
-  public typesList: Observable<ProductTypePrevModel[]>;
+  public typesList: Observable<ProductTypePrevModel[] | null>;
 
   public formGroup: FormGroup = this.formBuilder.group( {
     parent: [ this.parentData?.name || this.categoryData?.parent?.name || 'Корень каталога' ],
@@ -52,7 +52,7 @@ export class CategoryDialogComponent {
     return this.context.data.parentData;
   }
 
-  public get typeListData(): Observable<ProductTypePrevModel[]> {
+  public get typeListData(): Observable<ProductTypePrevModel[] | null> {
     return this.typesService.getTypes();
   }
 
