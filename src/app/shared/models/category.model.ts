@@ -16,6 +16,12 @@ export interface CategoryParentModel {
   description?: string;
 }
 
+export interface CategoryLinearModel {
+  id: string;
+  name: string;
+  productTypeId?: string;
+}
+
 export interface CategoryBaseModel {
   name: string;
   handle: string;

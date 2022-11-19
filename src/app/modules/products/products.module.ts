@@ -4,13 +4,19 @@ import { ProductsComponent } from './products.component';
 import { ProductsRoutingModule } from "./products-routing.module";
 import { ProductsListComponent } from './products-list/products-list.component';
 import { ProductsDetailsComponent } from './products-details/products-details.component';
-import { TuiBreadcrumbsModule, TuiInputModule } from "@taiga-ui/kit";
 import {
-  TuiButtonModule,
-  TuiFormatNumberPipeModule,
+  TuiBreadcrumbsModule,
+  TuiInputModule,
+  TuiInputNumberModule,
+  TuiSelectModule,
+  TuiTextAreaModule, TuiTreeModule
+} from "@taiga-ui/kit";
+import {
+  TuiButtonModule, TuiDataListModule,
+  TuiFormatNumberPipeModule, TuiHintModule,
   TuiLinkModule,
   TuiLoaderModule,
-  TuiSvgModule
+  TuiSvgModule, TuiTextfieldControllerModule
 } from "@taiga-ui/core";
 import { TuiTableModule, TuiTablePaginationModule } from "@taiga-ui/addon-table";
 import { ApiLoadingStateModule } from "../../shared/pipes/api-loading-state/api-loading-state.module";
@@ -40,6 +46,13 @@ import { ReactiveFormsModule } from "@angular/forms";
     ReactiveFormsModule,
     TuiInputModule,
     TuiLoaderModule,
+    TuiSelectModule,
+    TuiTextfieldControllerModule,
+    TuiDataListModule,
+    TuiHintModule,
+    TuiTextAreaModule,
+    TuiInputNumberModule,
+    TuiTreeModule,
   ]
 })
 export class ProductsModule { }

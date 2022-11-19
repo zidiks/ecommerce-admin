@@ -31,7 +31,6 @@ export class CategoriesService {
               name: 'Для женщин',
               handle: 'perfume/for_whom/woman',
               media: [],
-              productTypeId: '17da2181-98ce-456b-bb8e-f4be15be1863',
             },
             {
               id: '5d9abdca-a783-47cf-b00e-590420669175',
