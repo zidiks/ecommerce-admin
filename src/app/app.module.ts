@@ -19,16 +19,16 @@ registerLocaleData(localeRu, 'ru');
     AppComponent,
     SubmitComponent,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        TuiRootModule,
-        TuiAlertModule,
-        TuiDialogModule,
-        TuiButtonModule,
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    TuiRootModule,
+    TuiAlertModule,
+    TuiDialogModule,
+    TuiButtonModule,
+  ],
   providers: [
     {
       provide: TUI_SANITIZER,

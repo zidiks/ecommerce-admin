@@ -164,9 +164,54 @@
           </tui-text-area>
         </div>
       </div>
+      <div class="content">
+        <h3 class="tui-form__header tui-form__header_margin-top_none">Изображения</h3>
+        <div class="tui-form__row">
+          <tui-input-files
+            accept="image/*"
+            [multiple]="true"
+            [formControl]="mediaControl"
+            (reject)="onReject($event)"
+            (ngModelChange)="mediaControl.markAsTouched()"
+          ></tui-input-files>
+
+          <tui-files class="tui-space_top-1">
+            <tui-file
+              *ngFor="let file of (mediaControl.valueChanges | async) || []"
+              [file]="file"
+              (removed)="removeFile(file)"
+            ></tui-file>
+
+            <tui-file
+              *ngFor="let file of rejectedFiles"
+              state="error"
+              [file]="file"
+              (removed)="clearRejected(file)"
+            ></tui-file>
+          </tui-files>
+
+          <tui-error
+            [formControl]="mediaControl"
+            [error]="['maxLength'] | tuiFieldError | async"
+          ></tui-error>
+        </div>
+      </div>
+      <div class="content">
+        <h3 class="tui-form__header tui-form__header_margin-top_none">Свойства</h3>
+        <ng-container *ngIf="!(currentTypeData | apiLoadingState); else loaderSmall">
+          <div class="tui-form__row" *ngFor="let property of (currentTypeData?.properties || [])">
+            <property-input [control]="fProp[property.id]" [propertyData]="property"></property-input>
+          </div>
+        </ng-container>
+      </div>
   </form>
   <ng-template #loader>
     <tui-loader class="loader" size="xl">
+
+    </tui-loader>
+  </ng-template>
+  <ng-template #loaderSmall>
+    <tui-loader size="m">
 
     </tui-loader>
   </ng-template>

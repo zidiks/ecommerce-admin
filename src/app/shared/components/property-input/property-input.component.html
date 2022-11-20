@@ -1,0 +1,11 @@
+<ng-container [ngSwitch]="propertyData.type">
+  <ng-container *ngSwitchCase="propertyTypes.Color">
+    <ng-container *ngTemplateOutlet="color"></ng-container>
+  </ng-container>
+</ng-container>
+
+<ng-template #color>
+  <tui-input-color [formControl]="formControl">
+    {{ propertyData.name }}
+  </tui-input-color>
+</ng-template>

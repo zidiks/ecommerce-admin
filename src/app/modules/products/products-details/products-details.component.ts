@@ -1,18 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { ApiDataModel } from "../../../shared/models/api-data.model";
 import { ProductModel } from "../../../shared/models/product.model";
-import { AbstractControl, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { ProductsService } from "../products.service";
 import { TypesService } from "../../types/types.service";
 import { CategoryLinearModel, CategoryModel } from "../../../shared/models/category.model";
 import { BrandModel } from "../../../shared/models/brand.model";
-import { ProductTypePrevModel } from "../../../shared/models/type-property.model";
+import {
+  ProductTypeModel,
+  ProductTypePrevModel,
+  ProductTypePropertyModel
+} from "../../../shared/models/type-property.model";
 import { forkJoin } from "rxjs";
 import { BrandsService } from "../../brands/brands.service";
 import { CategoriesService } from "../../categories/categories.service";
 import { EMPTY_ARRAY, TuiContextWithImplicit, TuiHandler, tuiPure, TuiStringHandler } from "@taiga-ui/cdk";
-import { TuiValueContentContext } from "@taiga-ui/core";
+import { TuiAlertService, TuiNotification, TuiValueContentContext } from "@taiga-ui/core";
+import { maxFilesLength } from "../../../shared/functions/form-control-max-filex.func";
+import { TuiFileLike } from "@taiga-ui/kit";
+import { productPropertyControl } from "../../../shared/functions/product-property-control.func";
 
 interface DataResponse {
   product: ProductModel | null;
@@ -33,17 +40,21 @@ export class ProductsDetailsComponent implements OnInit {
   public brandsData: ApiDataModel<BrandModel[]>;
   public categoriesData: ApiDataModel<CategoryModel[]>;
   public productTypesPrevsData: ApiDataModel<ProductTypePrevModel[]>;
+  public currentTypeData: ApiDataModel<ProductTypeModel>;
   public linearCategoriesData: CategoryLinearModel[] = [];
+  rejectedFiles: readonly TuiFileLike[] = [];
+
+  readonly mediaControl = new FormControl([], [maxFilesLength(5)]);
 
   public formGroup: FormGroup = this.formBuilder.group({
     name: [null, Validators.required],
-    media: [],
+    media: [[]],
     price: [null, Validators.required],
     brand: [null, Validators.required],
     description: [null],
     categoryId: [null],
     productTypeId: [null],
-    productProps: this.formBuilder.array([]),
+    productProps: this.formBuilder.group({}),
   });
 
   constructor(
@@ -53,6 +64,7 @@ export class ProductsDetailsComponent implements OnInit {
     private typesService: TypesService,
     private brandsService: BrandsService,
     private categoriesService: CategoriesService,
+    @Inject(TuiAlertService) private readonly alertService: TuiAlertService,
   ) {
     this.productId = this.route.snapshot.params['id'];
     this.breadcrumbs = [
@@ -73,6 +85,13 @@ export class ProductsDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.refreshData();
+    this.mediaControl.statusChanges.subscribe(response => {
+      console.info(`STATUS`, response);
+      console.info(`ERRORS`, this.mediaControl.errors, `\n`);
+    });
+    this.f['productTypeId'].valueChanges.subscribe((value: string) => {
+      this.setPropertiesControls(value);
+    });
     this.f['categoryId'].valueChanges.subscribe((value: string) => {
       if (this.categoriesData?.length) {
         const categoryItem = this.linearCategoriesData.find((category => category.id === value));
@@ -120,6 +139,8 @@ export class ProductsDetailsComponent implements OnInit {
 
   public get f(): { [key: string]: AbstractControl; } { return this.formGroup.controls; }
 
+  public get fProp(): { [key: string]: AbstractControl; } { return (this.f['productProps'] as FormGroup).controls; }
+
   @tuiPure
   public stringifyBrands(
     items: BrandModel[],
@@ -164,6 +185,43 @@ export class ProductsDetailsComponent implements OnInit {
     const linearData: CategoryLinearModel[] = [];
     treeData.forEach((item: CategoryModel) => recursionFn(linearData, item));
     return linearData;
+  }
+
+  public onReject(files: TuiFileLike | readonly TuiFileLike[]): void {
+    this.rejectedFiles = [...this.rejectedFiles, ...(files as TuiFileLike[])];
+  }
+
+  public removeFile({name}: File): void {
+    this.mediaControl.setValue(
+      this.mediaControl.value?.filter((current: File) => current.name !== name) ?? [],
+    );
+  }
+
+  public clearRejected({name}: TuiFileLike): void {
+    this.rejectedFiles = this.rejectedFiles.filter(
+      rejected => rejected.name !== name,
+    );
+  }
+
+  private setPropertiesControls(productTypeId: string): void {
+    this.currentTypeData = undefined;
+    this.clearPropertiesControls();
+    this.typesService.getTypeById(productTypeId).subscribe((res: ProductTypeModel | undefined) => {
+      if (res) {
+        res.properties.forEach((property: ProductTypePropertyModel) => {
+          (this.f['productProps'] as FormGroup).addControl(property.id, productPropertyControl(property.type));
+        });
+        this.currentTypeData = res;
+      } else {
+        this.alertService.open(`Невозможно загрузить свойства для сущности c id: ${productTypeId}`, {label: `Ошибка загрузки`, status: TuiNotification.Error, autoClose: 3000}).subscribe();
+      }
+    });
+  }
+
+  private clearPropertiesControls(): void {
+    Object.keys((this.f['productProps'] as FormGroup).controls).forEach((controlKey: string) => {
+      (this.f['productProps'] as FormGroup).removeControl(controlKey);
+    });
   }
 
 }
