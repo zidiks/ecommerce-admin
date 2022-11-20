@@ -34,10 +34,10 @@ export class CategoriesService {
             },
             {
               id: '5d9abdca-a783-47cf-b00e-590420669175',
-              name: 'Унисекс',
+              name: 'Унисекс (наборы)',
               handle: 'perfume/for_whom/unisex',
               media: [],
-              productTypeId: '17da2181-98ce-456b-bb8e-f4be15be1863',
+              productTypeId: '6c2bdf75-274e-4337-a766-cc746910eb25',
             }
           ],
         }

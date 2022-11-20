@@ -30,6 +30,7 @@ export class TypesService {
       properties: [
         '9ea66bad-9f65-4ae0-ac16-2fc89e143379',
         'd97da77c-29af-44a0-ab3a-9611faf91635',
+        '5adf782f-cca2-40cb-bfbd-e897ced33135',
       ]
     }
   ];

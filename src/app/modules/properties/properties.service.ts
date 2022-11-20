@@ -21,6 +21,14 @@ export class PropertiesService {
       ],
     },
     {
+      id: '5adf782f-cca2-40cb-bfbd-e897ced33135',
+      showCard: false,
+      showFilter: true,
+      name: 'Новинка',
+      description: 'Продукт вышел недавно',
+      type: ProductTypePropertyType.CheckBox,
+    },
+    {
       id: '9ea66bad-9f65-4ae0-ac16-2fc89e143379',
       showCard: true,
       showFilter: true,
