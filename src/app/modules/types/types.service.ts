@@ -28,9 +28,12 @@ export class TypesService {
       id: 'd74a7db7-941f-4121-83f9-2db86710c523',
       name: 'Видеокарта',
       properties: [
-        '9ea66bad-9f65-4ae0-ac16-2fc89e143379',
         'd97da77c-29af-44a0-ab3a-9611faf91635',
+        '1223fde7-7798-49cc-8ecc-3933f2842716',
+        '06c0f0da-2039-46d9-834e-81229d0f16b8',
+        '1b0df5c7-1b90-4f3b-8b03-74efb137edec',
         '5adf782f-cca2-40cb-bfbd-e897ced33135',
+        '9ea66bad-9f65-4ae0-ac16-2fc89e143379',
       ]
     }
   ];

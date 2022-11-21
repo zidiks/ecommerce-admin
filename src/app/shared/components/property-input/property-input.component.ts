@@ -1,26 +1,30 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ProductTypePropertyModel } from "../../models/type-property.model";
 import { AbstractControl, FormControl } from "@angular/forms";
 import { ProductTypePropertyType } from "../../enums/product-property.enum";
+import { TUI_DEFAULT_MATCHER, tuiPure } from "@taiga-ui/cdk";
 
 @Component({
   selector: 'property-input',
   templateUrl: './property-input.component.html',
   styleUrls: ['./property-input.component.scss'],
 })
-export class PropertyInputComponent implements OnInit {
+export class PropertyInputComponent {
   @Input() public propertyData!: ProductTypePropertyModel;
   @Input() public control!: AbstractControl<any, any>;
   public propertyTypes = ProductTypePropertyType;
-
-  constructor() { }
+  public search: string | null = ``;
 
   public get formControl(): FormControl {
     return this.control as FormControl;
   }
 
-  ngOnInit(): void {
-    console.log(this.control.value);
+  public get options(): string[] {
+    return (this.propertyData.options || []).map((option: string | number) => option.toString());
   }
 
+  @tuiPure
+  filter(search: string | null): readonly string[] {
+    return this.options.filter(item => TUI_DEFAULT_MATCHER(item, search || ``));
+  }
 }

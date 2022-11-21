@@ -1,13 +1,33 @@
 <ng-container [ngSwitch]="propertyData.type">
+
   <ng-container *ngSwitchCase="propertyTypes.Color">
     <ng-container *ngTemplateOutlet="color"></ng-container>
   </ng-container>
+
   <ng-container *ngSwitchCase="propertyTypes.CheckBox">
     <ng-container *ngTemplateOutlet="checkbox"></ng-container>
   </ng-container>
+
   <ng-container *ngSwitchCase="propertyTypes.StringSelect">
     <ng-container *ngTemplateOutlet="stringSelect"></ng-container>
   </ng-container>
+
+  <ng-container *ngSwitchCase="propertyTypes.StringMultiSelect">
+    <ng-container *ngTemplateOutlet="stringMultiSelect"></ng-container>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="propertyTypes.StringInput">
+    <ng-container *ngTemplateOutlet="stringInput"></ng-container>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="propertyTypes.NumberSelect">
+    <ng-container *ngTemplateOutlet="stringSelect"></ng-container>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="propertyTypes.NumberInput">
+    <ng-container *ngTemplateOutlet="numberInput"></ng-container>
+  </ng-container>
+
 </ng-container>
 
 <ng-template #color>
@@ -30,12 +50,39 @@
 <ng-template #stringSelect>
   <tui-select [formControl]="formControl">
     {{ propertyData.name }}
-    <input
-      tuiTextfield
-    />
     <tui-data-list-wrapper
       *tuiDataList
       [items]="propertyData.options || []"
     ></tui-data-list-wrapper>
   </tui-select>
+</ng-template>
+
+<ng-template #stringMultiSelect>
+  <tui-multi-select
+    [formControl]="formControl"
+    [(search)]="search"
+  >
+    {{ propertyData.name }}
+    <tui-data-list-wrapper
+      *tuiDataList
+      tuiMultiSelectGroup
+      [items]="filter(search)"
+    ></tui-data-list-wrapper>
+  </tui-multi-select>
+</ng-template>
+
+<ng-template #stringInput>
+  <tui-input
+    [formControl]="formControl"
+  >
+    {{ propertyData.name }}
+  </tui-input>
+</ng-template>
+
+<ng-template #numberInput>
+  <tui-input
+    [formControl]="formControl"
+  >
+    {{ propertyData.name }}
+  </tui-input>
 </ng-template>
