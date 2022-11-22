@@ -25,7 +25,18 @@ export class ProductsService {
       categoryId: '77d13a08-917f-4e6d-882d-c132c4fc6520',
       productTypeId: 'd74a7db7-941f-4121-83f9-2db86710c523',
       productProps: [
-
+        {
+          productTypePropertyId: '5adf782f-cca2-40cb-bfbd-e897ced33135',
+          value: true,
+        },
+        {
+          productTypePropertyId: '06c0f0da-2039-46d9-834e-81229d0f16b8',
+          value: '2021',
+        },
+        {
+          productTypePropertyId: '1223fde7-7798-49cc-8ecc-3933f2842716',
+          value: 12
+        }
       ],
     }
   ];

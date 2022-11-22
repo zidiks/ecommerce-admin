@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { ApiDataModel } from "../../../shared/models/api-data.model";
-import { ProductModel } from "../../../shared/models/product.model";
+import { ProductModel, ProductPropertyValueModel } from "../../../shared/models/product.model";
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { ProductsService } from "../products.service";
 import { TypesService } from "../../types/types.service";
@@ -12,7 +12,7 @@ import {
   ProductTypePrevModel,
   ProductTypePropertyModel
 } from "../../../shared/models/type-property.model";
-import { forkJoin } from "rxjs";
+import { forkJoin, of } from "rxjs";
 import { BrandsService } from "../../brands/brands.service";
 import { CategoriesService } from "../../categories/categories.service";
 import { EMPTY_ARRAY, TuiContextWithImplicit, TuiHandler, tuiPure, TuiStringHandler } from "@taiga-ui/cdk";
@@ -22,7 +22,7 @@ import { TuiFileLike } from "@taiga-ui/kit";
 import { productPropertyControl } from "../../../shared/functions/product-property-control.func";
 
 interface DataResponse {
-  product: ProductModel | null;
+  product?: ProductModel | null;
   brands: BrandModel[] | null;
   categories: CategoryModel[] | null;
   productTypes: ProductTypePrevModel[] | null;
@@ -90,7 +90,9 @@ export class ProductsDetailsComponent implements OnInit {
       console.info(`ERRORS`, this.mediaControl.errors, `\n`);
     });
     this.f['productTypeId'].valueChanges.subscribe((value: string) => {
-      this.setPropertiesControls(value);
+      if (value) {
+        this.setPropertiesControls(value);
+      }
     });
     this.f['categoryId'].valueChanges.subscribe((value: string) => {
       if (this.categoriesData?.length) {
@@ -104,37 +106,38 @@ export class ProductsDetailsComponent implements OnInit {
 
   public refreshData(): void {
     this.formGroup.reset();
-    if (this.productId) {
-      this.productData = undefined;
-      forkJoin({
-        product: this.productsService.getProductById(this.productId),
-        brands: this.brandsService.getBrands(),
-        categories: this.categoriesService.getCategories(),
-        productTypes: this.typesService.getTypes(),
-      }).subscribe((res: DataResponse) => {
-        this.productData = res.product;
-        this.brandsData = res.brands;
-        this.categoriesData = res.categories;
-        if (res.categories) {
-          this.linearCategoriesData = this.linearCategory(res.categories);
-        }
-        this.productTypesPrevsData = res.productTypes;
-        if (res.product) {
-          const productData = res.product;
-          setTimeout(() => {
-            this.formGroup.patchValue({
-              name: productData.name,
-              media: productData.media,
-              price: productData.price,
-              brand: productData.brand.id,
-              description: productData.description,
-              categoryId: productData.categoryId,
-              productTypeId: productData.productTypeId,
-            });
+    this.productData = undefined;
+    forkJoin({
+      product: this.productId ? this.productsService.getProductById(this.productId) : of(null),
+      brands: this.brandsService.getBrands(),
+      categories: this.categoriesService.getCategories(),
+      productTypes: this.typesService.getTypes(),
+    }).subscribe((res: DataResponse) => {
+      this.productData = res.product;
+      this.brandsData = res.brands;
+      this.categoriesData = res.categories;
+      if (res.categories) {
+        this.linearCategoriesData = this.linearCategory(res.categories);
+      }
+      this.productTypesPrevsData = res.productTypes;
+      console.log(this.formGroup.value);
+      if (res.product) {
+        const productData = res.product;
+        setTimeout(() => {
+          this.formGroup.patchValue({
+            name: productData.name,
+            media: productData.media,
+            price: productData.price,
+            brand: productData.brand.id,
+            description: productData.description,
+            categoryId: productData.categoryId,
+            productTypeId: productData.productTypeId,
           });
-        }
-      });
-    }
+        });
+      } else {
+        this.currentTypeData = null;
+      }
+    });
   }
 
   public get f(): { [key: string]: AbstractControl; } { return this.formGroup.controls; }
@@ -210,6 +213,10 @@ export class ProductsDetailsComponent implements OnInit {
       if (res) {
         res.properties.forEach((property: ProductTypePropertyModel) => {
           (this.f['productProps'] as FormGroup).addControl(property.id, productPropertyControl(property.type));
+          const productPropValue: ProductPropertyValueModel | undefined = this.productData?.productProps.find((prop: ProductPropertyValueModel) => prop.productTypePropertyId === property.id);
+          if (productPropValue) {
+            this.fProp[property.id].setValue(productPropValue.value);
+          }
         });
         this.currentTypeData = res;
       } else {

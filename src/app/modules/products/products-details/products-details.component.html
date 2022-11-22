@@ -37,7 +37,7 @@
       </button>
     </div>
   </div>
-  <form [formGroup]="formGroup" *ngIf="([productData, brandsData, categoriesData, productTypesPrevsData] | apiLoadingState : 'Success' : true) else loader">
+  <form [formGroup]="formGroup" *ngIf="!([productData, brandsData, categoriesData, productTypesPrevsData] | apiLoadingState : 'Pending' : true) else loader">
       <div class="content">
         <h3 class="tui-form__header tui-form__header_margin-top_none">Общее</h3>
         <div class="tui-form__row">
@@ -196,7 +196,7 @@
           ></tui-error>
         </div>
       </div>
-      <div class="content">
+      <div class="content" *ngIf="currentTypeData !== null">
         <h3 class="tui-form__header tui-form__header_margin-top_none">Свойства</h3>
         <ng-container *ngIf="!(currentTypeData | apiLoadingState); else loaderSmall">
           <div class="tui-form__row" *ngFor="let property of (currentTypeData?.properties || [])">

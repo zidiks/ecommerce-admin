@@ -25,6 +25,7 @@ export interface ProductTypePropertyModel {
   showCard: boolean;
   showFilter: boolean;
   name: string;
+  unit?: string;
   description?: string;
   type: ProductTypePropertyType;
   options?: (string | number)[];

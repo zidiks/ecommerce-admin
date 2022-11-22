@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 import { TuiInputColorModule } from "@taiga-ui/addon-editor";
 import { ReactiveFormsModule } from "@angular/forms";
 import {
-  TuiCheckboxBlockModule,
-  TuiDataListWrapperModule,
-  TuiInputModule,
-  TuiMultiSelectModule,
-  TuiSelectModule
+    TuiCheckboxBlockModule,
+    TuiDataListWrapperModule, TuiInputCountModule,
+    TuiInputModule,
+    TuiMultiSelectModule,
+    TuiSelectModule
 } from "@taiga-ui/kit";
 import { PropertyInputComponent } from "./property-input.component";
 
@@ -15,16 +15,17 @@ import { PropertyInputComponent } from "./property-input.component";
   declarations: [
     PropertyInputComponent,
   ],
-  imports: [
-    CommonModule,
-    TuiInputColorModule,
-    ReactiveFormsModule,
-    TuiCheckboxBlockModule,
-    TuiSelectModule,
-    TuiDataListWrapperModule,
-    TuiMultiSelectModule,
-    TuiInputModule,
-  ],
+    imports: [
+        CommonModule,
+        TuiInputColorModule,
+        ReactiveFormsModule,
+        TuiCheckboxBlockModule,
+        TuiSelectModule,
+        TuiDataListWrapperModule,
+        TuiMultiSelectModule,
+        TuiInputModule,
+        TuiInputCountModule,
+    ],
   exports: [
     PropertyInputComponent,
   ]

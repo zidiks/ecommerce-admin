@@ -80,9 +80,10 @@
 </ng-template>
 
 <ng-template #numberInput>
-  <tui-input
+  <tui-input-count
+    [postfix]="propertyData.unit || ''"
     [formControl]="formControl"
   >
     {{ propertyData.name }}
-  </tui-input>
+  </tui-input-count>
 </ng-template>

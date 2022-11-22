@@ -9,10 +9,12 @@ export interface ProductModel {
   description: string;
   categoryId: string;
   productTypeId: string;
-  productProps: {
-    productTypePropertyId: string;
-    value: string | string[] | number | boolean;
-  }[];
+  productProps: ProductPropertyValueModel[];
+}
+
+export interface ProductPropertyValueModel {
+  productTypePropertyId: string;
+  value: string | string[] | number | boolean;
 }
 
 export interface ProductPrevModel {
