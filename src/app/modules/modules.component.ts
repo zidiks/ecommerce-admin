@@ -36,6 +36,7 @@ export class ModulesComponent {
       icon: 'tuiIconComment',
       name: 'Новости',
       route: '/news',
+      disabled: true,
     },
     {
       icon: 'tuiIconFilter',
@@ -51,16 +52,19 @@ export class ModulesComponent {
       icon: 'tuiIconChartBar',
       name: 'Аналитика',
       route: '/analytics',
+      disabled: true,
     },
     {
       icon: 'tuiIconUsers',
       name: 'Пользователи',
       route: '/users',
+      disabled: true,
     },
     {
       icon: 'tuiIconSettings',
       name: 'Настройки',
       route: '/settings',
+      disabled: true,
     }
   ];
 

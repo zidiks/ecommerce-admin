@@ -7,7 +7,8 @@ export interface OrderModel {
   _id: string;
   orderCode: string;
   customer: CustomerModel;
-  startDate: number;
+  createdAt: string;
+  updatedAt: string;
   state: OrderState;
   delivery: {
     deliveryMethod: DeliveryMethod;
