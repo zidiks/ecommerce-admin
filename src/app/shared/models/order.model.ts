@@ -4,7 +4,7 @@ import { StateColor } from "../enums/state-colors.enum";
 import { ProductPrevModel } from "./product.model";
 
 export interface OrderModel {
-  id: string;
+  _id: string;
   orderCode: string;
   customer: CustomerModel;
   startDate: number;

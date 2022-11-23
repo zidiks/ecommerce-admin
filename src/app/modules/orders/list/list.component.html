@@ -48,7 +48,7 @@
           *tuiHead="'id'"
           [sorter]="null"
         >
-          ID
+          Код
         </th>
         <th
           tuiTh
@@ -84,8 +84,14 @@
       <tr
         *ngFor="let item of sortedData"
         tuiTr
-        [routerLink]="'/orders/details/' + item.id"
+        [routerLink]="'/orders/details/' + item._id"
       >
+        <td
+          *tuiCell="'id'"
+          tuiTd
+        >
+          {{ item._id }}
+        </td>
         <td
           *tuiCell="'startDate'"
           tuiTd
