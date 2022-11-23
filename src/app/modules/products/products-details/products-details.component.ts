@@ -128,7 +128,7 @@ export class ProductsDetailsComponent implements OnInit {
             name: productData.name,
             media: productData.media,
             price: productData.price,
-            brand: productData.brand.id,
+            brand: productData.brand._id,
             description: productData.description,
             categoryId: productData.categoryId,
             productTypeId: productData.productTypeId,
@@ -148,7 +148,7 @@ export class ProductsDetailsComponent implements OnInit {
   public stringifyBrands(
     items: BrandModel[],
   ): TuiStringHandler<TuiContextWithImplicit<string>> {
-    const map = new Map(items.map(({id, name}) => [id, name] as [string, string]));
+    const map = new Map(items.map(({_id, name}) => [_id, name] as [string, string]));
 
     return ({$implicit}: TuiContextWithImplicit<string>) => map.get($implicit) || ``;
   }

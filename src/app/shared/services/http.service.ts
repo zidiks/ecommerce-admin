@@ -31,7 +31,7 @@ export class HttpService {
     return this.httpClient.delete<T>(`${this.url}/${endpoint}/${id}`);
   }
 
-  public put<T, K>(endpoint: string, id: number, payload: K): Observable<T> {
+  public put<T, K>(endpoint: string, id: string | number, payload: K): Observable<T> {
     return this.httpClient.put<T>(`${this.url}/${endpoint}/${id}`, payload);
   }
 

@@ -20,7 +20,7 @@ export class OrdersService {
     private http: HttpService,
   ) { }
 
-  public getOrders(): Observable<OrderModel[] | null> {
+  public getOrders(): Observable<OrderModel[]> {
     return this.http.get<OrderModel[]>('store/orders');
   }
 

@@ -5,7 +5,7 @@ import { ApiDataModel } from "../../../shared/models/api-data.model";
 import { BrandModel } from "../../../shared/models/brand.model";
 import { SubmitService } from "../../../shared/services/submit.service";
 import { PolymorpheusComponent } from "@tinkoff/ng-polymorpheus";
-import { TuiDialogService } from "@taiga-ui/core";
+import { TuiAlertService, TuiDialogService, TuiNotification } from "@taiga-ui/core";
 import { BrandDialogComponent } from "./brand-dialog/brand-dialog.component";
 
 @Component({
@@ -37,6 +37,7 @@ export class BrandsListComponent implements OnInit {
 
   constructor(
     @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
+    @Inject(TuiAlertService) private readonly alertService: TuiAlertService,
     @Inject(Injector) private readonly injector: Injector,
     private brandsService: BrandsService,
     private submitService: SubmitService,
@@ -54,24 +55,24 @@ export class BrandsListComponent implements OnInit {
   }
 
   public showAddDialog(): void {
-    const dialog = this.dialogService.open<null>(
+    const dialog = this.dialogService.open<BrandModel | null>(
       new PolymorpheusComponent(BrandDialogComponent, this.injector),
       {
         label: 'Бренд',
       }
     );
     dialog.subscribe({
-      next: data => {
-        console.info(`Dialog emitted data = ${data}`);
-      },
-      complete: () => {
-        console.info(`Dialog closed`);
+      next: (data: BrandModel | null) => {
+        if (data) {
+          this.alertService.open(`Бренд ${data.name} создан`, {label: `Успешно`, status: TuiNotification.Success, autoClose: 5000}).subscribe();
+          this.refreshData();
+        }
       },
     });
   }
 
   public showEditDialog(brand: BrandModel): void {
-    const dialog = this.dialogService.open<BrandModel>(
+    const dialog = this.dialogService.open<BrandModel | null>(
       new PolymorpheusComponent(BrandDialogComponent, this.injector),
       {
         label: 'Бренд',
@@ -79,11 +80,11 @@ export class BrandsListComponent implements OnInit {
       }
     );
     dialog.subscribe({
-      next: data => {
-        console.info(`Dialog emitted data = ${data}`);
-      },
-      complete: () => {
-        console.info(`Dialog closed`);
+      next: (data: BrandModel | null) => {
+        if (data) {
+          this.alertService.open(brand.name === data.name ? `Бренд ${brand.name} изменен` : `Бренд ${brand.name} изменен. Новое название ${data.name}`, {label: `Успешно`, status: TuiNotification.Success, autoClose: 5000}).subscribe();
+          this.refreshData();
+        }
       },
     });
   }
@@ -92,7 +93,10 @@ export class BrandsListComponent implements OnInit {
     this.submitService.submitDialog('Удалить', `Вы действительно хотите удалить бренд: ${title}?`).subscribe({
       next: (res) => {
         if (res) {
-          console.log('Delete brand with id', id);
+          this.brandsService.deleteBrand(id).subscribe(() => {
+            this.alertService.open(`Бренд ${title} удален`, {label: `Успешно`, status: TuiNotification.Success, autoClose: 5000}).subscribe();
+            this.refreshData();
+          });
         }
       },
     })

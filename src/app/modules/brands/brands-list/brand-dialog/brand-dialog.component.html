@@ -1,10 +1,10 @@
 <tui-loader
-  [showLoader]="false"
+  [showLoader]="loading"
   [overlay]="true"
   size="xl"
 >
   <div>
-    <form [formGroup]="formGroup">
+    <form [formGroup]="formGroup" (ngSubmit)="submit()">
       <tui-input
         tuiTextfieldSize="m"
         class="tui-space_top-3 tui-space_bottom-5"
@@ -29,11 +29,11 @@
       </tui-text-area>
       <button
         tuiButton
-        type="button"
+        type="submit"
         size="m"
         [disabled]="formGroup.invalid"
       >
-        {{ brandData?.id ? 'Сохранить' : 'Добавить' }}
+        {{ brandData?._id ? 'Сохранить' : 'Добавить' }}
       </button>
     </form>
   </div>
