@@ -2,7 +2,8 @@
   <tui-avatar
     size="xs"
     [rounded]="true"
-    [text]="(authService.currentUser$ | async)?.name || 'Неизвестно'"
+    *tuiLet="authService.currentUser$ | async as userData"
+    [text]=" userData?.username || 'Неизвестно'"
   ></tui-avatar>
 </ng-template>
 
@@ -64,7 +65,7 @@
             [icon]="iconProfile"
           >
         <span>
-          {{ (authService.currentUser$ | async)?.name || 'Неизвестно' }}
+          {{ (authService.currentUser$ | async)?.username || 'Неизвестно' }}
         </span>
           </button>
         </tui-hosted-dropdown>

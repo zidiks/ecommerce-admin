@@ -5,12 +5,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { TUI_LANGUAGE, TUI_RUSSIAN_LANGUAGE } from '@taiga-ui/i18n';
 import { of } from "rxjs";
 import localeRu from '@angular/common/locales/ru';
 import { registerLocaleData } from "@angular/common";
 import { SubmitComponent } from './shared/components/submit/submit.component';
+import { JwtInterceptor } from "./shared/interceptors/jwt.interceptor";
+import { ErrorInterceptor } from "./shared/interceptors/error.interceptor";
 
 registerLocaleData(localeRu, 'ru');
 
@@ -41,7 +43,17 @@ registerLocaleData(localeRu, 'ru');
     {
       provide: LOCALE_ID,
       useValue: 'ru'
-    }
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true
+    },
   ],
   bootstrap: [AppComponent]
 })

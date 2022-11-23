@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, delay, map, Observable, of, tap, throwError } from "rxjs";
+import { BehaviorSubject, map, Observable, tap, throwError } from "rxjs";
 import { UserModel } from "../models/user.model";
 import { Roles } from "../enums/roles.enum";
-import { HttpClient } from "@angular/common/http";
+import { HttpService } from "./http.service";
+import { GetCurrentUserResDto, LoginReqDto, LoginResDto } from "../dto/auth.dto";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class AuthService {
   public currentUser$: Observable<UserModel | null> = this.currentUserSubject.asObservable();
 
   constructor(
-    private http: HttpClient
+    private http: HttpService,
   ) {
   }
 
@@ -20,25 +21,39 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
-  public updCurrentUser(): Observable<UserModel | null> {
-    const storageUserToken: string | undefined = JSON.parse(localStorage.getItem('currentUser') || 'null')?.token;
+  public updCurrentUser(): Observable<UserModel> {
+    const storageUserToken: string | undefined = JSON.parse(localStorage.getItem('currentUser') || 'null')?.accessToken;
     if (storageUserToken) {
-      return this.fakeGetUser().pipe(
-        tap((res: UserModel | null) => {
-          this.currentUserSubject.next(res);
+      return this.http.get<GetCurrentUserResDto>('auth').pipe(
+        map((res: GetCurrentUserResDto) => {
+          const newCurrentUserData: UserModel = Object.assign(
+            this.currentUserSubject.value || {},
+            {
+              id: res.userId,
+              username: res.username,
+              roles: res.roles,
+              accessToken: res.accessToken,
+            });
+          this.currentUserSubject.next(newCurrentUserData);
+          return newCurrentUserData;
         })
       )
     } else {
-      return of(null);
+      return throwError(new Error('Empty token'));
     }
   }
 
-  public login(login: string, password: string): Observable<UserModel | null> {
-    return this.fakeLogin(login, password)
-      .pipe(map((user: UserModel | null) => {
-       if (user?.role !== Roles.Client) {
-         localStorage.setItem('currentUser', JSON.stringify(user));
-         this.currentUserSubject.next(user);
+  public login(username: string, password: string): Observable<LoginResDto> {
+    return this.http.post<LoginResDto, LoginReqDto>('auth/login', {username, password}).pipe(tap((user: LoginResDto) => {
+       if (user?.roles.includes(Roles.User)) {
+         const userData: UserModel = {
+           id: user.sub,
+           username: user.username,
+           roles: user.roles,
+           accessToken: user.accessToken,
+         };
+         localStorage.setItem('currentUser', JSON.stringify(userData));
+         this.currentUserSubject.next(userData);
          this.updCurrentUser().subscribe();
        }
         return user;
@@ -54,38 +69,6 @@ export class AuthService {
   public softLogout(): void {
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
-  }
-
-  public fakeLogin(login: string, password: string): Observable<any> {
-    if (login === 'zidiks' && password === '123') {
-      return of({
-        id: '343jn4l-34jkn343-n34kj334',
-        name: 'Тимофей Савельев',
-        login: 'zidiks',
-        role: Roles.Admin,
-        token: '228',
-      }).pipe(delay(200));
-    } else {
-      return throwError({
-        error: 'Неверный логин или пароль'
-      });
-    }
-  }
-
-  public fakeGetUser(): Observable<any> {
-    const token: string | undefined = JSON.parse(localStorage.getItem('currentUser') || 'null')?.token;
-    if (token === '228') {
-      return of ({
-        id: '343jn4l-34jkn343-n34kj334',
-        name: 'Миронов Владимир',
-        login: 'zidiks',
-        role: Roles.Admin,
-      });
-    } else {
-      return throwError({
-        error: 'Неверный ключ доступа'
-      });
-    }
   }
 
 }

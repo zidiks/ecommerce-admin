@@ -54,14 +54,14 @@ export class LoginComponent {
         .pipe(take(1))
         .subscribe(
           (res) => {
-            if (res && res?.role === Roles.Client) {
+            if (res && !res.roles.includes(Roles.User)) {
               this.alertService.open('Недостаточно прав доступа', {label: `Невозможно войти`, status: TuiNotification.Error, autoClose: 7000}).subscribe();
               this.loading = false;
             }
             this.router.navigate(['/']);
           },
           (error) => {
-            this.alertService.open(error.error, {label: `Невозможно войти`, status: TuiNotification.Error, autoClose: 7000}).subscribe();
+            this.alertService.open(error.message, {label: `Невозможно войти`, status: TuiNotification.Error, autoClose: 7000}).subscribe();
             this.loading = false;
           });
     }, 1500);
