@@ -21,19 +21,19 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
-  public updCurrentUser(): Observable<UserModel> {
+  public updCurrentUser(): Observable<UserModel | null> {
     const storageUserToken: string | undefined = JSON.parse(localStorage.getItem('currentUser') || 'null')?.accessToken;
     if (storageUserToken) {
       return this.http.get<GetCurrentUserResDto>('auth').pipe(
         map((res: GetCurrentUserResDto) => {
-          const newCurrentUserData: UserModel = Object.assign(
+          const newCurrentUserData: UserModel | null = res ? Object.assign(
             this.currentUserSubject.value || {},
             {
               id: res.userId,
               username: res.username,
               roles: res.roles,
               accessToken: res.accessToken,
-            });
+            }) : null;
           this.currentUserSubject.next(newCurrentUserData);
           return newCurrentUserData;
         })

@@ -13,6 +13,7 @@ import { registerLocaleData } from "@angular/common";
 import { SubmitComponent } from './shared/components/submit/submit.component';
 import { JwtInterceptor } from "./shared/interceptors/jwt.interceptor";
 import { ErrorInterceptor } from "./shared/interceptors/error.interceptor";
+import { HttpControlInterceptor } from "./shared/interceptors/http-control.interceptor";
 
 registerLocaleData(localeRu, 'ru');
 
@@ -47,6 +48,11 @@ registerLocaleData(localeRu, 'ru');
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpControlInterceptor,
       multi: true
     },
     {
