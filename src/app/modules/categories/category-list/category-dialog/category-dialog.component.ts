@@ -8,6 +8,7 @@ import { TypesService } from "../../../types/types.service";
 import { Observable } from "rxjs";
 import { ProductTypePrevModel } from "../../../../shared/models/type-property.model";
 import { TuiContextWithImplicit, tuiPure, TuiStringHandler } from "@taiga-ui/cdk";
+import { CategoriesService } from "../../categories.service";
 
 @Component({
   selector: 'app-category-dialog',
@@ -16,9 +17,10 @@ import { TuiContextWithImplicit, tuiPure, TuiStringHandler } from "@taiga-ui/cdk
 })
 export class CategoryDialogComponent {
   public typesList: Observable<ProductTypePrevModel[] | null>;
+  public loading = false;
 
   public formGroup: FormGroup = this.formBuilder.group( {
-    parent: [ this.parentData?.name || this.categoryData?.parent?.name || 'Корень каталога' ],
+    parent: [ this.parentData?._id || this.categoryData?.parent?._id || 'Корень каталога' ],
     name : [ this.categoryData?.name, Validators.required ],
     handle : [ this.categoryData?.handle, Validators.required ],
     description : [ this.categoryData?.description ],
@@ -29,6 +31,7 @@ export class CategoryDialogComponent {
     @Inject(POLYMORPHEUS_CONTEXT) private readonly context: TuiDialogContext<any, CategoryDialogDataModel>,
     private formBuilder: FormBuilder,
     private typesService: TypesService,
+    private categoriesService: CategoriesService,
   ) {
     this.typesList = this.typeListData;
   }
@@ -54,6 +57,40 @@ export class CategoryDialogComponent {
 
   public get typeListData(): Observable<ProductTypePrevModel[] | null> {
     return this.typesService.getTypes();
+  }
+
+  public submit(): void {
+    if (this.formGroup.valid) {
+      this.loading = true;
+      const formValue = this.formGroup.value;
+      if (this.categoryData?._id) {
+        this.categoriesService.updateCategory(this.categoryData._id, {
+          name: formValue.name,
+          handle: formValue.handle,
+          description: formValue.description,
+          media: this.categoryData?.media || [],
+          children: this.categoryData?.children?.map(item => item._id) || [],
+          productTypeId: formValue.type,
+        }).subscribe(
+          res => this.context.completeWith(res),
+          err => this.context.completeWith(null),
+        );
+      } else {
+        this.categoriesService.addCategory({
+          name: formValue.name,
+          handle: formValue.handle,
+          description: formValue.description,
+          media: [],
+          children: [],
+          productTypeId: formValue.type,
+        }).subscribe(
+          res => this.context.completeWith(res),
+          err => this.context.completeWith(null),
+        );
+      }
+    } else {
+      this.formGroup.markAsTouched();
+    }
   }
 
 }

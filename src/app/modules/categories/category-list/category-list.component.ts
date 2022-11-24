@@ -4,7 +4,7 @@ import { ApiDataModel } from "../../../shared/models/api-data.model";
 import { CategoriesService } from "../categories.service";
 import { EMPTY_ARRAY, TuiHandler } from "@taiga-ui/cdk";
 import { ApiLoadingState } from "../../../shared/enums/api-loading-state.enum";
-import { TuiDialogService } from "@taiga-ui/core";
+import { TuiAlertService, TuiDialogService, TuiNotification } from "@taiga-ui/core";
 import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
 import { CategoryDialogComponent } from "./category-dialog/category-dialog.component";
 import { setCategoryChildParent } from "../../../shared/functions/set-category-child-parent.func";
@@ -31,6 +31,7 @@ export class CategoryListComponent implements OnInit {
 
   constructor(
     @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
+    @Inject(TuiAlertService) private readonly alertService: TuiAlertService,
     @Inject(Injector) private readonly injector: Injector,
     private categoriesService: CategoriesService,
     private submitService: SubmitService,
@@ -62,10 +63,10 @@ export class CategoryListComponent implements OnInit {
     );
     dialog.subscribe({
       next: data => {
-        console.info(`Dialog emitted data = ${data}`);
-      },
-      complete: () => {
-        console.info(`Dialog closed`);
+        if (data) {
+          this.alertService.open(`Категория ${data.name} создана`, {label: `Успешно`, status: TuiNotification.Success, autoClose: 5000}).subscribe();
+          this.refreshData();
+        }
       },
     });
   }
@@ -82,10 +83,10 @@ export class CategoryListComponent implements OnInit {
     );
     dialog.subscribe({
       next: data => {
-        console.info(`Dialog emitted data = ${data}`);
-      },
-      complete: () => {
-        console.info(`Dialog closed`);
+        if (data) {
+          this.alertService.open(category.name === data.name ? `Категория ${category.name} изменена` : `Категория ${category.name} изменена. Новое название ${data.name}`, {label: `Успешно`, status: TuiNotification.Success, autoClose: 5000}).subscribe();
+          this.refreshData();
+        }
       },
     });
   }
@@ -94,7 +95,10 @@ export class CategoryListComponent implements OnInit {
     this.submitService.submitDialog('Удалить', `Вы действительно хотите удалить категорию: ${title}?`).subscribe({
       next: (res) => {
         if (res) {
-          console.log('Delete category with id', id);
+          this.categoriesService.deleteCategory(id).subscribe(() => {
+            this.alertService.open(`Категория ${title} удалена`, {label: `Успешно`, status: TuiNotification.Success, autoClose: 5000}).subscribe();
+            this.refreshData();
+          });
         }
       },
     })

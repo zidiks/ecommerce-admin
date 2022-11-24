@@ -1,5 +1,5 @@
 export interface CategoryModel {
-  id: string;
+  _id: string;
   name: string;
   handle: string;
   description?: string;
@@ -10,14 +10,14 @@ export interface CategoryModel {
 }
 
 export interface CategoryParentModel {
-  id: string;
+  _id: string;
   name: string;
   handle: string;
   description?: string;
 }
 
 export interface CategoryLinearModel {
-  id: string;
+  _id: string;
   name: string;
   productTypeId?: string;
 }

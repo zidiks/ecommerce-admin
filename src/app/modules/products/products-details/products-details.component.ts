@@ -96,7 +96,7 @@ export class ProductsDetailsComponent implements OnInit {
     });
     this.f['categoryId'].valueChanges.subscribe((value: string) => {
       if (this.categoriesData?.length) {
-        const categoryItem = this.linearCategoriesData.find((category => category.id === value));
+        const categoryItem = this.linearCategoriesData.find((category => category._id === value));
         if (categoryItem) {
           this.f['productTypeId'].setValue(categoryItem.productTypeId);
         }
@@ -163,7 +163,7 @@ export class ProductsDetailsComponent implements OnInit {
   }
 
   readonly categoryContent: TuiStringHandler<TuiValueContentContext<readonly unknown[]>> = ({$implicit}) => {
-    const categoryItem = (this.linearCategoriesData).find((category => category.id === $implicit.toString()));
+    const categoryItem = (this.linearCategoriesData).find((category => category._id === $implicit.toString()));
     if (categoryItem) {
       return categoryItem.name;
     }
@@ -175,7 +175,7 @@ export class ProductsDetailsComponent implements OnInit {
   private linearCategory(treeData: CategoryModel[]): CategoryLinearModel[] {
     const recursionFn = (linearTree: CategoryLinearModel[],categoryNode: CategoryModel): void => {
       linearTree.push({
-        id: categoryNode.id,
+        _id: categoryNode._id,
         name: categoryNode.name,
         productTypeId: categoryNode.productTypeId,
       });

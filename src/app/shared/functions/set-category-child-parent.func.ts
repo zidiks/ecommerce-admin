@@ -3,7 +3,7 @@ import { CategoryModel } from "../models/category.model";
 export const setCategoryChildParent = (category: CategoryModel): void => {
   category.children?.forEach((child: CategoryModel) => {
     child.parent = {
-      id: category.id,
+      _id: category._id,
       name: category.name,
       handle: category.handle,
       description: category.description,

@@ -12,7 +12,6 @@ import { AddBrandDto, UpdateBrandDto } from "../../../../shared/dto/brands.dto";
   styleUrls: ['./brand-dialog.component.scss']
 })
 export class BrandDialogComponent {
-
   public loading = false;
 
   public formGroup: FormGroup = this.formBuilder.group( {
