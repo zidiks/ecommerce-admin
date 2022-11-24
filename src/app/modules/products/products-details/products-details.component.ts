@@ -212,10 +212,10 @@ export class ProductsDetailsComponent implements OnInit {
     this.typesService.getTypeById(productTypeId).subscribe((res: ProductTypeModel | undefined) => {
       if (res) {
         res.properties.forEach((property: ProductTypePropertyModel) => {
-          (this.f['productProps'] as FormGroup).addControl(property.id, productPropertyControl(property.type));
-          const productPropValue: ProductPropertyValueModel | undefined = this.productData?.productProps.find((prop: ProductPropertyValueModel) => prop.productTypePropertyId === property.id);
+          (this.f['productProps'] as FormGroup).addControl(property._id, productPropertyControl(property.type));
+          const productPropValue: ProductPropertyValueModel | undefined = this.productData?.productProps.find((prop: ProductPropertyValueModel) => prop.productTypePropertyId === property._id);
           if (productPropValue) {
-            this.fProp[property.id].setValue(productPropValue.value);
+            this.fProp[property._id].setValue(productPropValue.value);
           }
         });
         this.currentTypeData = res;

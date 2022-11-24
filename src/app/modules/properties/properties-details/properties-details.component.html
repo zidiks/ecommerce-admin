@@ -21,6 +21,9 @@
         appearance="secondary"
         icon="tuiIconCheck"
         class="tui-space_right-3"
+        [showLoader]="loading"
+        (click)="submit()"
+        [disabled]="formGroup.invalid"
       >
         {{ !propertyId ? 'Добавить' : 'Сохранить' }}
       </button>
@@ -38,7 +41,7 @@
     </div>
   </div>
   <form [formGroup]="formGroup" *ngIf="(!(propertyData | apiLoadingState)) else loader">
-    <div class="content">
+    <tui-loader [showLoader]="loading" [overlay]="true" size="l" class="content">
         <h3 class="tui-form__header tui-form__header_margin-top_none">Общее</h3>
         <div class="tui-form__row tui-form__row_multi-fields">
           <div class="tui-form__multi-field">
@@ -100,7 +103,7 @@
             Отображать в фильтрах подбора
           </tui-checkbox-labeled>
         </div>
-    </div>
+    </tui-loader>
     <ng-container *tuiLet="f['type']?.valueChanges | async as typeValue">
       <div class="content" *ngIf="(typeValue | productProperty)?.options">
         <h3 class="tui-form__header tui-form__header_margin-top_none">Значения свойства</h3>

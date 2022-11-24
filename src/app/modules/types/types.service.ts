@@ -38,9 +38,7 @@ export class TypesService {
     }
   ];
 
-  constructor(
-    private propertiesService: PropertiesService,
-  ) { }
+  constructor() { }
 
   public getTypes(): Observable<ProductTypePrevModel[] | null> {
     return of(this.fakeTypes.map((type: ProductTypeBaseModel) => ({ id: type.id, name: type.name, propertiesLength: type.properties.length } as ProductTypePrevModel))).pipe(delay(1000), take(1));
@@ -51,11 +49,10 @@ export class TypesService {
     if (!data) {
       return of(undefined);
     } else {
-      const properties = data ? this.propertiesService.getPropertiesByIds(data.properties) : [];
       const dataWithProperties: ProductTypeModel = {
         id: data.id,
         name: data.name,
-        properties,
+        properties: [],
       };
       return of(dataWithProperties).pipe(delay(1000), take(1));
     }

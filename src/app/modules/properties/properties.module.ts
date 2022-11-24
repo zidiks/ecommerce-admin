@@ -6,17 +6,17 @@ import { PropertiesListComponent } from './properties-list/properties-list.compo
 import { PropertiesDetailsComponent } from './properties-details/properties-details.component';
 import {
   TuiBadgeModule,
-  TuiBreadcrumbsModule, TuiCheckboxLabeledModule,
+  TuiBreadcrumbsModule, TuiCheckboxLabeledModule, TuiDataListDropdownManagerModule,
   TuiInputModule, TuiInputTagModule,
   TuiMarkerIconModule, TuiSelectModule,
   TuiTextAreaModule
 } from "@taiga-ui/kit";
 import {
-  TuiButtonModule, TuiDataListModule,
-  TuiHintModule,
-  TuiLinkModule, TuiLoaderModule,
-  TuiSvgModule,
-  TuiTextfieldControllerModule
+    TuiButtonModule, TuiDataListModule, TuiDropdownModule,
+    TuiHintModule,
+    TuiLinkModule, TuiLoaderModule,
+    TuiSvgModule,
+    TuiTextfieldControllerModule
 } from "@taiga-ui/core";
 import { TuiTableModule, TuiTablePaginationModule } from "@taiga-ui/addon-table";
 import { TuiLetModule } from "@taiga-ui/cdk";
@@ -30,30 +30,32 @@ import { ReactiveFormsModule } from "@angular/forms";
     PropertiesListComponent,
     PropertiesDetailsComponent
   ],
-    imports: [
-        CommonModule,
-        PropertiesRoutingModule,
-        TuiBreadcrumbsModule,
-        TuiButtonModule,
-        TuiLinkModule,
-        TuiTableModule,
-        TuiLetModule,
-        ApiLoadingStateModule,
-        TuiSvgModule,
-        TuiTablePaginationModule,
-        TuiMarkerIconModule,
-        ProductPropertyModule,
-        TuiBadgeModule,
-        TuiHintModule,
-        ReactiveFormsModule,
-        TuiInputModule,
-        TuiTextAreaModule,
-        TuiSelectModule,
-        TuiTextfieldControllerModule,
-        TuiDataListModule,
-        TuiLoaderModule,
-        TuiCheckboxLabeledModule,
-        TuiInputTagModule,
-    ]
+  imports: [
+    CommonModule,
+    PropertiesRoutingModule,
+    TuiBreadcrumbsModule,
+    TuiButtonModule,
+    TuiLinkModule,
+    TuiTableModule,
+    TuiLetModule,
+    ApiLoadingStateModule,
+    TuiSvgModule,
+    TuiTablePaginationModule,
+    TuiMarkerIconModule,
+    ProductPropertyModule,
+    TuiBadgeModule,
+    TuiHintModule,
+    ReactiveFormsModule,
+    TuiInputModule,
+    TuiTextAreaModule,
+    TuiSelectModule,
+    TuiTextfieldControllerModule,
+    TuiDataListModule,
+    TuiLoaderModule,
+    TuiCheckboxLabeledModule,
+    TuiInputTagModule,
+    TuiDropdownModule,
+    TuiDataListDropdownManagerModule,
+  ]
 })
 export class PropertiesModule { }

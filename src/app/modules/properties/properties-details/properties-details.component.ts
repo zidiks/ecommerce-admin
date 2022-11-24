@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
+import { Component, Inject, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from "@angular/router";
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from "@angular/forms";
 import {
   EMPTY_ARRAY,
@@ -19,6 +19,7 @@ import { ApiDataModel } from "../../../shared/models/api-data.model";
 import { ProductTypePropertyModel } from "../../../shared/models/type-property.model";
 import { PropertiesService } from "../properties.service";
 import { pairwise } from "rxjs";
+import { TuiAlertService, TuiNotification } from "@taiga-ui/core";
 
 @Component({
   selector: 'app-properties-details',
@@ -31,6 +32,7 @@ export class PropertiesDetailsComponent implements OnInit {
   public typesList: ProductTypePropertyItemModel[] = this.productTypePropertyTypes;
   public propertyData: ApiDataModel<ProductTypePropertyModel>;
   public productTypePropertyType = ProductTypePropertyType;
+  public loading = false;
 
   public formGroup: FormGroup = this.formBuilder.group({
     name: [``, Validators.required],
@@ -42,7 +44,9 @@ export class PropertiesDetailsComponent implements OnInit {
   });
 
   constructor(
+    @Inject(TuiAlertService) private readonly alertService: TuiAlertService,
     private route: ActivatedRoute,
+    private router: Router,
     private formBuilder: FormBuilder,
     private propertiesService: PropertiesService,
   ) {
@@ -64,9 +68,8 @@ export class PropertiesDetailsComponent implements OnInit {
   }
 
   private createControlValidator(handler: TuiBooleanHandler<string>): ValidatorFn {
-    return ({value}: AbstractControl) => {
-      const invalidTags = value ? value.filter(handler) : EMPTY_ARRAY;
-
+    return ({value}: AbstractControl<any[]>) => {
+      const invalidTags = value ? value.filter((item: any) => !handler(item)) : EMPTY_ARRAY;
       return invalidTags.length > 0
         ? {
           tags: new TuiValidationError(`Some tags are invalid`),
@@ -84,11 +87,6 @@ export class PropertiesDetailsComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    if (this.propertyId) {
-      this.refreshData();
-    } else {
-      this.propertyData = null;
-    }
     this.f['type'].valueChanges.pipe(pairwise()).subscribe(([prev, next]: [ProductTypePropertyType, ProductTypePropertyType]) => {
       if (ProductTypePropertyType.NumberSelect === next) {
         this.f['options'].clearValidators();
@@ -97,20 +95,26 @@ export class PropertiesDetailsComponent implements OnInit {
         this.f['options'].clearValidators();
         this.f['options'].setValidators(this.createControlValidator(this.tagWordsValidator));
       }
-      if (!productsTypesPropertiesData[next].options && productsTypesPropertiesData[prev].options) {
-        this.f['options'].reset();
+      if (!productsTypesPropertiesData[next]?.options && productsTypesPropertiesData[prev]?.options) {
+        this.f['options'].patchValue([]);
       }
     });
+    if (this.propertyId) {
+      this.refreshData();
+    } else {
+      this.propertyData = null;
+    }
   }
 
   public refreshData(): void {
     if (this.propertyId) {
       this.propertyData = undefined;
-      this.propertiesService.getPropertyById(this.propertyId).subscribe((res: ProductTypePropertyModel | undefined) => {
+      this.formGroup.reset();
+      this.propertiesService.getPropertyById(this.propertyId).subscribe((res: ProductTypePropertyModel) => {
         this.propertyData = res || null;
         if (res) {
           setTimeout(() => {
-            this.formGroup.setValue({
+            this.formGroup.patchValue({
               name: res.name,
               description: res.description,
               showCard: res.showCard,
@@ -142,6 +146,34 @@ export class PropertiesDetailsComponent implements OnInit {
     const map = new Map(items.map(({key, name}) => [key.toString(), name] as [string, string]));
 
     return ({$implicit}: TuiContextWithImplicit<string>) => map.get($implicit) || ``;
+  }
+
+  public submit(): void {
+    this.formGroup.markAsTouched();
+    if (this.formGroup.valid) {
+      this.loading = true;
+      if (this.propertyId) {
+        this.propertiesService.updateProperty(this.propertyId, this.formGroup.value).subscribe(
+          res => {
+            this.alertService.open(`Свойство ${res.name} обновлено`, {label: `Успешно`, status: TuiNotification.Success, autoClose: 5000}).subscribe();
+            this.router.navigate(['/properties/list']);
+          },
+          err => {
+            this.loading = false;
+          }
+        )
+      } else {
+        this.propertiesService.addProperty(this.formGroup.value).subscribe(
+          res => {
+            this.alertService.open(`Свойство ${res.name} добавлено`, {label: `Успешно`, status: TuiNotification.Success, autoClose: 5000}).subscribe();
+            this.router.navigate(['/properties/list']);
+          },
+          err => {
+            this.loading = false;
+          }
+        )
+      }
+    }
   }
 
 }

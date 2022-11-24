@@ -200,7 +200,7 @@
         <h3 class="tui-form__header tui-form__header_margin-top_none">Свойства</h3>
         <ng-container *ngIf="!(currentTypeData | apiLoadingState); else loaderSmall">
           <div class="tui-form__row" *ngFor="let property of (currentTypeData?.properties || [])">
-            <property-input [control]="fProp[property.id]" [propertyData]="property"></property-input>
+            <property-input [control]="fProp[property._id]" [propertyData]="property"></property-input>
           </div>
         </ng-container>
       </div>

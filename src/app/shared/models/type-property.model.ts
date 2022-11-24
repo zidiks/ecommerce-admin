@@ -21,7 +21,7 @@ export interface ProductTypePrevModel {
 }
 
 export interface ProductTypePropertyModel {
-  id: string;
+  _id: string;
   showCard: boolean;
   showFilter: boolean;
   name: string;

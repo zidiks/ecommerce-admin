@@ -78,8 +78,42 @@
       <tr
         *ngFor="let item of sortedData"
         tuiTr
-        [routerLink]="'/properties/details/' + item.id"
+        [routerLink]="'/properties/details/' + item._id"
+        #dropdown="tuiDropdown"
+        tuiDropdownContext
+        [tuiDropdown]="contextMenu"
       >
+        <ng-template
+          #contextMenu
+        >
+          <tui-data-list
+            role="menu"
+            tuiDataListDropdownManager
+            class="context-menu"
+            [routerLink]="'/properties/details/' + item._id"
+          >
+            <button
+              tuiOption
+            >
+              Изменить
+              <tui-svg
+                class="icon"
+                src="tuiIconDraft"
+              ></tui-svg>
+            </button>
+            <button
+              tuiOption
+              class="context-delete"
+              (click)="showDeleteDialog(item._id, item.name); dropdown.toggle(false)"
+            >
+              Удалить
+              <tui-svg
+                class="icon"
+                src="tuiIconTrash"
+              ></tui-svg>
+            </button>
+          </tui-data-list>
+        </ng-template>
         <td
           *tuiCell="'name'"
           tuiTd

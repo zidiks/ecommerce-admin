@@ -42,7 +42,7 @@ export class TypesDialogComponent {
         map(items =>
           items
             .filter(({name}) => TUI_DEFAULT_MATCHER(name, search))
-            .map(({id}) => id),
+            .map(({_id}) => _id),
         ),
       ),
     ),
@@ -52,7 +52,7 @@ export class TypesDialogComponent {
   readonly stringify$: Observable<
     TuiHandler<string | TuiContextWithImplicit<string>, string>
     > = this.properties$.pipe(
-    map(items => new Map(items.map<[string, string]>(({id, name, type}) => [id, `${name} (${this.productPropertyPipe.transform(type)?.name})`]))),
+    map(items => new Map(items.map<[string, string]>(({_id, name, type}) => [_id, `${name} (${this.productPropertyPipe.transform(type)?.name})`]))),
     startWith(new Map()),
     map(
       map => (id: string | TuiContextWithImplicit<string>) => {
@@ -74,7 +74,7 @@ export class TypesDialogComponent {
         this.formGroup.setValue({
           name: res?.name || '',
           description: res?.description || '',
-          properties: res?.properties ? res.properties.map(item => item.id) : [],
+          properties: res?.properties ? res.properties.map(item => item._id) : [],
         });
       });
     } else {
