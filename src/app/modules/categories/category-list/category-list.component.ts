@@ -16,7 +16,7 @@ import { SubmitService } from "../../../shared/services/submit.service";
   styleUrls: ['./category-list.component.scss']
 })
 export class CategoryListComponent implements OnInit {
-  public categoriesData: ApiDataModel<CategoryModel[]>;
+  public categoriesData: ApiDataModel<CategoryModel>;
   public apiLoadingState = ApiLoadingState;
   public breadcrumbs = [
     {
@@ -43,9 +43,9 @@ export class CategoryListComponent implements OnInit {
 
   public refreshData(): void {
     this.categoriesData = undefined;
-    this.categoriesService.getCategories().subscribe((res: CategoryModel[] | null) => {
+    this.categoriesService.getCategoriesTree().subscribe((res: CategoryModel | null) => {
       if (res) {
-        res.forEach((category: CategoryModel) => setCategoryChildParent(category));
+        setCategoryChildParent(res)
       }
       this.categoriesData = res;
     })

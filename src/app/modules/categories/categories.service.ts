@@ -16,12 +16,20 @@ export class CategoriesService {
     return this.http.get<CategoryModel[]>('store/category');
   }
 
+  public getCategoriesTree(): Observable<CategoryModel | null> {
+    return this.http.get<CategoryModel>('store/category/tree');
+  }
+
   public addCategory(payload: AddCategoryDto): Observable<CategoryModel | null> {
     return this.http.post<CategoryModel, AddCategoryDto>('store/category', payload);
   }
 
   public updateCategory(id: string, payload: UpdateCategoryDto): Observable<CategoryModel | null> {
     return this.http.put<CategoryModel, UpdateCategoryDto>('store/category', id, payload);
+  }
+
+  public moveCategory(categoryId: string, toId: string): Observable<CategoryModel[] | null> {
+    return this.http.patch<CategoryModel[], { categoryId: string; toId: string }>('store/category/move', {categoryId, toId});
   }
 
   public deleteCategory(id: string): Observable<CategoryModel | null> {

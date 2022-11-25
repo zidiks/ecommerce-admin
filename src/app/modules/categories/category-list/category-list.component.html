@@ -40,9 +40,8 @@
     <div class="content" *ngSwitchCase="apiLoadingState.Success">
       <ng-container [tuiTreeController]="true">
         <tui-tree
-          *ngFor="let category of categoriesData"
           [tuiTreeController]="true"
-          [value]="category"
+          [value]="categoriesData"
           [content]="categoryItem"
           [childrenHandler]="handler"
         ></tui-tree>
@@ -81,6 +80,7 @@
                   ></tui-svg>
                 </button>
                 <button
+                  [disabled]="value.children?.length"
                   tuiOption
                   class="context-delete"
                   (click)="showDeleteDialog(value.id, value.name); dropdown.toggle(false)"

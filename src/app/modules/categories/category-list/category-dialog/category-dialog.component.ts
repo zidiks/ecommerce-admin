@@ -1,22 +1,25 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
-import { TuiDialogContext } from "@taiga-ui/core";
-import { CategoryModel } from "../../../../shared/models/category.model";
+import { TuiDialogContext, TuiValueContentContext } from "@taiga-ui/core";
+import { CategoryLinearModel, CategoryModel } from "../../../../shared/models/category.model";
 import { CategoryDialogDataModel } from "../../../../shared/models/category-dialog-data.model";
 import { TypesService } from "../../../types/types.service";
-import { Observable } from "rxjs";
+import { forkJoin, Observable } from "rxjs";
 import { ProductTypePrevModel } from "../../../../shared/models/type-property.model";
-import { TuiContextWithImplicit, tuiPure, TuiStringHandler } from "@taiga-ui/cdk";
+import { EMPTY_ARRAY, TuiContextWithImplicit, TuiHandler, tuiPure, TuiStringHandler } from "@taiga-ui/cdk";
 import { CategoriesService } from "../../categories.service";
+import { ApiDataModel } from "../../../../shared/models/api-data.model";
 
 @Component({
   selector: 'app-category-dialog',
   templateUrl: './category-dialog.component.html',
   styleUrls: ['./category-dialog.component.scss']
 })
-export class CategoryDialogComponent {
+export class CategoryDialogComponent implements OnInit {
   public typesList: Observable<ProductTypePrevModel[] | null>;
+  public categoriesTreeData: ApiDataModel<CategoryModel>;
+  public linearCategoriesData: CategoryLinearModel[] = [];
   public loading = false;
 
   public formGroup: FormGroup = this.formBuilder.group( {
@@ -34,6 +37,15 @@ export class CategoryDialogComponent {
     private categoriesService: CategoriesService,
   ) {
     this.typesList = this.typeListData;
+  }
+
+  public ngOnInit(): void {
+    this.categoriesService.getCategoriesTree().subscribe((res: CategoryModel | null) => {
+      this.categoriesTreeData = res;
+      if (res) {
+        this.linearCategoriesData = this.linearCategory([res]);
+      }
+    });
   }
 
   @tuiPure
@@ -64,25 +76,32 @@ export class CategoryDialogComponent {
       this.loading = true;
       const formValue = this.formGroup.value;
       if (this.categoryData?._id) {
-        this.categoriesService.updateCategory(this.categoryData._id, {
-          name: formValue.name,
-          handle: formValue.handle,
-          description: formValue.description,
-          media: this.categoryData?.media || [],
-          children: this.categoryData?.children?.map(item => item._id) || [],
-          productTypeId: formValue.type,
-        }).subscribe(
+        const requests: Observable<CategoryModel | CategoryModel[] | null>[] = [
+          this.categoriesService.updateCategory(this.categoryData._id, {
+            name: formValue.name,
+            handle: formValue.handle,
+            description: formValue.description,
+            media: this.categoryData?.media || [],
+            children: this.categoryData?.children?.map(item => item._id) || [],
+            productTypeId: formValue.type,
+          })
+        ];
+        if (this.parentData?._id !== formValue.parent && formValue.parent) {
+          requests.push(this.categoriesService.moveCategory(this.categoryData._id, formValue.parent));
+        }
+       forkJoin(requests).subscribe(
           res => this.context.completeWith(res),
           err => this.context.completeWith(null),
         );
       } else {
         this.categoriesService.addCategory({
+          parent: formValue.parent,
           name: formValue.name,
           handle: formValue.handle,
           description: formValue.description,
           media: [],
-          children: [],
           productTypeId: formValue.type,
+          root: this.parentData ? undefined : true,
         }).subscribe(
           res => this.context.completeWith(res),
           err => this.context.completeWith(null),
@@ -93,4 +112,34 @@ export class CategoryDialogComponent {
     }
   }
 
+  readonly categoryContent: TuiStringHandler<TuiValueContentContext<readonly unknown[]>> = ({$implicit}) => {
+    const categoryItem = (this.linearCategoriesData || []).find((category => category._id === $implicit.toString()));
+    if (categoryItem) {
+      return categoryItem.name;
+    }
+    return 'Неизвестно';
+  };
+
+  private linearCategory(treeData: CategoryModel[]): CategoryLinearModel[] {
+    const recursionFn = (linearTree: CategoryLinearModel[],categoryNode: CategoryModel): void => {
+      linearTree.push({
+        _id: categoryNode._id,
+        name: categoryNode.name,
+        productTypeId: categoryNode.productTypeId,
+      });
+      if (categoryNode.children?.length) {
+        categoryNode.children.forEach((child: CategoryModel) => {
+          recursionFn(linearTree, child);
+        });
+      }
+    }
+    const linearData: CategoryLinearModel[] = [];
+    treeData.forEach((item: CategoryModel) => recursionFn(linearData, item));
+    return linearData;
+  }
+
+  readonly categoryChildHandler: TuiHandler<CategoryModel, readonly CategoryModel[]> = item =>
+    this.categoryData?._id !== item._id ?
+      item.children?.filter(subItem =>subItem._id !== this.categoryData?._id) || EMPTY_ARRAY
+      : EMPTY_ARRAY;
 }

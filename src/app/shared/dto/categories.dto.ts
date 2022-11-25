@@ -1,4 +1,14 @@
 export interface AddCategoryDto {
+  parent: string;
+  name: string;
+  handle: string;
+  description?: string;
+  media: string[];
+  productTypeId?: string;
+  root?: boolean;
+}
+
+export interface UpdateCategoryDto {
   name: string;
   handle: string;
   description?: string;
@@ -6,5 +16,3 @@ export interface AddCategoryDto {
   children?: string[];
   productTypeId?: string;
 }
-
-export interface UpdateCategoryDto extends AddCategoryDto { }
