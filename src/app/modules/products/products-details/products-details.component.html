@@ -96,9 +96,8 @@
                 <tui-data-list>
                   <div class="category-tree">
                     <tui-tree
-                      *ngFor="let category of categoriesData"
                       [tuiTreeController]="true"
-                      [value]="category"
+                      [value]="categoriesData"
                       [content]="categoryItem"
                       [childrenHandler]="categoryChildHandler"
                     ></tui-tree>
@@ -111,7 +110,7 @@
                         tuiOption
                         class="category-item"
                         [disabled]="!value.productTypeId"
-                        [value]="value.id"
+                        [value]="value._id"
                       >
                         <tui-svg
                           class="category-icon"

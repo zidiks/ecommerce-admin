@@ -24,7 +24,7 @@ import { productPropertyControl } from "../../../shared/functions/product-proper
 interface DataResponse {
   product?: ProductModel | null;
   brands: BrandModel[] | null;
-  categories: CategoryModel[] | null;
+  categories: CategoryModel | null;
   productTypes: ProductTypePrevModel[] | null;
 }
 
@@ -38,7 +38,7 @@ export class ProductsDetailsComponent implements OnInit {
   public productId;
   public productData: ApiDataModel<ProductModel>;
   public brandsData: ApiDataModel<BrandModel[]>;
-  public categoriesData: ApiDataModel<CategoryModel[]>;
+  public categoriesData: ApiDataModel<CategoryModel>;
   public productTypesPrevsData: ApiDataModel<ProductTypePrevModel[]>;
   public currentTypeData: ApiDataModel<ProductTypeModel>;
   public linearCategoriesData: CategoryLinearModel[] = [];
@@ -95,7 +95,7 @@ export class ProductsDetailsComponent implements OnInit {
       }
     });
     this.f['categoryId'].valueChanges.subscribe((value: string) => {
-      if (this.categoriesData?.length) {
+      if (this.categoriesData) {
         const categoryItem = this.linearCategoriesData.find((category => category._id === value));
         if (categoryItem) {
           this.f['productTypeId'].setValue(categoryItem.productTypeId);
@@ -110,14 +110,14 @@ export class ProductsDetailsComponent implements OnInit {
     forkJoin({
       product: this.productId ? this.productsService.getProductById(this.productId) : of(null),
       brands: this.brandsService.getBrands(),
-      categories: this.categoriesService.getCategories(),
+      categories: this.categoriesService.getCategoriesTree(),
       productTypes: this.typesService.getTypes(),
     }).subscribe((res: DataResponse) => {
       this.productData = res.product;
       this.brandsData = res.brands;
       this.categoriesData = res.categories;
       if (res.categories) {
-        this.linearCategoriesData = this.linearCategory(res.categories);
+        this.linearCategoriesData = this.linearCategory([res.categories]);
       }
       this.productTypesPrevsData = res.productTypes;
       console.log(this.formGroup.value);
@@ -210,6 +210,7 @@ export class ProductsDetailsComponent implements OnInit {
     this.currentTypeData = undefined;
     this.clearPropertiesControls();
     this.typesService.getTypeById(productTypeId).subscribe((res: ProductTypeModel | null) => {
+      console.log(res);
       if (res) {
         res.properties.forEach((property: ProductTypePropertyModel) => {
           (this.f['productProps'] as FormGroup).addControl(property._id, productPropertyControl(property.type));
