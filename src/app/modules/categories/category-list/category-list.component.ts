@@ -95,9 +95,11 @@ export class CategoryListComponent implements OnInit {
     this.submitService.submitDialog('Удалить', `Вы действительно хотите удалить категорию: ${title}?`).subscribe({
       next: (res) => {
         if (res) {
-          this.categoriesService.deleteCategory(id).subscribe(() => {
-            this.alertService.open(`Категория ${title} удалена`, {label: `Успешно`, status: TuiNotification.Success, autoClose: 5000}).subscribe();
-            this.refreshData();
+          this.categoriesService.deleteCategory(id).subscribe((res) => {
+            if (res) {
+              this.alertService.open(`Категория ${title} удалена`, {label: `Успешно`, status: TuiNotification.Success, autoClose: 5000}).subscribe();
+              this.refreshData();
+            }
           });
         }
       },

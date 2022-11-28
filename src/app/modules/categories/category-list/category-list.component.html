@@ -83,7 +83,7 @@
                   [disabled]="value.children?.length"
                   tuiOption
                   class="context-delete"
-                  (click)="showDeleteDialog(value.id, value.name); dropdown.toggle(false)"
+                  (click)="showDeleteDialog(value._id, value.name); dropdown.toggle(false)"
                 >
                   Удалить
                   <tui-svg
