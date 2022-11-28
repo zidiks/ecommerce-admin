@@ -155,8 +155,10 @@ export class PropertiesDetailsComponent implements OnInit {
       if (this.propertyId) {
         this.propertiesService.updateProperty(this.propertyId, this.formGroup.value).subscribe(
           res => {
-            this.alertService.open(`Свойство ${res.name} обновлено`, {label: `Успешно`, status: TuiNotification.Success, autoClose: 5000}).subscribe();
-            this.router.navigate(['/properties/list']);
+            if (res) {
+              this.alertService.open(`Свойство ${res.name} обновлено`, {label: `Успешно`, status: TuiNotification.Success, autoClose: 5000}).subscribe();
+              this.router.navigate(['/properties/list']);
+            }
           },
           err => {
             this.loading = false;
@@ -165,8 +167,10 @@ export class PropertiesDetailsComponent implements OnInit {
       } else {
         this.propertiesService.addProperty(this.formGroup.value).subscribe(
           res => {
-            this.alertService.open(`Свойство ${res.name} добавлено`, {label: `Успешно`, status: TuiNotification.Success, autoClose: 5000}).subscribe();
-            this.router.navigate(['/properties/list']);
+            if (res) {
+              this.alertService.open(`Свойство ${res.name} добавлено`, {label: `Успешно`, status: TuiNotification.Success, autoClose: 5000}).subscribe();
+              this.router.navigate(['/properties/list']);
+            }
           },
           err => {
             this.loading = false;

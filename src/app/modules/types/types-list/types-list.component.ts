@@ -4,7 +4,7 @@ import { ApiLoadingState } from "../../../shared/enums/api-loading-state.enum";
 import { ProductTypeModel, ProductTypePrevModel } from "../../../shared/models/type-property.model";
 import { TypesService } from "../types.service";
 import { PolymorpheusComponent } from "@tinkoff/ng-polymorpheus";
-import { TuiDialogService } from "@taiga-ui/core";
+import { TuiAlertService, TuiDialogService, TuiNotification } from "@taiga-ui/core";
 import { SubmitService } from "../../../shared/services/submit.service";
 import { TypesDialogComponent } from "./types-dialog/types-dialog.component";
 
@@ -29,6 +29,7 @@ export class TypesListComponent implements OnInit {
 
   constructor(
     @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
+    @Inject(TuiAlertService) private readonly alertService: TuiAlertService,
     @Inject(Injector) private readonly injector: Injector,
     private typesService: TypesService,
     private submitService: SubmitService,
@@ -86,7 +87,12 @@ export class TypesListComponent implements OnInit {
     this.submitService.submitDialog('Удалить', `Вы действительно хотите удалить сущность: ${title}?`).subscribe({
       next: (res) => {
         if (res) {
-          console.log('Delete type with id', id);
+          this.typesService.deleteType(id).subscribe((deleteRes) => {
+            if (deleteRes) {
+              this.alertService.open(`Сущность ${title} удалена`, {label: `Успешно`, status: TuiNotification.Success, autoClose: 5000}).subscribe();
+              this.refreshData();
+            }
+          });
         }
       },
     })

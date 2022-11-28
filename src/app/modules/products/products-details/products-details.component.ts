@@ -157,7 +157,7 @@ export class ProductsDetailsComponent implements OnInit {
   public stringifyTypes(
     items: ProductTypePrevModel[],
   ): TuiStringHandler<TuiContextWithImplicit<string>> {
-    const map = new Map(items.map(({id, name}) => [id, name] as [string, string]));
+    const map = new Map(items.map(({_id, name}) => [_id, name] as [string, string]));
 
     return ({$implicit}: TuiContextWithImplicit<string>) => map.get($implicit) || ``;
   }
@@ -209,7 +209,7 @@ export class ProductsDetailsComponent implements OnInit {
   private setPropertiesControls(productTypeId: string): void {
     this.currentTypeData = undefined;
     this.clearPropertiesControls();
-    this.typesService.getTypeById(productTypeId).subscribe((res: ProductTypeModel | undefined) => {
+    this.typesService.getTypeById(productTypeId).subscribe((res: ProductTypeModel | null) => {
       if (res) {
         res.properties.forEach((property: ProductTypePropertyModel) => {
           (this.f['productProps'] as FormGroup).addControl(property._id, productPropertyControl(property.type));

@@ -42,7 +42,7 @@
         size="m"
         [disabled]="formGroup.invalid"
       >
-        {{ typesData?.id ? 'Сохранить' : 'Добавить' }}
+        {{ typesData?._id ? 'Сохранить' : 'Добавить' }}
       </button>
     </form>
   </div>

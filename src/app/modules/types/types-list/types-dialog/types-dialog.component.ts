@@ -55,8 +55,8 @@ export class TypesDialogComponent {
     map(items => new Map(items.map<[string, string]>(({_id, name, type}) => [_id, `${name} (${this.productPropertyPipe.transform(type)?.name})`]))),
     startWith(new Map()),
     map(
-      map => (id: string | TuiContextWithImplicit<string>) => {
-        return (tuiIsString(id) ? map.get(id) : map.get(id.$implicit)) || `Loading...`;
+      map => (_id: string | TuiContextWithImplicit<string>) => {
+        return (tuiIsString(_id) ? map.get(_id) : map.get(_id.$implicit)) || `Loading...`;
       }
     ),
   );
@@ -69,8 +69,9 @@ export class TypesDialogComponent {
     private propertiesService: PropertiesService,
   ) {
     if (this.context.data) {
-      typesService.getTypeById(this.context.data?.id).subscribe((res: ProductTypeModel | undefined) => {
+      typesService.getTypeById(this.context.data?._id).subscribe((res: ProductTypeModel | null) => {
         this.typesData = res || null;
+        console.log(res);
         this.formGroup.setValue({
           name: res?.name || '',
           description: res?.description || '',

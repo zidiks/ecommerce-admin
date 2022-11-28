@@ -52,7 +52,7 @@ export class CategoryDialogComponent implements OnInit {
   public stringify(
     items: ProductTypePrevModel[],
   ): TuiStringHandler<TuiContextWithImplicit<string>> {
-    const map = new Map(items.map(({id, name}) => [id, name] as [string, string]));
+    const map = new Map(items.map(({_id, name}) => [_id, name] as [string, string]));
 
     return ({$implicit}: TuiContextWithImplicit<string>) => map.get($implicit) || ``;
   }
