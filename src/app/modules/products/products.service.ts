@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { HttpService } from "../../shared/services/http.service";
 import { Paginated } from "../../shared/models/paginated.model";
 import { defaultOptions } from "../../shared/constants/default-get-products-options.const";
+import { AddProductDto, UpdateProductDto } from "../../shared/dto/products.dto";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class ProductsService {
     private http: HttpService,
   ) { }
 
-  public getProducts(options?: GetProductsOptions): Observable<Paginated<ProductModel[]>> {
+  public getProducts(options?: GetProductsOptions): Observable<Paginated<ProductModel[]> | null> {
     const mergedOptions: GetProductsOptions = { ...defaultOptions, ...options };
     const searchQuery = `search=${mergedOptions.search || ''}`;
     const sortQuery =`sort=${mergedOptions.sort || ''}`;
@@ -27,5 +28,13 @@ export class ProductsService {
 
   public getProductById(id: string): Observable<ProductModel | null> {
     return this.http.get<ProductModel>(`store/product/${id}`);
+  }
+
+  public addProduct(payload: AddProductDto): Observable<ProductModel | null> {
+    return this.http.post<ProductModel, AddProductDto>('store/product', payload);
+  }
+
+  public updateProduct(id: string, payload: UpdateProductDto): Observable<ProductModel | null> {
+    return this.http.put<ProductModel, UpdateProductDto>('store/product', id, payload);
   }
 }

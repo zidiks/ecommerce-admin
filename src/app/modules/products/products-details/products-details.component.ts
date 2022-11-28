@@ -43,6 +43,7 @@ export class ProductsDetailsComponent implements OnInit {
   public currentTypeData: ApiDataModel<ProductTypeModel>;
   public linearCategoriesData: CategoryLinearModel[] = [];
   rejectedFiles: readonly TuiFileLike[] = [];
+  public loading = false;
 
   readonly mediaControl = new FormControl([], [maxFilesLength(5)]);
 
@@ -230,6 +231,19 @@ export class ProductsDetailsComponent implements OnInit {
     Object.keys((this.f['productProps'] as FormGroup).controls).forEach((controlKey: string) => {
       (this.f['productProps'] as FormGroup).removeControl(controlKey);
     });
+  }
+
+  public submit(): void {
+    this.formGroup.markAsTouched();
+    if (this.formGroup.valid) {
+      console.log(this.formGroup.value);
+      this.loading = true;
+      if (this.productId) {
+
+      } else {
+
+      }
+    }
   }
 
 }

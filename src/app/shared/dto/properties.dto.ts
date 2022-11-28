@@ -10,4 +10,9 @@ export interface AddPropertyDto {
   options?: (string | number)[];
 }
 
+export interface ProductPropertyValueDto {
+  productTypePropertyId: string;
+  value: string | string[] | number | boolean;
+}
+
 export interface UpdatePropertyDto extends AddPropertyDto { }
