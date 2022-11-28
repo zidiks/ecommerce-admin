@@ -17,6 +17,14 @@ export interface ProductPropertyValueModel {
   value: string | string[] | number | boolean;
 }
 
+export interface GetProductsOptions {
+  search?: string;
+  page?: number;
+  sort?: string;
+  limit?: number;
+  asc?: boolean;
+}
+
 export interface ProductPrevModel {
   id: string;
   name: string;

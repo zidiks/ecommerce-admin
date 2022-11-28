@@ -1,54 +1,31 @@
 import { Injectable } from '@angular/core';
-import { ProductModel } from "../../shared/models/product.model";
-import { delay, Observable, of } from "rxjs";
+import { GetProductsOptions, ProductModel } from "../../shared/models/product.model";
+import { Observable } from "rxjs";
+import { HttpService } from "../../shared/services/http.service";
+import { Paginated } from "../../shared/models/paginated.model";
+import { defaultOptions } from "../../shared/constants/default-get-products-options.const";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsService {
-  public fakeProducts: ProductModel[] = [
-    {
-      id: 'ff27bf4c-09ee-40ad-9a6d-bf997c1a5aea',
-      name: 'Видеокарта ASUS TUF Gaming GeForce RTX 3080 Ti OC Edition 12GB GDDR6X',
-      media: [
-        'https://content2.onliner.by/catalog/device/main/326b60046da9ccc7af88ab178aa7f165.jpeg',
-        'https://content2.onliner.by/catalog/device/main/db8195d33fce3d3ee48afe255e288eab.jpeg',
-      ],
-      price: 4696.36,
-      brand: {
-        _id: '570962d9-5545-4837-9864-3221dd6b9b47',
-        name: 'Asus',
-        description: 'Расположенная на Тайване транснациональная компания, специализирующаяся на компьютерной электронике (как комплектующие, так и готовые продукты).',
-        origin: 'Тайвань',
-      },
-      description: 'NVIDIA GeForce RTX 3080 Ti 12 ГБ GDDR6X LHR, базовая частота 1370 МГц, макс. частота 1785 МГц, 10240sp, 80 RT-ядер, частота памяти 19000 МГц, 384 бит, доп. питание: 8+8 pin, 2.7 слота, HDMI, DisplayPort, трассировка лучей',
-      categoryId: '77d13a08-917f-4e6d-882d-c132c4fc6520',
-      productTypeId: 'd74a7db7-941f-4121-83f9-2db86710c523',
-      productProps: [
-        {
-          productTypePropertyId: '5adf782f-cca2-40cb-bfbd-e897ced33135',
-          value: true,
-        },
-        {
-          productTypePropertyId: '06c0f0da-2039-46d9-834e-81229d0f16b8',
-          value: '2021',
-        },
-        {
-          productTypePropertyId: '1223fde7-7798-49cc-8ecc-3933f2842716',
-          value: 12
-        }
-      ],
-    }
-  ];
 
-  constructor() { }
+  constructor(
+    private http: HttpService,
+  ) { }
 
-  public getProducts(): Observable<ProductModel[]> {
-    return of(this.fakeProducts).pipe(delay(1000));
+  public getProducts(options?: GetProductsOptions): Observable<Paginated<ProductModel[]>> {
+    const mergedOptions: GetProductsOptions = { ...defaultOptions, ...options };
+    const searchQuery = `search=${mergedOptions.search || ''}`;
+    const sortQuery =`sort=${mergedOptions.sort || ''}`;
+    const ascQuery = `asc=${mergedOptions.asc || ''}`;
+    const pageQuery = `page=${mergedOptions.page}`;
+    const limitQuery = `limit=${mergedOptions.limit}`;
+    const queries = [searchQuery, sortQuery, ascQuery, pageQuery, limitQuery].join('&');
+    return this.http.get<Paginated<ProductModel[]>>(`store/product?${queries}`);
   }
 
   public getProductById(id: string): Observable<ProductModel | null> {
-    const data = this.fakeProducts.find((item: ProductModel) => item.id === id);
-    return of(data || null).pipe(delay(1000));
+    return this.http.get<ProductModel>(`store/product/${id}`);
   }
 }

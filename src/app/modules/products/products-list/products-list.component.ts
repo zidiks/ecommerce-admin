@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiDataModel } from "../../../shared/models/api-data.model";
 import { ProductModel } from "../../../shared/models/product.model";
 import { ProductsService } from "../products.service";
+import { Paginated } from "../../../shared/models/paginated.model";
 
 @Component({
   selector: 'app-products-list',
@@ -35,8 +36,11 @@ export class ProductsListComponent implements OnInit {
 
   public refreshData(): void {
     this.productsData = undefined;
-    this.productsService.getProducts().subscribe((res: ProductModel[] | null) => {
-      this.productsData = res;
+    this.productsService.getProducts({
+      search: 'a',
+    }).subscribe((res: Paginated<ProductModel[]> | null) => {
+      console.log(res);
+      this.productsData = res?.data || null;
     });
   }
 
