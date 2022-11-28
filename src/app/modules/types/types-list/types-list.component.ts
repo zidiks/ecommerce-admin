@@ -55,11 +55,11 @@ export class TypesListComponent implements OnInit {
       }
     );
     dialog.subscribe({
-      next: data => {
-        console.info(`Dialog emitted data = ${data}`);
-      },
-      complete: () => {
-        console.info(`Dialog closed`);
+      next: (data: ProductTypeModel | null) => {
+        if (data) {
+          this.alertService.open(`Cущность ${data.name} создана`, {label: `Успешно`, status: TuiNotification.Success, autoClose: 5000}).subscribe();
+          this.refreshData();
+        }
       },
     });
   }
@@ -74,11 +74,11 @@ export class TypesListComponent implements OnInit {
       }
     );
     dialog.subscribe({
-      next: data => {
-        console.info(`Dialog emitted data = ${data}`);
-      },
-      complete: () => {
-        console.info(`Dialog closed`);
+      next: (data: ProductTypeModel | null) => {
+        if (data) {
+          this.alertService.open(type.name === data.name ? `Сущность ${type.name} изменена` : `Сущность ${type.name} изменена. Новое название ${data.name}`, {label: `Успешно`, status: TuiNotification.Success, autoClose: 5000}).subscribe();
+          this.refreshData();
+        }
       },
     });
   }

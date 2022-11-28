@@ -25,7 +25,7 @@ export class TypesService {
     return this.http.put<ProductTypeModel, UpdateTypeDto>(`store/type`, id, payload);
   }
 
-  public createType(payload: AddTypeDto): Observable<ProductTypeModel | null> {
+  public addType(payload: AddTypeDto): Observable<ProductTypeModel | null> {
     return this.http.post<ProductTypeModel, AddTypeDto>('store/type', payload);
   }
 

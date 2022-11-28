@@ -1,5 +1,5 @@
 <tui-loader
-  [showLoader]="false"
+  [showLoader]="loading || ([categoriesTreeData, linearCategoriesData, typesData] | apiLoadingState : 'Pending' : true)"
   [overlay]="true"
   size="xl"
 >
@@ -62,7 +62,7 @@
       </tui-input>
       <tui-select
         tuiTextfieldSize="m"
-        *tuiLet="typesList | async as items"
+        *tuiLet="typesData as items"
         [valueContent]="items ? stringify(items) : loading"
         formControlName="type"
         [tuiTextfieldLabelOutside]="!items?.length"
@@ -70,6 +70,13 @@
         Сущность
         <ng-template tuiDataList>
           <tui-data-list *ngIf="items?.length; else loading">
+            <button
+              tuiOption
+              class="empty-param"
+              [value]="null"
+            >
+              Без сущности
+            </button>
             <button
               *ngFor="let item of items"
               tuiOption

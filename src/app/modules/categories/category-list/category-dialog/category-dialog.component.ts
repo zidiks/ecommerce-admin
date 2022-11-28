@@ -17,7 +17,7 @@ import { ApiDataModel } from "../../../../shared/models/api-data.model";
   styleUrls: ['./category-dialog.component.scss']
 })
 export class CategoryDialogComponent implements OnInit {
-  public typesList: Observable<ProductTypePrevModel[] | null>;
+  public typesData: ApiDataModel<ProductTypePrevModel[]>;
   public categoriesTreeData: ApiDataModel<CategoryModel>;
   public linearCategoriesData: CategoryLinearModel[] = [];
   public loading = false;
@@ -35,11 +35,10 @@ export class CategoryDialogComponent implements OnInit {
     private formBuilder: FormBuilder,
     private typesService: TypesService,
     private categoriesService: CategoriesService,
-  ) {
-    this.typesList = this.typeListData;
-  }
+  ) { }
 
   public ngOnInit(): void {
+    this.typesService.getTypes().subscribe(res => this.typesData = res);
     this.categoriesService.getCategoriesTree().subscribe((res: CategoryModel | null) => {
       this.categoriesTreeData = res;
       if (res) {
@@ -86,11 +85,11 @@ export class CategoryDialogComponent implements OnInit {
             productTypeId: formValue.type,
           })
         ];
-        if (this.parentData?._id !== formValue.parent && formValue.parent) {
+        if (this.parentData?._id !== formValue.parent && formValue.parent && !this.categoryData.root) {
           requests.push(this.categoriesService.moveCategory(this.categoryData._id, formValue.parent));
         }
        forkJoin(requests).subscribe(
-          res => this.context.completeWith(res),
+          res => this.context.completeWith(res[0]),
           err => this.context.completeWith(null),
         );
       } else {
