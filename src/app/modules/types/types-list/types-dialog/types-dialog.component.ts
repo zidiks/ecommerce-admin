@@ -83,7 +83,7 @@ export class TypesDialogComponent {
           this.formGroup.setValue({
             name: res.type?.name || '',
             description: res.type?.description || '',
-            properties: res.type?.properties ? res.type.properties : [],
+            properties: res.type?.properties ? res.type.properties.map(item => item._id) : [],
           });
         });
       });
