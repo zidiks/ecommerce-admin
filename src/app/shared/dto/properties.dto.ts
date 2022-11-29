@@ -12,7 +12,9 @@ export interface AddPropertyDto {
 
 export interface ProductPropertyValueDto {
   productTypePropertyId: string;
-  value: string | string[] | number | boolean;
+  value: PropertyValue;
 }
+
+export type PropertyValue = string | string[] | number | boolean;
 
 export interface UpdatePropertyDto extends AddPropertyDto { }

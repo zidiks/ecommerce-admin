@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { ApiDataModel } from "../../../shared/models/api-data.model";
 import { ProductModel, ProductPropertyValueModel } from "../../../shared/models/product.model";
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
@@ -20,6 +20,8 @@ import { TuiAlertService, TuiNotification, TuiValueContentContext } from "@taiga
 import { maxFilesLength } from "../../../shared/functions/form-control-max-filex.func";
 import { TuiFileLike } from "@taiga-ui/kit";
 import { productPropertyControl } from "../../../shared/functions/product-property-control.func";
+import { AddProductDto, UpdateProductDto } from "../../../shared/dto/products.dto";
+import { PropertyValue } from "../../../shared/dto/properties.dto";
 
 interface DataResponse {
   product?: ProductModel | null;
@@ -60,6 +62,7 @@ export class ProductsDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private formBuilder: FormBuilder,
     private productsService: ProductsService,
     private typesService: TypesService,
@@ -121,7 +124,6 @@ export class ProductsDetailsComponent implements OnInit {
         this.linearCategoriesData = this.linearCategory([res.categories]);
       }
       this.productTypesPrevsData = res.productTypes;
-      console.log(this.formGroup.value);
       if (res.product) {
         const productData = res.product;
         setTimeout(() => {
@@ -211,7 +213,6 @@ export class ProductsDetailsComponent implements OnInit {
     this.currentTypeData = undefined;
     this.clearPropertiesControls();
     this.typesService.getTypeById(productTypeId).subscribe((res: ProductTypeModel | null) => {
-      console.log(res);
       if (res) {
         res.properties.forEach((property: ProductTypePropertyModel) => {
           (this.f['productProps'] as FormGroup).addControl(property._id, productPropertyControl(property.type));
@@ -236,12 +237,39 @@ export class ProductsDetailsComponent implements OnInit {
   public submit(): void {
     this.formGroup.markAsTouched();
     if (this.formGroup.valid) {
-      console.log(this.formGroup.value);
+      const data = this.formGroup.value;
+      const payload = {
+        ...data,
+        media: data.media || [],
+        productProps: Object.entries<PropertyValue>(data.productProps || [])
+          .map(([productTypePropertyId, value]: [string, PropertyValue]) =>
+            ({ productTypePropertyId, value }))
+      }
       this.loading = true;
       if (this.productId) {
-
+        this.productsService.updateProduct(this.productId.toString(), payload as UpdateProductDto).subscribe(
+          res => {
+            if (res) {
+              this.alertService.open(`Продукт ${res.name} обновлён`, {label: `Успешно`, status: TuiNotification.Success, autoClose: 5000}).subscribe();
+              this.router.navigate(['/products/list']);
+            }
+          },
+          err => {
+            this.loading = false;
+          }
+        );
       } else {
-
+        this.productsService.addProduct(payload as AddProductDto).subscribe(
+          res => {
+            if (res) {
+              this.alertService.open(`Продукт ${res.name} добавлен`, {label: `Успешно`, status: TuiNotification.Success, autoClose: 5000}).subscribe();
+              this.router.navigate(['/products/list']);
+            }
+          },
+          err => {
+            this.loading = false;
+          }
+        );
       }
     }
   }

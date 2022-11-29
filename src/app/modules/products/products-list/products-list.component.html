@@ -78,13 +78,13 @@
       <tr
         *ngFor="let item of sortedData"
         tuiTr
-        [routerLink]="'/products/details/' + item.id"
+        [routerLink]="'/products/details/' + item._id"
       >
         <td
           *tuiCell="'media'"
           tuiTd
         >
-          <img class="product-item-img" [src]="item.media[0]" [alt]="item.name">
+          <img class="product-item-img" [src]="item.media[0] || 'assets/images/no-image.png'" [alt]="item.name">
         </td>
         <td
           *tuiCell="'name'"

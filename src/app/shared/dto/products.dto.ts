@@ -4,11 +4,7 @@ export interface AddProductDto {
   name: string;
   media: string[];
   price: number;
-  brand: {
-    name: string;
-    description?: string;
-    origin: string;
-  };
+  brand: string;
   description: string;
   categoryId: string;
   productTypeId: string;
