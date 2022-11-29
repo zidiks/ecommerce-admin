@@ -39,7 +39,6 @@ export class ProductsListComponent implements OnInit {
     this.productsService.getProducts({
       search: 'a',
     }).subscribe((res: Paginated<ProductModel[]> | null) => {
-      console.log(res);
       this.productsData = res?.data || null;
     });
   }
