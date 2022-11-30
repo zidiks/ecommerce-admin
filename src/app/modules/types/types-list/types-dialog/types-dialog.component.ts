@@ -76,7 +76,6 @@ export class TypesDialogComponent {
         properties: propertiesService.getProperties(),
         type: typesService.getTypeById(this.typeData._id),
       }).subscribe((res) => {
-        console.log(res);
         this.propertiesDataSubject.next(res.properties || []);
         this.typesData = res.type || null;
         setTimeout(() => {

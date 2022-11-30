@@ -23,6 +23,10 @@ export class HttpService {
     return this.httpClient.get<T>(`${this.url}/${endpoint}`);
   }
 
+  public getImage(endpoint: string): Observable<Blob> {
+    return this.httpClient.get(`${this.url}/${endpoint}`, { responseType: 'blob' });
+  }
+
   public post<T, K>(endpoint: string, payload?: K): Observable<T> {
     return this.httpClient.post<T>(`${this.url}/${endpoint}`, payload);
   }

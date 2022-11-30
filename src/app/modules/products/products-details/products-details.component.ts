@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { ApiDataModel } from "../../../shared/models/api-data.model";
 import { ProductModel, ProductPropertyValueModel } from "../../../shared/models/product.model";
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { AbstractControl, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ProductsService } from "../products.service";
 import { TypesService } from "../../types/types.service";
 import { CategoryLinearModel, CategoryModel } from "../../../shared/models/category.model";
@@ -12,7 +12,7 @@ import {
   ProductTypePrevModel,
   ProductTypePropertyModel
 } from "../../../shared/models/type-property.model";
-import { forkJoin, of } from "rxjs";
+import { forkJoin, Observable, of } from "rxjs";
 import { BrandsService } from "../../brands/brands.service";
 import { CategoriesService } from "../../categories/categories.service";
 import { EMPTY_ARRAY, TuiContextWithImplicit, TuiHandler, tuiPure, TuiStringHandler } from "@taiga-ui/cdk";
@@ -22,6 +22,10 @@ import { TuiFileLike } from "@taiga-ui/kit";
 import { productPropertyControl } from "../../../shared/functions/product-property-control.func";
 import { AddProductDto, UpdateProductDto } from "../../../shared/dto/products.dto";
 import { PropertyValue } from "../../../shared/dto/properties.dto";
+import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
+import { ImagesService } from "../../../shared/services/images.service";
+
+const MAX_MEDIA_LENGTH = 10;
 
 interface DataResponse {
   product?: ProductModel | null;
@@ -44,14 +48,23 @@ export class ProductsDetailsComponent implements OnInit {
   public productTypesPrevsData: ApiDataModel<ProductTypePrevModel[]>;
   public currentTypeData: ApiDataModel<ProductTypeModel>;
   public linearCategoriesData: CategoryLinearModel[] = [];
-  rejectedFiles: readonly TuiFileLike[] = [];
   public loading = false;
+  public maxMediaLength = MAX_MEDIA_LENGTH;
 
-  readonly mediaControl = new FormControl([], [maxFilesLength(5)]);
+  loadingFile: TuiFileLike[] = [
+    {
+      name: `Loading file.txt`,
+    },
+    {
+      name: `Loading file2.txt`,
+    }
+  ];
+
+  removedFiles: TuiFileLike[] = this.loadingFile as unknown as TuiFileLike[];
 
   public formGroup: FormGroup = this.formBuilder.group({
     name: [null, Validators.required],
-    media: [[]],
+    media: [[], maxFilesLength(this.maxMediaLength)],
     price: [null, Validators.required],
     brand: [null, Validators.required],
     description: [null],
@@ -68,6 +81,7 @@ export class ProductsDetailsComponent implements OnInit {
     private typesService: TypesService,
     private brandsService: BrandsService,
     private categoriesService: CategoriesService,
+    private imagesService: ImagesService,
     @Inject(TuiAlertService) private readonly alertService: TuiAlertService,
   ) {
     this.productId = this.route.snapshot.params['id'];
@@ -89,9 +103,8 @@ export class ProductsDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.refreshData();
-    this.mediaControl.statusChanges.subscribe(response => {
-      console.info(`STATUS`, response);
-      console.info(`ERRORS`, this.mediaControl.errors, `\n`);
+    this.f['media'].valueChanges.subscribe(response => {
+      console.log(response);
     });
     this.f['productTypeId'].valueChanges.subscribe((value: string) => {
       if (value) {
@@ -106,6 +119,10 @@ export class ProductsDetailsComponent implements OnInit {
         }
       }
     });
+  }
+
+  public getImages(names: string[]): Observable<TuiFileLike[]> {
+    return names.length ? forkJoin(names.map(name => this.imagesService.getImage(name))) : of([]);
   }
 
   public refreshData(): void {
@@ -126,15 +143,17 @@ export class ProductsDetailsComponent implements OnInit {
       this.productTypesPrevsData = res.productTypes;
       if (res.product) {
         const productData = res.product;
-        setTimeout(() => {
-          this.formGroup.patchValue({
-            name: productData.name,
-            media: productData.media,
-            price: productData.price,
-            brand: productData.brand._id,
-            description: productData.description,
-            categoryId: productData.categoryId,
-            productTypeId: productData.productTypeId,
+        this.getImages(res.product.media || []).subscribe(mediaRes => {
+          setTimeout(() => {
+            this.formGroup.patchValue({
+              name: productData.name,
+              media: mediaRes || [],
+              price: productData.price,
+              brand: productData.brand?._id,
+              description: productData.description,
+              categoryId: productData.categoryId,
+              productTypeId: productData.productTypeId,
+            });
           });
         });
       } else {
@@ -194,18 +213,12 @@ export class ProductsDetailsComponent implements OnInit {
   }
 
   public onReject(files: TuiFileLike | readonly TuiFileLike[]): void {
-    this.rejectedFiles = [...this.rejectedFiles, ...(files as TuiFileLike[])];
+    this.alertService.open([...(files as TuiFileLike[])].map(item => item.name).join(', '), {label: `Ошибка загрузки файлов`, status: TuiNotification.Error, autoClose: 5000}).subscribe();
   }
 
   public removeFile({name}: File): void {
-    this.mediaControl.setValue(
-      this.mediaControl.value?.filter((current: File) => current.name !== name) ?? [],
-    );
-  }
-
-  public clearRejected({name}: TuiFileLike): void {
-    this.rejectedFiles = this.rejectedFiles.filter(
-      rejected => rejected.name !== name,
+    this.f['media'].setValue(
+      this.f['media'].value?.filter((current: File) => current.name !== name) ?? [],
     );
   }
 
@@ -232,6 +245,12 @@ export class ProductsDetailsComponent implements OnInit {
     Object.keys((this.f['productProps'] as FormGroup).controls).forEach((controlKey: string) => {
       (this.f['productProps'] as FormGroup).removeControl(controlKey);
     });
+  }
+
+  public drop(event: CdkDragDrop<string[]>) {
+    const array = this.f['media'].value;
+    moveItemInArray(array, event.previousIndex, event.currentIndex);
+    this.f['media'].setValue(array);
   }
 
   public submit(): void {

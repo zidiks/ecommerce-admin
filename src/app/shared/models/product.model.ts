@@ -5,7 +5,7 @@ export interface ProductModel {
   name: string;
   media: string[];
   price: number;
-  brand: BrandModel;
+  brand?: BrandModel;
   description: string;
   categoryId: string;
   productTypeId: string;

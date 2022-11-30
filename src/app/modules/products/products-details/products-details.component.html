@@ -173,28 +173,35 @@
             <tui-input-files
               accept="image/*"
               [multiple]="true"
-              [formControl]="mediaControl"
+              formControlName="media"
               (reject)="onReject($event)"
-              (ngModelChange)="mediaControl.markAsTouched()"
+              (ngModelChange)="f['media'].markAsTouched()"
             ></tui-input-files>
-
-            <tui-files class="tui-space_top-1">
+            <tui-files cdkDropList (cdkDropListDropped)="drop($event)" class="files-list tui-space_top-3">
               <tui-file
-                *ngFor="let file of (mediaControl.valueChanges | async) || []"
+                class="files-item"
+                cdkDrag
+                cdkDragLockAxis="y"
+                *ngFor="let file of (f['media'].valueChanges | async) || []; index as i"
+                state="normal"
+                size="l"
                 [file]="file"
                 (removed)="removeFile(file)"
-              ></tui-file>
-
-              <tui-file
-                *ngFor="let file of rejectedFiles"
-                state="error"
-                [file]="file"
-                (removed)="clearRejected(file)"
-              ></tui-file>
+              >
+                <div class="files-item-placeholder" *cdkDragPlaceholder></div>
+                <div>
+                  <tui-badge
+                    *ngIf="!i"
+                    status="success"
+                    class="tui-space_top-1"
+                    size="s"
+                    value="Обложка"
+                  ></tui-badge>
+                </div>
+              </tui-file>
             </tui-files>
-
             <tui-error
-              [formControl]="mediaControl"
+              formControlName="media"
               [error]="['maxLength'] | tuiFieldError | async"
             ></tui-error>
           </div>

@@ -5,6 +5,7 @@ import { ProductsRoutingModule } from "./products-routing.module";
 import { ProductsListComponent } from './products-list/products-list.component';
 import { ProductsDetailsComponent } from './products-details/products-details.component';
 import {
+  TuiBadgeModule,
   TuiBreadcrumbsModule, TuiFieldErrorPipeModule, TuiInputFilesModule,
   TuiInputModule,
   TuiInputNumberModule,
@@ -26,6 +27,8 @@ import { TuiLetModule } from "@taiga-ui/cdk";
 import { TuiCurrencyPipeModule } from "@taiga-ui/addon-commerce";
 import { ReactiveFormsModule } from "@angular/forms";
 import { PropertyInputModule } from "../../shared/components/property-input/property-input.module";
+import { DragDropModule } from "@angular/cdk/drag-drop";
+import { TuiPreviewModule } from '@taiga-ui/addon-preview';
 
 @NgModule({
   declarations: [
@@ -60,6 +63,9 @@ import { PropertyInputModule } from "../../shared/components/property-input/prop
     TuiErrorModule,
     TuiFieldErrorPipeModule,
     PropertyInputModule,
+    DragDropModule,
+    TuiBadgeModule,
+    TuiPreviewModule,
   ]
 })
 export class ProductsModule { }
