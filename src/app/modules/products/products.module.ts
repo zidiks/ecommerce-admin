@@ -29,6 +29,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { PropertyInputModule } from "../../shared/components/property-input/property-input.module";
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { TuiPreviewModule } from '@taiga-ui/addon-preview';
+import { ErrorImgModule } from "../../shared/directives/error-img/error-img.module";
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { TuiPreviewModule } from '@taiga-ui/addon-preview';
     DragDropModule,
     TuiBadgeModule,
     TuiPreviewModule,
+    ErrorImgModule,
   ]
 })
 export class ProductsModule { }

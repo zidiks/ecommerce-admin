@@ -84,7 +84,12 @@
           *tuiCell="'media'"
           tuiTd
         >
-          <img class="product-item-img" [src]="item.media[0] ? 'http://localhost:5000/storage/images/' + item.media[0] : 'assets/images/no-image.png'" [alt]="item.name">
+          <img
+            class="product-item-img"
+            [src]="'http://localhost:5000/storage/images/' + item.media[0]"
+            default = "assets/images/no-image.png"
+            [alt]="item.name"
+          >
         </td>
         <td
           *tuiCell="'name'"
