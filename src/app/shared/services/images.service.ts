@@ -3,6 +3,8 @@ import { HttpService } from "./http.service";
 import { map, Observable } from "rxjs";
 import { TuiFileLike } from "@taiga-ui/kit";
 import { blobToFile } from "../functions/blob-to-file.func";
+import { AddImagesResponseDto } from "../dto/images.dto";
+import { ResultMediaData } from "../models/images.model";
 
 @Injectable({
   providedIn: 'root'
@@ -13,18 +15,18 @@ export class ImagesService {
     private http: HttpService,
   ) { }
 
-  public getImage(name: string): Observable<TuiFileLike> {
+  public getImage(name: string): Observable<TuiFileLike | null> {
     return this.http.getImage(`storage/images/${name}`).pipe(
       map((blob: Blob) => {
-        return blobToFile(blob, name);
+        return blob ? blobToFile(blob, name) : null;
       })
     );
   }
 
-  public addImages(images: File[]): Observable<{ url: string; name: string; }> {
+  public addImages(images: ResultMediaData[]): Observable<AddImagesResponseDto[]> {
     const formData: FormData = new FormData();
-    images.forEach((file) => { formData.append('image', file); });
-    return this.http.post('/storage/upload', formData);
+    images.forEach((media) => { formData.append('image', media.file as unknown as File, media.name); });
+    return this.http.post<AddImagesResponseDto[], FormData>('storage/upload', formData);
   }
 
   public deleteImage(name: string): Observable<any> {

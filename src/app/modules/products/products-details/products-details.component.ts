@@ -12,7 +12,7 @@ import {
   ProductTypePrevModel,
   ProductTypePropertyModel
 } from "../../../shared/models/type-property.model";
-import { forkJoin, Observable, of } from "rxjs";
+import { forkJoin, map, Observable, of, switchMap } from "rxjs";
 import { BrandsService } from "../../brands/brands.service";
 import { CategoriesService } from "../../categories/categories.service";
 import { EMPTY_ARRAY, TuiContextWithImplicit, TuiHandler, tuiPure, TuiStringHandler } from "@taiga-ui/cdk";
@@ -24,6 +24,9 @@ import { AddProductDto, UpdateProductDto } from "../../../shared/dto/products.dt
 import { PropertyValue } from "../../../shared/dto/properties.dto";
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 import { ImagesService } from "../../../shared/services/images.service";
+import * as randomBytes from "randombytes";
+import { ResultMediaData } from "../../../shared/models/images.model";
+import { AddImagesResponseDto } from "../../../shared/dto/images.dto";
 
 const MAX_MEDIA_LENGTH = 10;
 
@@ -44,6 +47,7 @@ export class ProductsDetailsComponent implements OnInit {
   public productId;
   public productData: ApiDataModel<ProductModel>;
   public brandsData: ApiDataModel<BrandModel[]>;
+  public initialMedia: ApiDataModel<string[]>;
   public categoriesData: ApiDataModel<CategoryModel>;
   public productTypesPrevsData: ApiDataModel<ProductTypePrevModel[]>;
   public currentTypeData: ApiDataModel<ProductTypeModel>;
@@ -103,9 +107,6 @@ export class ProductsDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.refreshData();
-    this.f['media'].valueChanges.subscribe(response => {
-      console.log(response);
-    });
     this.f['productTypeId'].valueChanges.subscribe((value: string) => {
       if (value) {
         this.setPropertiesControls(value);
@@ -121,7 +122,7 @@ export class ProductsDetailsComponent implements OnInit {
     });
   }
 
-  public getImages(names: string[]): Observable<TuiFileLike[]> {
+  public getImages(names: string[]): Observable<(TuiFileLike | null)[]> {
     return names.length ? forkJoin(names.map(name => this.imagesService.getImage(name))) : of([]);
   }
 
@@ -143,11 +144,12 @@ export class ProductsDetailsComponent implements OnInit {
       this.productTypesPrevsData = res.productTypes;
       if (res.product) {
         const productData = res.product;
+        this.initialMedia = res.product.media || [];
         this.getImages(res.product.media || []).subscribe(mediaRes => {
           setTimeout(() => {
             this.formGroup.patchValue({
               name: productData.name,
-              media: mediaRes || [],
+              media: mediaRes.filter(mediaItem => mediaItem) || [],
               price: productData.price,
               brand: productData.brand?._id,
               description: productData.description,
@@ -257,40 +259,83 @@ export class ProductsDetailsComponent implements OnInit {
     this.formGroup.markAsTouched();
     if (this.formGroup.valid) {
       const data = this.formGroup.value;
-      const payload = {
-        ...data,
-        media: data.media || [],
-        productProps: Object.entries<PropertyValue>(data.productProps || [])
-          .map(([productTypePropertyId, value]: [string, PropertyValue]) =>
-            ({ productTypePropertyId, value }))
-      }
       this.loading = true;
-      if (this.productId) {
-        this.productsService.updateProduct(this.productId.toString(), payload as UpdateProductDto).subscribe(
-          res => {
-            if (res) {
-              this.alertService.open(`Продукт ${res.name} обновлён`, {label: `Успешно`, status: TuiNotification.Success, autoClose: 5000}).subscribe();
-              this.router.navigate(['/products/list']);
+      this.processMedia(this.initialMedia || [], data.media).subscribe(resMediaPayload => {
+        const payload = {
+          ...data,
+          media: resMediaPayload,
+          productProps: Object.entries<PropertyValue>(data.productProps || [])
+            .map(([productTypePropertyId, value]: [string, PropertyValue]) =>
+              ({ productTypePropertyId, value }))
+        };
+        if (this.productId) {
+          this.productsService.updateProduct(this.productId.toString(), payload as UpdateProductDto).subscribe(
+            res => {
+              if (res) {
+                this.alertService.open(`Продукт ${res.name} обновлён`, {label: `Успешно`, status: TuiNotification.Success, autoClose: 5000}).subscribe();
+                this.router.navigate(['/products/list']);
+              }
+            },
+            err => {
+              this.loading = false;
             }
-          },
-          err => {
-            this.loading = false;
-          }
-        );
-      } else {
-        this.productsService.addProduct(payload as AddProductDto).subscribe(
-          res => {
-            if (res) {
-              this.alertService.open(`Продукт ${res.name} добавлен`, {label: `Успешно`, status: TuiNotification.Success, autoClose: 5000}).subscribe();
-              this.router.navigate(['/products/list']);
+          );
+        } else {
+          this.productsService.addProduct(payload as AddProductDto).subscribe(
+            res => {
+              if (res) {
+                this.alertService.open(`Продукт ${res.name} добавлен`, {label: `Успешно`, status: TuiNotification.Success, autoClose: 5000}).subscribe();
+                this.router.navigate(['/products/list']);
+              }
+            },
+            err => {
+              this.loading = false;
             }
-          },
-          err => {
-            this.loading = false;
-          }
-        );
-      }
+          );
+        }
+      })
     }
+  }
+
+  private processMedia(initialNames: string[], resultMedias: TuiFileLike[]): Observable<string[]> {
+    const resultMediaData: ResultMediaData[] = resultMedias.map(media => {
+      const isNew: boolean = !initialNames.includes(media.name);
+      const shortName: string = randomBytes(7).toString('hex');
+      return {
+        file: media,
+        name: isNew ? `${shortName}.${media.name.split('.')[1]}` : media.name,
+        newShortName: isNew ? shortName : undefined,
+      }
+    });
+    const resultNames: string[] = resultMediaData.map(media => media.file.name);
+    const deleteRequests: Observable<any>[] = initialNames.filter(item => !resultNames.includes(item)).map(item => this.imagesService.deleteImage(item));
+    const addMedias: ResultMediaData[] = resultMediaData.filter(media => media.newShortName);
+    const addRequest: Observable<AddImagesResponseDto[]> = this.imagesService.addImages(addMedias);
+    return forkJoin(deleteRequests.length ? deleteRequests : [of(null)])
+      .pipe(
+        switchMap(() => addRequest
+          .pipe(
+            map((addResponse: AddImagesResponseDto[]) => {
+              return resultMediaData
+                .map(mediaData => {
+                  if (mediaData.newShortName) {
+                    const foundAddResponseItem = addResponse.find(responseItem => responseItem.shortName === mediaData.newShortName);
+                    if (foundAddResponseItem) {
+                      return {
+                        ...mediaData,
+                        name: foundAddResponseItem.name,
+                      }
+                    }
+                    return undefined;
+                  }
+                  return mediaData;
+                })
+                .filter(mediaData => mediaData)
+                .map(mediaData => mediaData!.name);
+            })
+          )
+        )
+      );
   }
 
 }
