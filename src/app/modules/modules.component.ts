@@ -36,7 +36,6 @@ export class ModulesComponent {
       icon: 'tuiIconComment',
       name: 'Новости',
       route: '/news',
-      disabled: true,
     },
     {
       icon: 'tuiIconFilter',

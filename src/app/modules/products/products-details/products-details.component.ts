@@ -55,17 +55,6 @@ export class ProductsDetailsComponent implements OnInit {
   public loading = false;
   public maxMediaLength = MAX_MEDIA_LENGTH;
 
-  loadingFile: TuiFileLike[] = [
-    {
-      name: `Loading file.txt`,
-    },
-    {
-      name: `Loading file2.txt`,
-    }
-  ];
-
-  removedFiles: TuiFileLike[] = this.loadingFile as unknown as TuiFileLike[];
-
   public formGroup: FormGroup = this.formBuilder.group({
     name: [null, Validators.required],
     media: [[], maxFilesLength(this.maxMediaLength)],
