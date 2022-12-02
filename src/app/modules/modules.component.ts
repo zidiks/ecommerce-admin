@@ -51,7 +51,6 @@ export class ModulesComponent {
       icon: 'tuiIconChartBar',
       name: 'Аналитика',
       route: '/analytics',
-      disabled: true,
     },
     {
       icon: 'tuiIconUsers',
