@@ -22,7 +22,7 @@ export class TypesListComponent implements OnInit {
       routerLink: `/`,
     },
     {
-      caption: `Сущности`,
+      caption: `Типы товара`,
       routerLink: `/types`,
     },
   ];
@@ -50,14 +50,14 @@ export class TypesListComponent implements OnInit {
     const dialog = this.dialogService.open<null>(
       new PolymorpheusComponent(TypesDialogComponent, this.injector),
       {
-        label: 'Сущность',
+        label: 'Тип товара',
         size: 'l',
       }
     );
     dialog.subscribe({
       next: (data: ProductTypeModel | null) => {
         if (data) {
-          this.alertService.open(`Cущность ${data.name} создана`, {label: `Успешно`, status: TuiNotification.Success, autoClose: 5000}).subscribe();
+          this.alertService.open(`Тип товара ${data.name} создан`, {label: `Успешно`, status: TuiNotification.Success, autoClose: 5000}).subscribe();
           this.refreshData();
         }
       },
@@ -68,7 +68,7 @@ export class TypesListComponent implements OnInit {
     const dialog = this.dialogService.open<ProductTypeModel>(
       new PolymorpheusComponent(TypesDialogComponent, this.injector),
       {
-        label: 'Сущность',
+        label: 'Тип товара',
         size: 'l',
         data: type,
       }
@@ -76,7 +76,7 @@ export class TypesListComponent implements OnInit {
     dialog.subscribe({
       next: (data: ProductTypeModel | null) => {
         if (data) {
-          this.alertService.open(type.name === data.name ? `Сущность ${type.name} изменена` : `Сущность ${type.name} изменена. Новое название ${data.name}`, {label: `Успешно`, status: TuiNotification.Success, autoClose: 5000}).subscribe();
+          this.alertService.open(type.name === data.name ? `Тип товара ${type.name} изменен` : `Тип товара ${type.name} изменен. Новое название ${data.name}`, {label: `Успешно`, status: TuiNotification.Success, autoClose: 5000}).subscribe();
           this.refreshData();
         }
       },
@@ -84,12 +84,12 @@ export class TypesListComponent implements OnInit {
   }
 
   showDeleteDialog(id: string, title: string): void {
-    this.submitService.submitDialog('Удалить', `Вы действительно хотите удалить сущность: ${title}?`).subscribe({
+    this.submitService.submitDialog('Удалить', `Вы действительно хотите удалить тип товара: ${title}?`).subscribe({
       next: (res) => {
         if (res) {
           this.typesService.deleteType(id).subscribe((deleteRes) => {
             if (deleteRes) {
-              this.alertService.open(`Сущность ${title} удалена`, {label: `Успешно`, status: TuiNotification.Success, autoClose: 5000}).subscribe();
+              this.alertService.open(`Тип товара ${title} удален`, {label: `Успешно`, status: TuiNotification.Success, autoClose: 5000}).subscribe();
               this.refreshData();
             }
           });

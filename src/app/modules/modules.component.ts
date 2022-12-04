@@ -44,7 +44,7 @@ export class ModulesComponent {
     },
     {
       icon: 'tuiIconCode',
-      name: 'Сущности',
+      name: 'Типы товара',
       route: '/types',
     },
     {
@@ -62,7 +62,6 @@ export class ModulesComponent {
       icon: 'tuiIconSettings',
       name: 'Настройки',
       route: '/settings',
-      disabled: true,
     }
   ];
 
