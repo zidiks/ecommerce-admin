@@ -2,9 +2,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { Clipboard } from '@angular/cdk/clipboard';
 import { TuiAlertService, TuiNotification } from "@taiga-ui/core";
-import { OrderModel } from "../../../shared/models/order.model";
+import { HistoryDataItemWithCode, OrderModel } from "../../../shared/models/order.model";
 import { OrdersService } from "../orders.service";
 import { ApiDataModel } from "../../../shared/models/api-data.model";
+import { historyDataItems } from "../../../shared/functions/history-data-item.func";
 
 @Component({
   selector: 'app-details',
@@ -15,6 +16,8 @@ export class DetailsComponent implements OnInit {
   public breadcrumbs;
   public orderId;
   public orderData: ApiDataModel<OrderModel>;
+  public historyDataItems: HistoryDataItemWithCode[] = historyDataItems();
+  public historySelectedType: HistoryDataItemWithCode | undefined;
   constructor(
     private route: ActivatedRoute,
     private clipboard: Clipboard,
@@ -44,7 +47,7 @@ export class DetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.refreshData();
+    this.refreshData()
   }
 
   public refreshData(): void {

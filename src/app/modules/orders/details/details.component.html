@@ -194,6 +194,29 @@
 
           </div>
         </div>
+        <div tuiGroup class="group tui-space_vertical-3">
+          <tui-select
+            [(ngModel)]="historySelectedType"
+            class="tui-space_vertical-5"
+            [tuiTextfieldLabelOutside]="true"
+            [valueContent]="historyDataContent"
+          >
+            <tui-data-list-wrapper
+              *tuiDataList
+              [items]="historyDataItems"
+              [itemContent]="historyDataContent"
+            ></tui-data-list-wrapper>
+            <ng-template
+              #historyDataContent
+              let-item
+            >
+              <div class="card-item">
+                <span class="card-name">{{ item.code }}</span>
+                <span class="card-number">{{ item.label }}</span>
+              </div>
+            </ng-template>
+          </tui-select>
+        </div>
         <div class="content-part__content">
           <div class="history" *ngFor="let historyItem of orderData.historyList">
             <ng-container *tuiLet="historyItem.type | orderHistory as historyType">

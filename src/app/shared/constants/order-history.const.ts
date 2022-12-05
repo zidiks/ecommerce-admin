@@ -1,6 +1,7 @@
 import { OrderHistory } from "../enums/order-history.enum";
+import { HistoryDataItem } from "../models/order.model";
 
-export const historyData: Record<string, { color: string, label: string, icons: string }> = {
+export const historyData: Record<string, HistoryDataItem> = {
   [OrderHistory.Pending]: {
     color: 'tui-neutral-fill',
     label: 'Ожидание',

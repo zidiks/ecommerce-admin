@@ -36,6 +36,19 @@ export interface OrderHistoryItem {
   products?: ProductPrevModel[];
 }
 
+export interface HistoryDataItem {
+  color: string;
+  label: string;
+  icons: string;
+}
+
+export interface HistoryDataItemWithCode {
+  code: string;
+  color: string;
+  label: string;
+  icons: string;
+}
+
 export interface PaymentMethod {
   id: string;
   name: string;
