@@ -3,21 +3,19 @@ import { CommonModule } from '@angular/common';
 import { OrdersRoutingModule } from './orders-routing.module';
 import { OrdersComponent } from "./orders.component";
 import {
-  TuiButtonModule,
+  TuiButtonModule, TuiDataListModule,
   TuiFormatDatePipeModule,
   TuiFormatNumberPipeModule, TuiGroupModule,
-  TuiHintModule,
+  TuiHintModule, TuiHostedDropdownModule,
   TuiLinkModule,
   TuiLoaderModule,
-  TuiSvgModule, TuiTextfieldControllerModule,
+  TuiSvgModule,
   TuiTooltipModule
 } from "@taiga-ui/core";
 import {
   TuiAvatarModule,
   TuiBadgeModule,
   TuiBreadcrumbsModule,
-  TuiDataListWrapperModule,
-  TuiSelectModule
 } from "@taiga-ui/kit";
 import { TuiTableModule, TuiTablePaginationModule } from "@taiga-ui/addon-table";
 import { ListComponent } from './list/list.component';
@@ -26,7 +24,7 @@ import { TuiCurrencyPipeModule, TuiMoneyModule } from "@taiga-ui/addon-commerce"
 import { TuiLetModule } from "@taiga-ui/cdk";
 import { OrderHistoryModule } from "../../shared/pipes/order-history/order-history.module";
 import { ApiLoadingStateModule } from "../../shared/pipes/api-loading-state/api-loading-state.module";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -34,32 +32,32 @@ import { FormsModule } from "@angular/forms";
     ListComponent,
     DetailsComponent,
   ],
-    imports: [
-        CommonModule,
-        OrdersRoutingModule,
-        TuiButtonModule,
-        TuiBreadcrumbsModule,
-        TuiLinkModule,
-        TuiTableModule,
-        TuiFormatNumberPipeModule,
-        TuiBadgeModule,
-        TuiTablePaginationModule,
-        TuiAvatarModule,
-        TuiCurrencyPipeModule,
-        TuiFormatDatePipeModule,
-        TuiLetModule,
-        TuiSvgModule,
-        TuiHintModule,
-        TuiLoaderModule,
-        TuiTooltipModule,
-        OrderHistoryModule,
-        TuiMoneyModule,
-        ApiLoadingStateModule,
-        TuiGroupModule,
-        TuiSelectModule,
-        TuiTextfieldControllerModule,
-        TuiDataListWrapperModule,
-        FormsModule,
-    ]
+  imports: [
+    CommonModule,
+    OrdersRoutingModule,
+    TuiButtonModule,
+    TuiBreadcrumbsModule,
+    TuiLinkModule,
+    TuiTableModule,
+    TuiFormatNumberPipeModule,
+    TuiBadgeModule,
+    TuiTablePaginationModule,
+    TuiAvatarModule,
+    TuiCurrencyPipeModule,
+    TuiFormatDatePipeModule,
+    TuiLetModule,
+    TuiSvgModule,
+    TuiHintModule,
+    TuiLoaderModule,
+    TuiTooltipModule,
+    OrderHistoryModule,
+    TuiMoneyModule,
+    ApiLoadingStateModule,
+    TuiGroupModule,
+    FormsModule,
+    ReactiveFormsModule,
+    TuiHostedDropdownModule,
+    TuiDataListModule,
+  ]
 })
 export class OrdersModule { }

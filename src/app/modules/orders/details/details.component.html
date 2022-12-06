@@ -195,27 +195,49 @@
           </div>
         </div>
         <div tuiGroup class="group tui-space_vertical-3">
-          <tui-select
-            [(ngModel)]="historySelectedType"
-            class="tui-space_vertical-5"
-            [tuiTextfieldLabelOutside]="true"
-            [valueContent]="historyDataContent"
-          >
-            <tui-data-list-wrapper
-              *tuiDataList
-              [items]="historyDataItems"
-              [itemContent]="historyDataContent"
-            ></tui-data-list-wrapper>
-            <ng-template
-              #historyDataContent
-              let-item
+          <form [formGroup]="historyFormGroup">
+            <tui-hosted-dropdown
+              #dropdown
+              [tuiDropdownMaxHeight]="500"
+              [content]="historyDropdown"
+              [(open)]="dropdownOpen"
             >
-              <div class="card-item">
-                <span class="card-name">{{ item.code }}</span>
-                <span class="card-number">{{ item.label }}</span>
-              </div>
+              <button
+                tuiIconButton
+                appearance="secondary"
+                size="m"
+                type="button"
+                *tuiLet="(currentHistoryType$ | async) as currentHistoryType"
+                [pseudoHover]="dropdown.open || null"
+              >
+                <tui-svg
+                  [style.color]="'var(--' + currentHistoryType!.color + ')'"
+                  [src]="currentHistoryType!.icons"
+                ></tui-svg>
+              </button>
+            </tui-hosted-dropdown>
+            <ng-template #historyDropdown>
+              <tui-data-list
+                style="width: 12rem"
+              >
+                <tui-opt-group>
+                  <button
+                    *ngFor="let item of historyDataItems"
+                    tuiOption
+                    (click)="setCurrentHistoryType(item);"
+                  >
+                    <div>
+                      <tui-svg
+                        [style.color]="'var(--' + item.color + ')'"
+                        [src]="item.icons"
+                      ></tui-svg>
+                      {{ item.label }}
+                    </div>
+                  </button>
+                </tui-opt-group>
+              </tui-data-list>
             </ng-template>
-          </tui-select>
+          </form>
         </div>
         <div class="content-part__content">
           <div class="history" *ngFor="let historyItem of orderData.historyList">

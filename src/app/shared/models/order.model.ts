@@ -37,6 +37,7 @@ export interface OrderHistoryItem {
 }
 
 export interface HistoryDataItem {
+  type: OrderHistory;
   color: string;
   label: string;
   icons: string;
