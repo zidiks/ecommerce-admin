@@ -1,1 +1,55 @@
-<p>delivery works!</p>
+<div class="delivery">
+  <div class="header">
+    <div class="header__title">
+      <tui-breadcrumbs  size="l">
+        <ng-container *ngFor="let item of breadcrumbs">
+          <a
+            *tuiItem
+            tuiLink
+            [routerLink]="item.routerLink"
+          >
+            {{ item.caption }}
+          </a>
+        </ng-container>
+      </tui-breadcrumbs>
+    </div>
+    <div class="header__actions">
+
+    </div>
+  </div>
+  <ng-container [ngSwitch]="deliveryData | apiLoadingStateValue">
+    <ng-container *ngSwitchCase="apiLoadingState.Success">
+      <div
+        class="content tui-space_top-4"
+        *ngIf="!(deliveryData | apiLoadingState)"
+      >
+        <a
+          *ngFor="let setting of deliveryData || []"
+          size="l"
+          tuiIsland
+          [hoverable]="true"
+        >
+          <div class="tui-island__content">
+            <figure class="tui-island__figure">
+              <div class="some-figure">
+                <tui-svg src="tuiIconCompanyLarge"></tui-svg>
+              </div>
+            </figure>
+            <div>
+              <h3 class="tui-island__title">{{ setting.name }}</h3>
+              <p class="tui-island__paragraph">{{ setting.description }}</p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </ng-container>
+    <div class="content" *ngSwitchCase="apiLoadingState.Empty">
+      Empty data...
+    </div>
+    <ng-container *ngSwitchCase="apiLoadingState.Pending">
+      <tui-loader class="loader" size="xl">
+
+      </tui-loader>
+    </ng-container>
+  </ng-container>
+</div>
