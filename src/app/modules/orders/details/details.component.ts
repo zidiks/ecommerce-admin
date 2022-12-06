@@ -10,6 +10,7 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from "@angular/fo
 import { Observable, startWith } from "rxjs";
 import { historyData } from "../../../shared/constants/order-history.const";
 import { OrderHistory } from "../../../shared/enums/order-history.enum";
+import { UpdateOrderDto } from "../../../shared/dto/order.dto";
 
 @Component({
   selector: 'app-details',
@@ -80,8 +81,18 @@ export class DetailsComponent implements OnInit {
 
   public updateOrder(): void {
     if (this.orderData?._id) {
-     const payload: OrderModel = this.orderData;
-     delete payload._id;
+     const payload: UpdateOrderDto = {
+       orderCode: this.orderData.orderCode,
+       customer: this.orderData.customer,
+       state: this.orderData.state,
+       delivery: this.orderData.delivery,
+       paymentMethod: this.orderData.paymentMethod,
+       cartItems: this.orderData.cartItems,
+       subTotalPrice: this.orderData.subTotalPrice,
+       totalPrice: this.orderData.totalPrice,
+       totalDiscount: this.orderData.totalDiscount,
+       historyList: this.orderData.historyList,
+     }
      const id = this.orderData._id;
      this.orderData = undefined;
      this.orderService.updateOrder(id, payload).subscribe(res => {

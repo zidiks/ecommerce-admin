@@ -2,6 +2,7 @@ import { CustomerModel } from "./customer.model";
 import { OrderHistory } from "../enums/order-history.enum";
 import { StateColor } from "../enums/state-colors.enum";
 import { ProductPrevModel } from "./product.model";
+import { DeliveryMethodDTO, DeliveryMethodFieldValueDTO } from "../dto/order.dto";
 
 export interface OrderModel {
   _id?: string;
@@ -10,16 +11,20 @@ export interface OrderModel {
   createdAt: string;
   updatedAt: string;
   state: OrderState;
-  delivery: {
-    deliveryMethod: DeliveryMethod;
-    deliveryAddress: string;
-  };
+  delivery: Delivery;
   paymentMethod: PaymentMethod;
   cartItems: CartItem[];
   subTotalPrice: number;
   totalPrice: number;
   totalDiscount: number;
   historyList: OrderHistoryItem[];
+}
+
+export interface Delivery {
+  deliveryMethod: DeliveryMethodDTO;
+  deliveryAddress: string;
+  deliveryData: DeliveryMethodFieldValueDTO[];
+  comment?: string;
 }
 
 export interface DeliveryMethod {
@@ -61,6 +66,7 @@ export interface CartItem {
   product: ProductPrevModel;
   count: number;
   discount: number;
+  total: number;
 }
 
 export interface OrderState {

@@ -17,8 +17,8 @@ export class OrdersService {
     return this.http.get<OrderModel[]>('store/orders');
   }
 
-  public updateOrder(id: string, payload: OrderModel): Observable<UpdateOrderDto | null> {
-    return this.http.put<OrderModel, OrderModel>('store/product', id, payload);
+  public updateOrder(id: string, payload: UpdateOrderDto): Observable<OrderModel | null> {
+    return this.http.put<OrderModel, UpdateOrderDto>('store/product', id, payload);
   }
 
   public getOrderById(id: string): Observable<OrderModel | null> {
