@@ -96,6 +96,15 @@
   font-size: 0.9rem;
 }
 
+.history-input-group {
+  &__send {
+    color: var(--tui-link);
+  }
+  tui-input {
+    box-shadow: none;
+  }
+}
+
 .products {
   display: flex;
   flex-direction: column;
@@ -261,6 +270,16 @@
   &__right {
     display: flex;
     flex-direction: column;
+    &-remove {
+      color: var(--tui-negative);
+      cursor: pointer;
+      tui-svg {
+        transform: scale(1.1);
+      }
+      &:hover {
+        opacity: 0.6;
+      }
+    }
     &-title {
      display: flex;
      align-items: center;
@@ -276,4 +295,8 @@
     display: grid;
     grid-template-columns: 2rem auto;
   }
+}
+
+.spacer {
+  flex: 1 1 auto;
 }

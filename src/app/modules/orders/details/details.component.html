@@ -16,6 +16,18 @@
     <div class="header__actions">
       <button
         size="s"
+        tuiButton
+        type="button"
+        appearance="secondary"
+        icon="tuiIconCheck"
+        class="tui-space_right-3"
+        [showLoader]="orderData | apiLoadingState"
+        (click)="updateOrder()"
+      >
+        {{ 'Сохранить' }}
+      </button>
+      <button
+        size="s"
         tuiIconButton
         type="button"
         appearance="secondary"
@@ -26,7 +38,7 @@
       </button>
     </div>
   </div>
-  <div class="content" *ngIf="orderData else loader">
+  <div class="content" *ngIf="(orderData | apiLoadingState : 'Success') && orderData else loader">
     <div class="content_left">
       <div class="content-part">
         <div class="content-part__header">
@@ -194,53 +206,77 @@
 
           </div>
         </div>
-        <div tuiGroup class="group tui-space_vertical-3">
-          <form [formGroup]="historyFormGroup">
-            <tui-hosted-dropdown
-              #dropdown
-              [tuiDropdownMaxHeight]="500"
-              [content]="historyDropdown"
-              [(open)]="dropdownOpen"
+        <form [formGroup]="historyFormGroup" (ngSubmit)="addOrderHistoryItem()" tuiGroup class="history-input-group tui-space_vertical-3">
+          <tui-hosted-dropdown
+            class="tui-group__auto-width-item"
+            #dropdown
+            [tuiDropdownMaxHeight]="500"
+            [content]="historyDropdown"
+            [(open)]="dropdownOpen"
+          >
+            <button
+              class="tui-group__inherit-item"
+              tuiIconButton
+              appearance="outline"
+              size="m"
+              type="button"
+              *tuiLet="(currentHistoryType$ | async) as currentHistoryType"
+              [pseudoHover]="dropdown.open || null"
             >
-              <button
-                tuiIconButton
-                appearance="secondary"
-                size="m"
-                type="button"
-                *tuiLet="(currentHistoryType$ | async) as currentHistoryType"
-                [pseudoHover]="dropdown.open || null"
-              >
-                <tui-svg
-                  [style.color]="'var(--' + currentHistoryType!.color + ')'"
-                  [src]="currentHistoryType!.icons"
-                ></tui-svg>
-              </button>
-            </tui-hosted-dropdown>
-            <ng-template #historyDropdown>
-              <tui-data-list
-                style="width: 12rem"
-              >
-                <tui-opt-group>
-                  <button
-                    *ngFor="let item of historyDataItems"
-                    tuiOption
-                    (click)="setCurrentHistoryType(item);"
-                  >
-                    <div>
-                      <tui-svg
-                        [style.color]="'var(--' + item.color + ')'"
-                        [src]="item.icons"
-                      ></tui-svg>
-                      {{ item.label }}
-                    </div>
-                  </button>
-                </tui-opt-group>
-              </tui-data-list>
-            </ng-template>
-          </form>
-        </div>
+              <tui-svg
+                [style.color]="'var(--' + currentHistoryType!.color + ')'"
+                [src]="currentHistoryType!.icons"
+              ></tui-svg>
+            </button>
+          </tui-hosted-dropdown>
+          <ng-template #historyDropdown>
+            <tui-data-list
+              style="width: 12rem"
+            >
+              <tui-opt-group>
+                <button
+                  *ngFor="let item of historyDataItems"
+                  tuiOption
+                  (click)="setCurrentHistoryType(item);"
+                >
+                  <div>
+                    <tui-svg
+                      [style.color]="'var(--' + item.color + ')'"
+                      [src]="item.icons"
+                    ></tui-svg>
+                    {{ item.label }}
+                  </div>
+                </button>
+              </tui-opt-group>
+            </tui-data-list>
+          </ng-template>
+          <tui-input
+            tuiTextfieldSize="m"
+            formControlName="details"
+            [tuiTextfieldLabelOutside]="true"
+          >
+            Введите информацию о заказе
+            <input
+              tuiTextfield
+              type="text"
+            />
+          </tui-input>
+          <button
+            [disabled]="historyFormGroup.invalid"
+            appearance="outline"
+            size="m"
+            tuiIconButton
+            type="submit"
+            class="tui-group__auto-width-item"
+          >
+            <tui-svg
+              class="history-input-group__send"
+              src="tuiIconComment"
+            ></tui-svg>
+          </button>
+        </form>
         <div class="content-part__content">
-          <div class="history" *ngFor="let historyItem of orderData.historyList">
+          <div class="history" *ngFor="let historyItem of orderData.historyList; index as i">
             <ng-container *tuiLet="historyItem.type | orderHistory as historyType">
               <div class="history__title">
                 <div class="history__left">
@@ -248,6 +284,15 @@
                 </div>
                 <div class="history__right-title">
                   <span>{{ historyType.label }}</span>
+                  <div class="spacer"></div>
+                  <div
+                    class="history__right-remove"
+                    (click)="removeOrderHistoryItem(i)"
+                  >
+                    <tui-svg
+                      src="tuiIconClose"
+                    ></tui-svg>
+                  </div>
                 </div>
               </div>
               <div class="history__details">
@@ -255,7 +300,7 @@
                   <div class="history__line"></div>
                 </div>
                 <div class="history__right">
-                  <span class="history__date">{{ historyItem.time * 1000 | date : 'medium' }}</span>
+                  <span class="history__date">{{ historyItem.time | date : 'medium' }}</span>
                   <span *ngIf="historyItem.details" class="history__text">{{ historyItem.details }}</span>
                 </div>
               </div>

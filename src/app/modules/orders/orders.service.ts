@@ -1,20 +1,13 @@
 import { Injectable } from '@angular/core';
-import { DeliveryMethod, OrderModel } from "../../shared/models/order.model";
+import { OrderModel } from "../../shared/models/order.model";
 import { map, Observable } from "rxjs";
 import { HttpService } from "../../shared/services/http.service";
+import { UpdateOrderDto } from "../../shared/dto/order.dto";
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrdersService {
-  public fakeDeliveryMethods: DeliveryMethod[] = [
-    {
-      id: '0',
-      name: 'Европочта',
-      description: '«Европочта» - это быстроразвивающийся  почтовый сервис, который занимается доставкой посылок по всей Беларуси!',
-      media: 'url..',
-    }
-  ]
 
   constructor(
     private http: HttpService,
@@ -24,7 +17,11 @@ export class OrdersService {
     return this.http.get<OrderModel[]>('store/orders');
   }
 
-  public getOrderById(id: string): Observable<OrderModel | undefined> {
+  public updateOrder(id: string, payload: OrderModel): Observable<UpdateOrderDto | null> {
+    return this.http.put<OrderModel, OrderModel>('store/product', id, payload);
+  }
+
+  public getOrderById(id: string): Observable<OrderModel | null> {
     return this.http.get<OrderModel>(`store/order/${id}`).pipe(
       map((order: OrderModel) => {
         order.historyList = order.historyList.sort((a, b) => a.time - b.time);

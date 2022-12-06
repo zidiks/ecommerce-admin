@@ -29,6 +29,7 @@ export class DetailsComponent implements OnInit {
     details: ['', Validators.required],
     products: [[]],
   });
+  private initialHistoryFormGroupValue = this.historyFormGroup.value;
 
   @ViewChild(TuiHostedDropdownComponent) dropdownElement?: TuiHostedDropdownComponent;
 
@@ -65,6 +66,37 @@ export class DetailsComponent implements OnInit {
     this.refreshData();
   }
 
+  public addOrderHistoryItem(): void {
+    const formValue = this.historyFormGroup.value;
+    if (this.orderData) {
+      this.orderData.historyList.push({
+        type: formValue.type.type,
+        details: formValue.details,
+        time: new Date().getTime(),
+      });
+      this.historyFormGroup.reset(this.initialHistoryFormGroupValue);
+    }
+  }
+
+  public updateOrder(): void {
+    if (this.orderData?._id) {
+     const payload: OrderModel = this.orderData;
+     delete payload._id;
+     const id = this.orderData._id;
+     this.orderData = undefined;
+     this.orderService.updateOrder(id, payload).subscribe(res => {
+       console.log(res);
+       this.orderData = res
+     });
+    }
+  }
+
+  public removeOrderHistoryItem(index: number): void {
+    if (this.orderData) {
+      this.orderData.historyList.splice(index, 1);
+    }
+  }
+
   public get f(): { [key: string]: AbstractControl; } { return this.historyFormGroup.controls; }
 
   public setCurrentHistoryType(item: HistoryDataItem): void {
@@ -80,7 +112,7 @@ export class DetailsComponent implements OnInit {
 
   public refreshData(): void {
     this.orderData = undefined;
-    this.orderService.getOrderById(this.orderId).subscribe((res: OrderModel | undefined) => {
+    this.orderService.getOrderById(this.orderId).subscribe((res: OrderModel | null) => {
       this.orderData = res || null;
     });
   }

@@ -9,13 +9,13 @@ import {
   TuiHintModule, TuiHostedDropdownModule,
   TuiLinkModule,
   TuiLoaderModule,
-  TuiSvgModule,
+  TuiSvgModule, TuiTextfieldControllerModule,
   TuiTooltipModule
 } from "@taiga-ui/core";
 import {
   TuiAvatarModule,
   TuiBadgeModule,
-  TuiBreadcrumbsModule,
+  TuiBreadcrumbsModule, TuiInputModule,
 } from "@taiga-ui/kit";
 import { TuiTableModule, TuiTablePaginationModule } from "@taiga-ui/addon-table";
 import { ListComponent } from './list/list.component';
@@ -58,6 +58,8 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     ReactiveFormsModule,
     TuiHostedDropdownModule,
     TuiDataListModule,
+    TuiInputModule,
+    TuiTextfieldControllerModule,
   ]
 })
 export class OrdersModule { }
