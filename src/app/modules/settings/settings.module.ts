@@ -7,7 +7,7 @@ import { PaymentComponent } from './payment/payment.component';
 import { OrderStateComponent } from './order-state/order-state.component';
 import { DeliveryComponent } from './delivery/delivery.component';
 import { TuiBreadcrumbsModule, TuiIslandModule } from "@taiga-ui/kit";
-import { TuiLinkModule, TuiLoaderModule, TuiSvgModule } from "@taiga-ui/core";
+import { TuiButtonModule, TuiLinkModule, TuiLoaderModule, TuiSvgModule } from "@taiga-ui/core";
 import { ApiLoadingStateModule } from "../../shared/pipes/api-loading-state/api-loading-state.module";
 
 @NgModule({
@@ -27,6 +27,7 @@ import { ApiLoadingStateModule } from "../../shared/pipes/api-loading-state/api-
     TuiSvgModule,
     ApiLoadingStateModule,
     TuiLoaderModule,
+    TuiButtonModule,
   ]
 })
 export class SettingsModule { }

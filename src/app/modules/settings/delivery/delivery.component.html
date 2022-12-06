@@ -14,7 +14,16 @@
       </tui-breadcrumbs>
     </div>
     <div class="header__actions">
-
+      <button
+        size="s"
+        tuiIconButton
+        type="button"
+        appearance="secondary"
+        icon="tuiIconRefresh"
+        class="tui-space_right-3"
+        (click)="refreshData()"
+      >
+      </button>
     </div>
   </div>
   <ng-container [ngSwitch]="deliveryData | apiLoadingStateValue">
