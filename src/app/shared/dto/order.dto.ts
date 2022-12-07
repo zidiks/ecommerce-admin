@@ -1,64 +1,69 @@
-import { CustomerModel } from "../models/customer.model";
-import { OrderState } from "../models/order.model";
+import { StateColor } from "../enums/state-colors.enum";
+import { ProductModel, ProductPrevModel } from "../models/product.model";
 import { OrderHistory } from "../enums/order-history.enum";
-import { ProductPrevModel } from "../models/product.model";
+import { ApiId, ApiTimestamp } from "../models/api-data.model";
 
-export interface AddOrderDto {
-  orderCode: string;
-  customer: CustomerModel;
-  state: OrderState;
-  delivery: DeliveryDTO;
-  paymentMethod: PaymentMethodDTO;
-  cartItems: CartItemDTO[];
+export interface AddOrderRequestDto {
+  customer: OrderCustomerDto;
+  state: OrderStateDto;
+  delivery: OrderDeliveryDto;
+  paymentMethod: OrderPaymentMethodDto;
+  cartItems: OrderCartItemDto[];
   subTotalPrice: number;
   totalPrice: number;
   totalDiscount: number;
-  historyList: OrderHistoryItemDTO[];
+  historyList: OrderHistoryItemDto[];
 }
 
-export interface UpdateOrderDto extends AddOrderDto { }
+export interface UpdateOrderRequestDto extends AddOrderRequestDto { }
 
-export interface CartItemDTO {
-  product: ProductPrevModel;
+export interface OrderResponseDto extends AddOrderRequestDto, ApiId, ApiTimestamp {
+  orderCode: string;
+}
+
+export interface OrderCartItemDto {
+  product: ProductModel;
   count: number;
   discount: number;
   total: number;
 }
 
-export interface DeliveryDTO {
-  deliveryMethod: DeliveryMethodDTO;
-  deliveryAddress: string;
-  deliveryData: DeliveryMethodFieldValueDTO[];
-  comment?: string;
+export interface OrderCustomerDto {
+  phone: string;
+  name: string;
 }
 
-export interface DeliveryMethodFieldValueDTO {
-  code: string;
+export interface OrderStateDto {
+  label: string;
+  color: StateColor;
+  description: string;
+}
+
+export interface OrderPaymentMethodDto {
+  name: string;
+  description: string;
+}
+
+export interface OrderDeliveryDto {
+  deliveryMethod: OrderDeliveryMethodDto;
+  deliveryAddress: string;
+  deliveryData: OrderDeliveryDataValueDto[];
+  comment: string;
+}
+
+export interface OrderDeliveryMethodDto {
+  name: string;
+  description: string;
+}
+
+export interface OrderDeliveryDataValueDto {
   name: string;
   value: string;
 }
 
-export interface DeliveryMethodFieldDTO {
-  code: string;
-  name: string;
-}
-
-export interface PaymentMethodDTO {
-  name: string;
-  description: string;
-  media: string;
-}
-
-export interface DeliveryMethodDTO {
-  name: string;
-  description: string;
-  media: string;
-  fields: DeliveryMethodFieldDTO;
-  paymentMethod: PaymentMethodDTO
-}
-
-export interface OrderHistoryItemDTO {
+export interface OrderHistoryItemDto {
   type: OrderHistory,
   details?: string;
+  time: number;
   products?: ProductPrevModel[];
 }

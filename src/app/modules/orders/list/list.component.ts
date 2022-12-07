@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { OrderModel } from "../../../shared/models/order.model";
 import { tuiTablePaginationOptionsProvider } from "@taiga-ui/addon-table";
 import { OrdersService } from "../orders.service";
 import { ApiDataModel } from "../../../shared/models/api-data.model";
+import { OrderResponseDto } from "../../../shared/dto/order.dto";
 
 @Component({
   selector: 'app-category-list',
@@ -17,7 +17,7 @@ import { ApiDataModel } from "../../../shared/models/api-data.model";
 export class ListComponent implements OnInit {
   public page = 0;
   public size = 10;
-  public ordersData: ApiDataModel<OrderModel[]>;
+  public ordersData: ApiDataModel<OrderResponseDto[]>;
   public breadcrumbs = [
     {
       caption: `Главная`,
@@ -41,7 +41,7 @@ export class ListComponent implements OnInit {
 
   public refreshData(): void {
     this.ordersData = undefined;
-    this.ordersService.getOrders().subscribe((res: OrderModel[] | null) => {
+    this.ordersService.getOrders().subscribe((res: OrderResponseDto[] | null) => {
       this.ordersData = res;
     });
   }

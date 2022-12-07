@@ -2,7 +2,7 @@ import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { Clipboard } from '@angular/cdk/clipboard';
 import { TuiAlertService, TuiHostedDropdownComponent, TuiNotification } from "@taiga-ui/core";
-import { HistoryDataItem, HistoryDataItemWithCode, OrderModel } from "../../../shared/models/order.model";
+import { HistoryDataItem, HistoryDataItemWithCode } from "../../../shared/models/order.model";
 import { OrdersService } from "../orders.service";
 import { ApiDataModel } from "../../../shared/models/api-data.model";
 import { historyDataItems } from "../../../shared/functions/history-data-item.func";
@@ -10,7 +10,7 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from "@angular/fo
 import { Observable, startWith } from "rxjs";
 import { historyData } from "../../../shared/constants/order-history.const";
 import { OrderHistory } from "../../../shared/enums/order-history.enum";
-import { UpdateOrderDto } from "../../../shared/dto/order.dto";
+import { OrderResponseDto, UpdateOrderRequestDto } from "../../../shared/dto/order.dto";
 
 @Component({
   selector: 'app-details',
@@ -21,9 +21,10 @@ export class DetailsComponent implements OnInit {
   public breadcrumbs;
   public orderId;
   public dropdownOpen = false;
-  public orderData: ApiDataModel<OrderModel>;
+  public orderData: ApiDataModel<OrderResponseDto>;
   public historyDataItems: HistoryDataItem[] = historyDataItems();
   public historySelectedType: HistoryDataItemWithCode | undefined;
+  public waitUpdating = false;
 
   public historyFormGroup: FormGroup = this.formBuilder.group({
     type: [historyData[OrderHistory.Message], Validators.required],
@@ -81,8 +82,7 @@ export class DetailsComponent implements OnInit {
 
   public updateOrder(): void {
     if (this.orderData?._id) {
-     const payload: UpdateOrderDto = {
-       orderCode: this.orderData.orderCode,
+     const payload: UpdateOrderRequestDto = {
        customer: this.orderData.customer,
        state: this.orderData.state,
        delivery: this.orderData.delivery,
@@ -94,11 +94,20 @@ export class DetailsComponent implements OnInit {
        historyList: this.orderData.historyList,
      }
      const id = this.orderData._id;
-     this.orderData = undefined;
-     this.orderService.updateOrder(id, payload).subscribe(res => {
-       console.log(res);
-       this.orderData = res
-     });
+     this.waitUpdating = true;
+     this.orderService.updateOrder(id, payload).subscribe(
+       res => {
+         if (res) {
+           this.alertService.open(`Изменения сохранены`, {label: `Успешно`, status: TuiNotification.Success, autoClose: 5000}).subscribe();
+         }
+         this.orderData = res;
+         this.waitUpdating = false;
+       },
+       err => {
+         this.orderData = null;
+         this.waitUpdating = false;
+       }
+      );
     }
   }
 
@@ -123,7 +132,7 @@ export class DetailsComponent implements OnInit {
 
   public refreshData(): void {
     this.orderData = undefined;
-    this.orderService.getOrderById(this.orderId).subscribe((res: OrderModel | null) => {
+    this.orderService.getOrderById(this.orderId).subscribe((res: OrderResponseDto | null) => {
       this.orderData = res || null;
     });
   }

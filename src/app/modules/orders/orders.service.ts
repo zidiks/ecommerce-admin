@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { OrderModel } from "../../shared/models/order.model";
 import { map, Observable } from "rxjs";
 import { HttpService } from "../../shared/services/http.service";
-import { UpdateOrderDto } from "../../shared/dto/order.dto";
+import { OrderResponseDto, UpdateOrderRequestDto } from "../../shared/dto/order.dto";
 
 @Injectable({
   providedIn: 'root'
@@ -13,17 +12,17 @@ export class OrdersService {
     private http: HttpService,
   ) { }
 
-  public getOrders(): Observable<OrderModel[]> {
-    return this.http.get<OrderModel[]>('store/orders');
+  public getOrders(): Observable<OrderResponseDto[] | null> {
+    return this.http.get<OrderResponseDto[]>('store/orders');
   }
 
-  public updateOrder(id: string, payload: UpdateOrderDto): Observable<OrderModel | null> {
-    return this.http.put<OrderModel, UpdateOrderDto>('store/product', id, payload);
+  public updateOrder(id: string, payload: UpdateOrderRequestDto): Observable<OrderResponseDto | null> {
+    return this.http.put<OrderResponseDto, UpdateOrderRequestDto>('store/order', id, payload);
   }
 
-  public getOrderById(id: string): Observable<OrderModel | null> {
-    return this.http.get<OrderModel>(`store/order/${id}`).pipe(
-      map((order: OrderModel) => {
+  public getOrderById(id: string): Observable<OrderResponseDto | null> {
+    return this.http.get<OrderResponseDto>(`store/order/${id}`).pipe(
+      map((order: OrderResponseDto) => {
         order.historyList = order.historyList.sort((a, b) => a.time - b.time);
         return order;
       })
