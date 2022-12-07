@@ -8,9 +8,9 @@ import { OrderStateComponent } from './order-state/order-state.component';
 import { DeliveryComponent } from './delivery/delivery.component';
 import {
   TuiBreadcrumbsModule,
-  TuiDataListDropdownManagerModule,
+  TuiDataListDropdownManagerModule, TuiDataListWrapperModule,
   TuiInputModule, TuiInputTagModule,
-  TuiIslandModule,
+  TuiIslandModule, TuiMultiSelectModule,
   TuiTextAreaModule
 } from "@taiga-ui/kit";
 import {
@@ -26,6 +26,7 @@ import { DataEmptyModule } from "../../shared/components/data-empty/data-empty.m
 import { DeliveryDialogComponent } from './delivery/delivery-dialog/delivery-dialog.component';
 import { PaymentDialogComponent } from './payment/payment-dialog/payment-dialog.component';
 import { ReactiveFormsModule } from "@angular/forms";
+import { TuiLetModule } from "@taiga-ui/cdk";
 
 @NgModule({
   declarations: [
@@ -57,6 +58,9 @@ import { ReactiveFormsModule } from "@angular/forms";
     TuiTextfieldControllerModule,
     TuiInputTagModule,
     TuiLabelModule,
+    TuiMultiSelectModule,
+    TuiLetModule,
+    TuiDataListWrapperModule,
   ]
 })
 export class SettingsModule { }

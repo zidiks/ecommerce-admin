@@ -21,23 +21,31 @@
         Описание
       </tui-text-area>
 
-      <label tuiLabel="Дополнительные поля">
+      <label tuiLabel="Поля для заполнения данных">
         <tui-input-tag
           class="tui-space_top-3 tui-space_bottom-5"
           formControlName="fields"
           [tuiTextfieldLabelOutside]="true"
         >
-          Введите дополнительные поля
+          Введите поля
         </tui-input-tag>
       </label>
       <label tuiLabel="Методы оплаты">
-        <tui-input-tag
+        <tui-multi-select
+          *tuiLet="items$ | async"
           class="tui-space_top-3 tui-space_bottom-5"
-          formControlName="fields"
+          formControlName="paymentMethods"
           [tuiTextfieldLabelOutside]="true"
+          [stringify]="(stringify$ | async)!"
+          (searchChange)="onSearch($event)"
         >
-          Введите дополнительные поля
-        </tui-input-tag>
+          <tui-data-list-wrapper
+            *tuiDataList
+            tuiMultiSelectGroup
+            [items]="items$ | async"
+            [itemContent]="(stringify$ | async)!"
+          ></tui-data-list-wrapper>
+        </tui-multi-select>
       </label>
       <button
         tuiButton

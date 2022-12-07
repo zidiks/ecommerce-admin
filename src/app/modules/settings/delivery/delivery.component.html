@@ -50,6 +50,7 @@
           #dropdown="tuiDropdown"
           tuiDropdownContext
           [tuiDropdown]="contextMenu"
+          (click)="showEditDialog(delivery); dropdown.toggle(false)"
         >
           <div class="tui-island__content">
             <figure class="tui-island__figure">
