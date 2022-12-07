@@ -9,14 +9,14 @@ import { DeliveryComponent } from './delivery/delivery.component';
 import {
   TuiBreadcrumbsModule,
   TuiDataListDropdownManagerModule,
-  TuiInputModule,
+  TuiInputModule, TuiInputTagModule,
   TuiIslandModule,
   TuiTextAreaModule
 } from "@taiga-ui/kit";
 import {
   TuiButtonModule,
   TuiDataListModule,
-  TuiDropdownModule,
+  TuiDropdownModule, TuiLabelModule,
   TuiLinkModule,
   TuiLoaderModule,
   TuiSvgModule, TuiTextfieldControllerModule
@@ -55,6 +55,8 @@ import { ReactiveFormsModule } from "@angular/forms";
     TuiInputModule,
     TuiTextAreaModule,
     TuiTextfieldControllerModule,
+    TuiInputTagModule,
+    TuiLabelModule,
   ]
 })
 export class SettingsModule { }

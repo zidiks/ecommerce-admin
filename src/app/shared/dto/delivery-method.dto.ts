@@ -8,6 +8,8 @@ export interface AddDeliveryMethodRequestDto {
   paymentMethods: string[];
 }
 
+export interface UpdateDeliveryMethodRequestDto extends AddDeliveryMethodRequestDto { }
+
 export interface DeliveryMethodFieldDto {
   code: string;
   name: string;
@@ -16,6 +18,6 @@ export interface DeliveryMethodFieldDto {
 export interface DeliveryMethodResponseDto extends ApiId, ApiTimestamp {
   name: string;
   description: string;
-  fields: DeliveryMethodFieldDto;
+  fields: DeliveryMethodFieldDto[];
   paymentMethods: PaymentMethodResponseDto[];
 }

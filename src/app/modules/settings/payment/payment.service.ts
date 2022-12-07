@@ -20,10 +20,6 @@ export class PaymentService {
     return this.http.get<PaymentMethodResponseDto[]>('store/payment-method');
   }
 
-  public getPaymentMethodById(id: string): Observable<PaymentMethodResponseDto | null> {
-    return this.http.get<PaymentMethodResponseDto>(`store/payment-method/${id}`);
-  }
-
   public updatePaymentMethod(id: string, payload: UpdatePaymentMethodRequestDto): Observable<PaymentMethodResponseDto | null> {
     return this.http.put<PaymentMethodResponseDto, UpdatePaymentMethodRequestDto>('store/payment-method', id, payload);
   }

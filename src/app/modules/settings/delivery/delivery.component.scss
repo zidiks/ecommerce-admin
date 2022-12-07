@@ -33,4 +33,15 @@
 .loader {
   margin-top: 4rem;
 }
+.context-menu {
+  min-width: 9rem;
+}
+
+.context-delete {
+  color: var(--tui-error-fill);
+  &:hover {
+    background-color: var(--tui-error-bg-hover);
+  }
+}
+
 
