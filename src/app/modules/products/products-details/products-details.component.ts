@@ -287,7 +287,7 @@ export class ProductsDetailsComponent implements OnInit {
   }
 
   private processMedia(initialNames: string[], resultMedias: TuiFileLike[]): Observable<string[]> {
-    const resultMediaData: ResultMediaData[] = resultMedias.map(media => {
+    const resultMediaData: ResultMediaData[] = (resultMedias || []).map(media => {
       const isNew: boolean = !initialNames.includes(media.name);
       const shortName: string = randomBytes(7).toString('hex');
       return {

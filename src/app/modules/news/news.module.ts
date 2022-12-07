@@ -17,6 +17,7 @@ import { ApiLoadingStateModule } from "../../shared/pipes/api-loading-state/api-
 import { TuiLetModule } from "@taiga-ui/cdk";
 import { ReactiveFormsModule } from "@angular/forms";
 import { TuiEditorModule } from "@taiga-ui/addon-editor";
+import { DataEmptyModule } from "../../shared/components/data-empty/data-empty.module";
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { TuiEditorModule } from "@taiga-ui/addon-editor";
         TuiInputFilesModule,
         TuiEditorModule,
         TuiInputTagModule,
+        DataEmptyModule,
     ]
 })
 export class NewsModule { }

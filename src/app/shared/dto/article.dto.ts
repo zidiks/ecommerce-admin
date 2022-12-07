@@ -1,22 +1,18 @@
-export interface ArticleResponseDto {
-  _id: string;
+import { ApiId, ApiTimestamp } from "../models/api-data.model";
+
+export interface ArticleResponseDto extends ApiId, ApiTimestamp {
   media: string;
   title: string;
   description: string;
   content: string;
   tags: string[];
-  createdAt: string;
-  updatedAt: string;
 }
 
-export interface ArticlePrevResponseDto {
-  _id: string;
+export interface ArticlePrevResponseDto extends ApiId, ApiTimestamp {
   media: string;
   title: string;
   description: string;
   tags: string[];
-  createdAt: string;
-  updatedAt: string;
 }
 
 export interface AddArticleRequestDto {

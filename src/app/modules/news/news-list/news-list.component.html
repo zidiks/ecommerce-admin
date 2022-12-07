@@ -65,7 +65,7 @@
       </tr>
       </thead>
       <tbody
-        *tuiLet="(articlesData || []) | tuiTableSort as sortedData"
+        *tuiLet="(articlesData?.data || []) | tuiTableSort as sortedData"
         tuiTbody
         [data]="sortedData"
       >
@@ -109,18 +109,15 @@
         </tr>
       </ng-container>
       <ng-container *ngIf="articlesData | apiLoadingState : 'Empty'">
-        <tr class="table-empty">
-          <tui-svg
-            src="tuiIconInfo"
-          ></tui-svg>
-          <span>Список пуст</span>
+        <tr>
+          <app-data-empty></app-data-empty>
         </tr>
       </ng-container>
       </tbody>
     </table>
     <tui-table-pagination
       *ngIf="articlesData | apiLoadingState : 'Success'"
-      [total]="articlesData?.length || 0"
+      [total]="articlesData?.data?.length || 0"
       [(page)]="page"
       [(size)]="size"
     ></tui-table-pagination>

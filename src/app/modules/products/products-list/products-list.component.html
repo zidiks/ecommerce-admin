@@ -86,7 +86,7 @@
         >
           <img
             class="product-item-img"
-            [src]="'http://localhost:5000/storage/images/' + item.media[0]"
+            [src]="item.media[0] ? 'http://localhost:5000/storage/images/' + item.media[0] : 'assets/images/no-image.png'"
             default = "assets/images/no-image.png"
             [alt]="item.name"
           >
@@ -126,11 +126,8 @@
         </tr>
       </ng-container>
       <ng-container *ngIf="productsData | apiLoadingState : 'Empty'">
-        <tr class="table-empty">
-          <tui-svg
-            src="tuiIconInfo"
-          ></tui-svg>
-          <span>Список пуст</span>
+        <tr>
+          <app-data-empty></app-data-empty>
         </tr>
       </ng-container>
       </tbody>

@@ -25,6 +25,7 @@ import { TuiLetModule } from "@taiga-ui/cdk";
 import { OrderHistoryModule } from "../../shared/pipes/order-history/order-history.module";
 import { ApiLoadingStateModule } from "../../shared/pipes/api-loading-state/api-loading-state.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { DataEmptyModule } from "../../shared/components/data-empty/data-empty.module";
 
 @NgModule({
   declarations: [
@@ -32,34 +33,35 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     ListComponent,
     DetailsComponent,
   ],
-  imports: [
-    CommonModule,
-    OrdersRoutingModule,
-    TuiButtonModule,
-    TuiBreadcrumbsModule,
-    TuiLinkModule,
-    TuiTableModule,
-    TuiFormatNumberPipeModule,
-    TuiBadgeModule,
-    TuiTablePaginationModule,
-    TuiAvatarModule,
-    TuiCurrencyPipeModule,
-    TuiFormatDatePipeModule,
-    TuiLetModule,
-    TuiSvgModule,
-    TuiHintModule,
-    TuiLoaderModule,
-    TuiTooltipModule,
-    OrderHistoryModule,
-    TuiMoneyModule,
-    ApiLoadingStateModule,
-    TuiGroupModule,
-    FormsModule,
-    ReactiveFormsModule,
-    TuiHostedDropdownModule,
-    TuiDataListModule,
-    TuiInputModule,
-    TuiTextfieldControllerModule,
-  ]
+    imports: [
+        CommonModule,
+        OrdersRoutingModule,
+        TuiButtonModule,
+        TuiBreadcrumbsModule,
+        TuiLinkModule,
+        TuiTableModule,
+        TuiFormatNumberPipeModule,
+        TuiBadgeModule,
+        TuiTablePaginationModule,
+        TuiAvatarModule,
+        TuiCurrencyPipeModule,
+        TuiFormatDatePipeModule,
+        TuiLetModule,
+        TuiSvgModule,
+        TuiHintModule,
+        TuiLoaderModule,
+        TuiTooltipModule,
+        OrderHistoryModule,
+        TuiMoneyModule,
+        ApiLoadingStateModule,
+        TuiGroupModule,
+        FormsModule,
+        ReactiveFormsModule,
+        TuiHostedDropdownModule,
+        TuiDataListModule,
+        TuiInputModule,
+        TuiTextfieldControllerModule,
+        DataEmptyModule,
+    ]
 })
 export class OrdersModule { }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpService } from "../../shared/services/http.service";
 import { Observable } from "rxjs";
 import { AddArticleRequestDto, ArticleResponseDto, UpdateArticleRequestDto } from "../../shared/dto/article.dto";
+import { Paginated } from "../../shared/models/paginated.model";
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,8 @@ export class NewsService {
     private http: HttpService,
   ) { }
 
-  public getArticles(): Observable<ArticleResponseDto[] | null> {
-    return this.http.get<ArticleResponseDto[]>('article');
+  public getArticles(): Observable<Paginated<ArticleResponseDto[]> | null> {
+    return this.http.get<Paginated<ArticleResponseDto[]>>('article');
   }
 
   public getArticleById(id: string): Observable<ArticleResponseDto | null> {

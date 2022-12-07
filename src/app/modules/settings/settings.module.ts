@@ -9,6 +9,7 @@ import { DeliveryComponent } from './delivery/delivery.component';
 import { TuiBreadcrumbsModule, TuiIslandModule } from "@taiga-ui/kit";
 import { TuiButtonModule, TuiLinkModule, TuiLoaderModule, TuiSvgModule } from "@taiga-ui/core";
 import { ApiLoadingStateModule } from "../../shared/pipes/api-loading-state/api-loading-state.module";
+import { DataEmptyModule } from "../../shared/components/data-empty/data-empty.module";
 
 @NgModule({
   declarations: [
@@ -18,16 +19,17 @@ import { ApiLoadingStateModule } from "../../shared/pipes/api-loading-state/api-
     OrderStateComponent,
     DeliveryComponent
   ],
-  imports: [
-    CommonModule,
-    SettingsRoutingModule,
-    TuiBreadcrumbsModule,
-    TuiLinkModule,
-    TuiIslandModule,
-    TuiSvgModule,
-    ApiLoadingStateModule,
-    TuiLoaderModule,
-    TuiButtonModule,
-  ]
+    imports: [
+        CommonModule,
+        SettingsRoutingModule,
+        TuiBreadcrumbsModule,
+        TuiLinkModule,
+        TuiIslandModule,
+        TuiSvgModule,
+        ApiLoadingStateModule,
+        TuiLoaderModule,
+        TuiButtonModule,
+        DataEmptyModule,
+    ]
 })
 export class SettingsModule { }

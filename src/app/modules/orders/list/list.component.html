@@ -143,14 +143,10 @@
         </tr>
       </ng-container>
       <ng-container *ngIf="ordersData | apiLoadingState : 'Empty'">
-        <tr class="table-empty">
-          <tui-svg
-            src="tuiIconInfo"
-          ></tui-svg>
-          <span>Список пуст</span>
+        <tr>
+          <app-data-empty></app-data-empty>
         </tr>
       </ng-container>
-
       </tbody>
     </table>
     <tui-table-pagination

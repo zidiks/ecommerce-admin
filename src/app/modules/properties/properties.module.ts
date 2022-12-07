@@ -23,6 +23,7 @@ import { TuiLetModule } from "@taiga-ui/cdk";
 import { ApiLoadingStateModule } from "../../shared/pipes/api-loading-state/api-loading-state.module";
 import { ProductPropertyModule } from "../../shared/pipes/product-property/product-property.module";
 import { ReactiveFormsModule } from "@angular/forms";
+import { DataEmptyModule } from "../../shared/components/data-empty/data-empty.module";
 
 @NgModule({
   declarations: [
@@ -30,32 +31,33 @@ import { ReactiveFormsModule } from "@angular/forms";
     PropertiesListComponent,
     PropertiesDetailsComponent
   ],
-  imports: [
-    CommonModule,
-    PropertiesRoutingModule,
-    TuiBreadcrumbsModule,
-    TuiButtonModule,
-    TuiLinkModule,
-    TuiTableModule,
-    TuiLetModule,
-    ApiLoadingStateModule,
-    TuiSvgModule,
-    TuiTablePaginationModule,
-    TuiMarkerIconModule,
-    ProductPropertyModule,
-    TuiBadgeModule,
-    TuiHintModule,
-    ReactiveFormsModule,
-    TuiInputModule,
-    TuiTextAreaModule,
-    TuiSelectModule,
-    TuiTextfieldControllerModule,
-    TuiDataListModule,
-    TuiLoaderModule,
-    TuiCheckboxLabeledModule,
-    TuiInputTagModule,
-    TuiDropdownModule,
-    TuiDataListDropdownManagerModule,
-  ]
+    imports: [
+        CommonModule,
+        PropertiesRoutingModule,
+        TuiBreadcrumbsModule,
+        TuiButtonModule,
+        TuiLinkModule,
+        TuiTableModule,
+        TuiLetModule,
+        ApiLoadingStateModule,
+        TuiSvgModule,
+        TuiTablePaginationModule,
+        TuiMarkerIconModule,
+        ProductPropertyModule,
+        TuiBadgeModule,
+        TuiHintModule,
+        ReactiveFormsModule,
+        TuiInputModule,
+        TuiTextAreaModule,
+        TuiSelectModule,
+        TuiTextfieldControllerModule,
+        TuiDataListModule,
+        TuiLoaderModule,
+        TuiCheckboxLabeledModule,
+        TuiInputTagModule,
+        TuiDropdownModule,
+        TuiDataListDropdownManagerModule,
+        DataEmptyModule,
+    ]
 })
 export class PropertiesModule { }

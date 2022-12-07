@@ -90,8 +90,8 @@
           </button>
       </div>
     </div>
-    <div class="content" *ngSwitchCase="apiLoadingState.Empty">
-      Empty data...
+    <div *ngSwitchCase="apiLoadingState.Empty">
+      <app-data-empty></app-data-empty>
     </div>
     <ng-container *ngSwitchCase="apiLoadingState.Pending">
       <tui-loader class="loader" size="xl">

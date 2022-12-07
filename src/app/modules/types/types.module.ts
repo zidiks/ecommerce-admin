@@ -23,6 +23,7 @@ import { ApiLoadingStateModule } from "../../shared/pipes/api-loading-state/api-
 import { TypesDialogComponent } from './types-list/types-dialog/types-dialog.component';
 import { ReactiveFormsModule } from "@angular/forms";
 import { TuiLetModule } from "@taiga-ui/cdk";
+import { DataEmptyModule } from "../../shared/components/data-empty/data-empty.module";
 
 @NgModule({
   declarations: [
@@ -30,27 +31,28 @@ import { TuiLetModule } from "@taiga-ui/cdk";
     TypesListComponent,
     TypesDialogComponent,
   ],
-  imports: [
-    CommonModule,
-    TypesRoutingModule,
-    TuiBreadcrumbsModule,
-    TuiLinkModule,
-    TuiButtonModule,
-    ApiLoadingStateModule,
-    TuiLoaderModule,
-    TuiActionModule,
-    TuiMarkerIconModule,
-    ReactiveFormsModule,
-    TuiInputModule,
-    TuiTextfieldControllerModule,
-    TuiTextAreaModule,
-    TuiDataListDropdownManagerModule,
-    TuiDropdownModule,
-    TuiSvgModule,
-    TuiDataListModule,
-    TuiMultiSelectModule,
-    TuiDataListWrapperModule,
-    TuiLetModule,
-  ],
+    imports: [
+        CommonModule,
+        TypesRoutingModule,
+        TuiBreadcrumbsModule,
+        TuiLinkModule,
+        TuiButtonModule,
+        ApiLoadingStateModule,
+        TuiLoaderModule,
+        TuiActionModule,
+        TuiMarkerIconModule,
+        ReactiveFormsModule,
+        TuiInputModule,
+        TuiTextfieldControllerModule,
+        TuiTextAreaModule,
+        TuiDataListDropdownManagerModule,
+        TuiDropdownModule,
+        TuiSvgModule,
+        TuiDataListModule,
+        TuiMultiSelectModule,
+        TuiDataListWrapperModule,
+        TuiLetModule,
+        DataEmptyModule,
+    ],
 })
 export class TypesModule { }

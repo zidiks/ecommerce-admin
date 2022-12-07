@@ -23,23 +23,6 @@ tui-table-pagination {
   margin-top: 2rem;
   padding: 0 0.5rem;
 }
-.table-empty {
-  cursor: default;
-  padding: 2rem 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  user-select: none;
-  tui-svg {
-    color: var(--tui-base-05);
-    margin-top: 0.1rem;
-  }
-  span {
-    margin-left: 0.5rem;
-    font-size: 1.1rem;
-    color: var(--tui-base-05);
-  }
-}
 table {
   width: 100%;
   .td {
