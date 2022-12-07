@@ -1,21 +1,21 @@
 import { PaymentMethodResponseDto } from "./payment-method.dto";
 import { ApiId, ApiTimestamp } from "../models/api-data.model";
 
-export interface CrateDeliveryMethodRequestDTO {
+export interface AddDeliveryMethodRequestDto {
   name: string;
   description: string;
-  fields: DeliveryMethodFieldDTO;
+  fields: DeliveryMethodFieldDto;
   paymentMethods: string[];
 }
 
-export interface DeliveryMethodFieldDTO {
+export interface DeliveryMethodFieldDto {
   code: string;
   name: string;
 }
 
-export interface DeliveryMethodResponseDTO extends ApiId, ApiTimestamp {
+export interface DeliveryMethodResponseDto extends ApiId, ApiTimestamp {
   name: string;
   description: string;
-  fields: DeliveryMethodFieldDTO;
+  fields: DeliveryMethodFieldDto;
   paymentMethods: PaymentMethodResponseDto[];
 }

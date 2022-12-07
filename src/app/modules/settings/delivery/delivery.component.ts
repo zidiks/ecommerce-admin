@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiDataModel } from "../../../shared/models/api-data.model";
 import { DeliveryService } from "./delivery.service";
-import { DeliveryMethodResponseDTO } from "../../../shared/dto/delivery-method.dto";
+import { DeliveryMethodResponseDto } from "../../../shared/dto/delivery-method.dto";
 import { ApiLoadingState } from "../../../shared/enums/api-loading-state.enum";
 
 @Component({
@@ -10,7 +10,7 @@ import { ApiLoadingState } from "../../../shared/enums/api-loading-state.enum";
   styleUrls: ['./delivery.component.scss']
 })
 export class DeliveryComponent implements OnInit {
-  public deliveryData: ApiDataModel<DeliveryMethodResponseDTO[]>
+  public deliveryData: ApiDataModel<DeliveryMethodResponseDto[]>
   public apiLoadingState = ApiLoadingState;
 
   public breadcrumbs = [

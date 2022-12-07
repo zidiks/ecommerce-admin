@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from "../../../shared/services/http.service";
 import { Observable } from "rxjs";
-import { DeliveryMethodResponseDTO } from "../../../shared/dto/delivery-method.dto";
+import { DeliveryMethodResponseDto } from "../../../shared/dto/delivery-method.dto";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class DeliveryService {
     private http: HttpService,
   ) { }
 
-  public getDeliveryMethods(): Observable<DeliveryMethodResponseDTO[]> {
-    return this.http.get<DeliveryMethodResponseDTO[]>('store/delivery-method');
+  public getDeliveryMethods(): Observable<DeliveryMethodResponseDto[]> {
+    return this.http.get<DeliveryMethodResponseDto[]>('store/delivery-method');
   }
 }
