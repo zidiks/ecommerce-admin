@@ -7,10 +7,12 @@ import { OrdersService } from "../orders.service";
 import { ApiDataModel } from "../../../shared/models/api-data.model";
 import { historyDataItems } from "../../../shared/functions/history-data-item.func";
 import { AbstractControl, FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Observable, startWith } from "rxjs";
+import { forkJoin, Observable, startWith } from "rxjs";
 import { historyData } from "../../../shared/constants/order-history.const";
 import { OrderHistory } from "../../../shared/enums/order-history.enum";
 import { OrderResponseDto, UpdateOrderRequestDto } from "../../../shared/dto/order.dto";
+import { OrderStateService } from "../../settings/order-state/order-state.service";
+import { OrderStateResponseDto } from "../../../shared/dto/order-state.dto";
 
 @Component({
   selector: 'app-details',
@@ -22,9 +24,11 @@ export class DetailsComponent implements OnInit {
   public orderId;
   public dropdownOpen = false;
   public orderData: ApiDataModel<OrderResponseDto>;
+  public statesData: ApiDataModel<OrderStateResponseDto[]>;
   public historyDataItems: HistoryDataItem[] = historyDataItems();
   public historySelectedType: HistoryDataItemWithCode | undefined;
   public waitUpdating = false;
+  public statePickerOpen = false;
 
   public historyFormGroup: FormGroup = this.formBuilder.group({
     type: [historyData[OrderHistory.Message], Validators.required],
@@ -40,6 +44,7 @@ export class DetailsComponent implements OnInit {
     private clipboard: Clipboard,
     @Inject(TuiAlertService) private readonly alertService: TuiAlertService,
     private orderService: OrdersService,
+    private orderStateService: OrderStateService,
     private formBuilder: FormBuilder,
   ) {
     this.orderId = this.route.snapshot.params['id'];
@@ -66,6 +71,14 @@ export class DetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.refreshData();
+  }
+
+  public setOrderState({label, description, color}: OrderStateResponseDto): void {
+    if (this.orderData) {
+      this.orderData.state = { label, description, color };
+    }
+    this.statePickerOpen = false;
+    this.dropdownElement?.nativeFocusableElement?.focus();
   }
 
   public addOrderHistoryItem(): void {
@@ -132,8 +145,12 @@ export class DetailsComponent implements OnInit {
 
   public refreshData(): void {
     this.orderData = undefined;
-    this.orderService.getOrderById(this.orderId).subscribe((res: OrderResponseDto | null) => {
-      this.orderData = res || null;
+    forkJoin({
+      order: this.orderService.getOrderById(this.orderId),
+      states: this.orderStateService.getOrderStates(),
+    }).subscribe((res: { order: OrderResponseDto | null; states: OrderStateResponseDto[] | null }) => {
+      this.orderData = res.order;
+      this.statesData = res.states;
     });
   }
 

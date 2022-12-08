@@ -36,7 +36,7 @@ export interface OrderCustomerDto {
 export interface OrderStateDto {
   label: string;
   color: StateColor;
-  description: string;
+  description?: string;
 }
 
 export interface OrderPaymentMethodDto {

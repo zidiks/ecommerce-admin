@@ -300,3 +300,19 @@
 .spacer {
   flex: 1 1 auto;
 }
+
+.order-state {
+  cursor: pointer;
+  outline-width: 0 !important;
+  transition: outline-width .1s;
+  &:hover {
+    outline-width: 2px !important;
+  }
+}
+
+.state-picker {
+  padding: 0.5rem;
+  &-item {
+    cursor: pointer;
+  }
+}

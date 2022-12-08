@@ -21,7 +21,7 @@
         appearance="secondary"
         icon="tuiIconCheck"
         class="tui-space_right-3"
-        [showLoader]="(orderData | apiLoadingState) || waitUpdating"
+        [showLoader]="([orderData, statesData ] | apiLoadingState : 'Pending' : true) || waitUpdating"
         (click)="updateOrder()"
       >
         {{ 'Сохранить' }}
@@ -33,7 +33,7 @@
         appearance="secondary"
         icon="tuiIconRefresh"
         class="tui-space_right-3"
-        [disabled]="(orderData | apiLoadingState) || waitUpdating"
+        [disabled]="([orderData, statesData ] | apiLoadingState : 'Pending' : true) || waitUpdating"
         (click)="refreshData()"
       >
       </button>
@@ -44,7 +44,7 @@
     [overlay]="true"
     size="xl"
   >
-    <div class="content" *ngIf="(orderData | apiLoadingState : 'Success') && orderData else loader">
+    <div class="content" *ngIf="([orderData, statesData ] | apiLoadingState : 'Success' : true) && orderData else loader">
       <div class="content_left">
         <div class="content-part">
           <div class="content-part__header">
@@ -66,10 +66,32 @@
               <div class="customer__part">
                 <h3>Статус</h3>
                 <ng-container *tuiLet="orderData.state as statusInfo">
-                  <tui-badge
-                    [status]="statusInfo.color"
-                    [value]="statusInfo.label"
-                  ></tui-badge>
+                  <tui-hosted-dropdown
+                    tuiDropdownDirection="bottom"
+                    [content]="picker"
+                    [(open)]="statePickerOpen"
+                    [tuiDropdownMaxHeight]="999"
+                  >
+                    <tui-badge
+                      class="order-state"
+                      [style]="'outline: solid var(--tui-' + statusInfo.color + '-bg-hover)'"
+                      [status]="statusInfo.color"
+                      [value]="statusInfo.label"
+                    ></tui-badge>
+                  </tui-hosted-dropdown>
+                  <ng-template
+                    #picker
+                  >
+                    <div class="state-picker">
+                      <tui-badge
+                        *ngFor="let state of statesData"
+                        class="state-picker-item tui-space_vertical-1 tui-space_horizontal-1"
+                        [status]="state.color"
+                        [value]="state.label"
+                        (click)="setOrderState(state)"
+                      ></tui-badge>
+                    </div>
+                  </ng-template>
                 </ng-container>
               </div>
               <div class="customer__part">
