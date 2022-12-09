@@ -27,6 +27,7 @@ import { ImagesService } from "../../../shared/services/images.service";
 import * as randomBytes from "randombytes";
 import { ResultMediaData } from "../../../shared/models/images.model";
 import { AddImagesResponseDto } from "../../../shared/dto/images.dto";
+import { SubmitService } from "../../../shared/services/submit.service";
 
 const MAX_MEDIA_LENGTH = 10;
 
@@ -75,6 +76,7 @@ export class ProductsDetailsComponent implements OnInit {
     private brandsService: BrandsService,
     private categoriesService: CategoriesService,
     private imagesService: ImagesService,
+    private submitService: SubmitService,
     @Inject(TuiAlertService) private readonly alertService: TuiAlertService,
   ) {
     this.productId = this.route.snapshot.params['id'];
@@ -282,6 +284,23 @@ export class ProductsDetailsComponent implements OnInit {
             }
           );
         }
+      })
+    }
+  }
+
+  public showDeleteDialog(): void {
+    if (this.productData) {
+      this.submitService.submitDialog('Удалить', `Вы действительно хотите удалить товар: ${this.productData.name}?`).subscribe({
+        next: (res) => {
+          if (res && this.productData) {
+            this.productsService.deleteProduct(this.productData._id).subscribe((res) => {
+              if (this.productData && res) {
+                this.alertService.open(`Товар ${this.productData.name} удален`, {label: `Успешно`, status: TuiNotification.Success, autoClose: 5000}).subscribe();
+                this.router.navigate(['/products'])
+              }
+            });
+          }
+        },
       })
     }
   }
