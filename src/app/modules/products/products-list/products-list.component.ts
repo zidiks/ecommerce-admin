@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { ApiDataModel } from "../../../shared/models/api-data.model";
-import { ProductModel } from "../../../shared/models/product.model";
+import { GetProductsOptions, ProductPrevModel } from "../../../shared/models/product.model";
 import { ProductsService } from "../products.service";
 import { Paginated } from "../../../shared/models/paginated.model";
+import { BehaviorSubject, combineLatest, debounceTime } from "rxjs";
+import { BaseProductProperty } from "../../../shared/enums/base-product-property.emum";
 
 @Component({
   selector: 'app-products-list',
@@ -10,9 +12,22 @@ import { Paginated } from "../../../shared/models/paginated.model";
   styleUrls: ['./products-list.component.scss']
 })
 export class ProductsListComponent implements OnInit {
-  public page = 0;
-  public size = 10;
-  public productsData: ApiDataModel<ProductModel[]>;
+  readonly limit$ = new BehaviorSubject<number>(10);
+  readonly page$ = new BehaviorSubject<number>(0);
+  readonly emitter = new EventEmitter();
+  readonly emitter$ = this.emitter.asObservable();
+  readonly direction$ = new BehaviorSubject<-1 | 1>(-1);
+  readonly sorter$ = new BehaviorSubject<string>(`name`);
+  readonly request$ = combineLatest({
+    emitter: this.emitter$,
+    sort: this.sorter$,
+    direction: this.direction$,
+    page: this.page$,
+    limit: this.limit$,
+  }).pipe(
+    debounceTime(0),
+  );
+  public productsData: ApiDataModel<Paginated<ProductPrevModel>>;
   public breadcrumbs = [
     {
       caption: `Главная`,
@@ -24,22 +39,45 @@ export class ProductsListComponent implements OnInit {
     },
   ];
 
-  readonly columns = ['media', 'name', 'price', 'brand'];
+  readonly columns = ['media', 'name', 'price', 'categoryId', 'brand'];
 
   constructor(
     private productsService: ProductsService,
   ) { }
 
   ngOnInit(): void {
+    this.request$.subscribe(res => {
+      this.getData({
+        preview: true,
+        sort: {
+          property: res.sort as BaseProductProperty,
+          direction: res.direction,
+        },
+        pagination: {
+          page: res.page,
+          limit: res.limit,
+        }
+      });
+    });
     this.refreshData();
   }
 
+  public changeSize(limit: number): void {
+    this.limit$.next(limit);
+  }
+
+  public changePage(page: number): void {
+    this.page$.next(page);
+  }
+
   public refreshData(): void {
+    this.emitter.emit();
+  }
+
+  public getData(options?: GetProductsOptions): void {
     this.productsData = undefined;
-    this.productsService.getProducts({
-      search: 'a',
-    }).subscribe((res: Paginated<ProductModel[]> | null) => {
-      this.productsData = res?.data || null;
+    this.productsService.getProducts<ProductPrevModel>(options).subscribe((res: Paginated<ProductPrevModel> | null) => {
+      this.productsData = res || null;
     });
   }
 

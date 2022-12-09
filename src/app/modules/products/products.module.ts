@@ -31,6 +31,7 @@ import { DragDropModule } from "@angular/cdk/drag-drop";
 import { TuiPreviewModule } from '@taiga-ui/addon-preview';
 import { ErrorImgModule } from "../../shared/directives/error-img/error-img.module";
 import { DataEmptyModule } from "../../shared/components/data-empty/data-empty.module";
+import { PaginationIndexModule } from "../../shared/pipes/pagination-index/pagination-index.module";
 
 @NgModule({
   declarations: [
@@ -38,38 +39,39 @@ import { DataEmptyModule } from "../../shared/components/data-empty/data-empty.m
     ProductsListComponent,
     ProductsDetailsComponent
   ],
-    imports: [
-        CommonModule,
-        ProductsRoutingModule,
-        TuiBreadcrumbsModule,
-        TuiLinkModule,
-        TuiButtonModule,
-        TuiTableModule,
-        ApiLoadingStateModule,
-        TuiSvgModule,
-        TuiTablePaginationModule,
-        TuiLetModule,
-        TuiFormatNumberPipeModule,
-        TuiCurrencyPipeModule,
-        ReactiveFormsModule,
-        TuiInputModule,
-        TuiLoaderModule,
-        TuiSelectModule,
-        TuiTextfieldControllerModule,
-        TuiDataListModule,
-        TuiHintModule,
-        TuiTextAreaModule,
-        TuiInputNumberModule,
-        TuiTreeModule,
-        TuiInputFilesModule,
-        TuiErrorModule,
-        TuiFieldErrorPipeModule,
-        PropertyInputModule,
-        DragDropModule,
-        TuiBadgeModule,
-        TuiPreviewModule,
-        ErrorImgModule,
-        DataEmptyModule,
-    ]
+  imports: [
+    CommonModule,
+    ProductsRoutingModule,
+    TuiBreadcrumbsModule,
+    TuiLinkModule,
+    TuiButtonModule,
+    TuiTableModule,
+    ApiLoadingStateModule,
+    TuiSvgModule,
+    TuiTablePaginationModule,
+    TuiLetModule,
+    TuiFormatNumberPipeModule,
+    TuiCurrencyPipeModule,
+    ReactiveFormsModule,
+    TuiInputModule,
+    TuiLoaderModule,
+    TuiSelectModule,
+    TuiTextfieldControllerModule,
+    TuiDataListModule,
+    TuiHintModule,
+    TuiTextAreaModule,
+    TuiInputNumberModule,
+    TuiTreeModule,
+    TuiInputFilesModule,
+    TuiErrorModule,
+    TuiFieldErrorPipeModule,
+    PropertyInputModule,
+    DragDropModule,
+    TuiBadgeModule,
+    TuiPreviewModule,
+    ErrorImgModule,
+    DataEmptyModule,
+    PaginationIndexModule,
+  ]
 })
 export class ProductsModule { }

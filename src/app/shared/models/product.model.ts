@@ -1,7 +1,9 @@
 import { BrandModel } from "./brand.model";
+import { BaseProductProperty } from "../enums/base-product-property.emum";
+import { ApiId, ApiTimestamp } from "./api-data.model";
+import { ComparisonOperator } from "../enums/mongoose-query.enum";
 
-export interface ProductModel {
-  id: string;
+export interface ProductModel extends ApiId, ApiTimestamp {
   name: string;
   media: string[];
   price: number;
@@ -12,6 +14,15 @@ export interface ProductModel {
   productProps: ProductPropertyValueModel[];
 }
 
+export interface ProductPrevModel extends ApiId, ApiTimestamp {
+  name: string;
+  media: string[];
+  price: number;
+  brand?: BrandModel;
+  description: string;
+  categoryName: string;
+}
+
 export interface ProductPropertyValueModel {
   productTypePropertyId: string;
   value: string | string[] | number | boolean;
@@ -19,17 +30,23 @@ export interface ProductPropertyValueModel {
 
 export interface GetProductsOptions {
   search?: string;
-  page?: number;
-  sort?: string;
-  limit?: number;
-  asc?: boolean;
+  sort?: {
+    property: BaseProductProperty;
+    direction: -1 | 1;
+  };
+  pagination?: {
+    page: number;
+    limit: number;
+  }
+  preview?: boolean;
+  baseProperties?: GetProductsBasePropertiesDTO;
+  customProperties?: GetProductsCustomPropertiesDTO;
 }
 
-export interface ProductPrevModel {
-  id: string;
-  name: string;
-  media: string[];
-  price: number;
-  brand: BrandModel;
-  description?: string;
-}
+export type  GetProductsComparison = Partial<Record<ComparisonOperator,  GetProductsComparisonValue>>;
+
+export type  GetProductsComparisonValue = string | number | boolean | (string | number)[];
+
+export type GetProductsBasePropertiesDTO = Partial<Record<BaseProductProperty,  GetProductsComparison>>;
+
+export type GetProductsCustomPropertiesDTO = Partial<Record<string,  GetProductsComparison>>;

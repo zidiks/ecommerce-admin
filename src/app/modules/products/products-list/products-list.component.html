@@ -41,6 +41,10 @@
       tuiTable
       class="table"
       [columns]="columns"
+      [direction]="(direction$ | async) || 1"
+      [tuiSortBy]="sorter$ | async"
+      (tuiSortByChange)="sorter$.next($event!.toString())"
+      (directionChange)="direction$.next($event)"
     >
       <thead>
       <tr tuiThGroup>
@@ -52,18 +56,28 @@
         </th>
         <th
           tuiTh
+          tuiSortable
           *tuiHead="'name'"
         >
           Название
         </th>
         <th
           tuiTh
+          tuiSortable
           *tuiHead="'price'"
         >
           Цена
         </th>
         <th
           tuiTh
+          tuiSortable
+          *tuiHead="'categoryId'"
+        >
+          Категория
+        </th>
+        <th
+          tuiTh
+          tuiSortable
           *tuiHead="'brand'"
         >
           Бренд
@@ -71,7 +85,7 @@
       </tr>
       </thead>
       <tbody
-        *tuiLet="(productsData || []) | tuiTableSort as sortedData"
+        *tuiLet="(productsData?.data || []) | tuiTableSort as sortedData"
         tuiTbody
         [data]="sortedData"
       >
@@ -104,6 +118,12 @@
           {{ item.price | tuiFormatNumber: {decimalLimit: 2, decimalSeparator: '.'} }} {{ 'RUB' | tuiCurrency }}
         </td>
         <td
+          *tuiCell="'categoryId'"
+          tuiTd
+        >
+          {{ item.categoryName || 'Неизвестно' }}
+        </td>
+        <td
           *tuiCell="'brand'"
           tuiTd
         >
@@ -126,17 +146,18 @@
         </tr>
       </ng-container>
       <ng-container *ngIf="productsData | apiLoadingState : 'Empty'">
-        <tr>
-          <app-data-empty></app-data-empty>
-        </tr>
+        <app-data-empty></app-data-empty>
       </ng-container>
       </tbody>
     </table>
     <tui-table-pagination
       *ngIf="productsData | apiLoadingState : 'Success'"
-      [total]="productsData?.length || 0"
-      [(page)]="page"
-      [(size)]="size"
+      [items]="[1, 10, 20, 50]"
+      [total]="productsData?.metadata?.total || 0"
+      [page]="page$ | async | paginationIndex"
+      [size]="(limit$ | async) || 0"
+      (pageChange)="changePage($event + 1)"
+      (sizeChange)="changeSize($event)"
     ></tui-table-pagination>
   </div>
 </div>
