@@ -3,8 +3,10 @@ import { ApiDataModel } from "../../../shared/models/api-data.model";
 import { GetProductsOptions, ProductPrevModel } from "../../../shared/models/product.model";
 import { ProductsService } from "../products.service";
 import { Paginated } from "../../../shared/models/paginated.model";
-import { BehaviorSubject, combineLatest, debounceTime } from "rxjs";
+import { BehaviorSubject, combineLatest, debounceTime, map, Observable, of, startWith, switchMap } from "rxjs";
 import { BaseProductProperty } from "../../../shared/enums/base-product-property.emum";
+import { FormControl } from "@angular/forms";
+import { Autocomplete } from "../../../shared/dto/products.dto";
 
 @Component({
   selector: 'app-products-list',
@@ -12,6 +14,11 @@ import { BaseProductProperty } from "../../../shared/enums/base-product-property
   styleUrls: ['./products-list.component.scss']
 })
 export class ProductsListComponent implements OnInit {
+  readonly search = new FormControl('');
+  readonly search$ = this.search.valueChanges.pipe(debounceTime(200), startWith(''));
+  readonly autocomplete$: Observable<Autocomplete[]> = this.search$.pipe(switchMap((search: string | null) => {
+    return search?.length ? this.productsService.autocomplete(search).pipe(map(res => res || [])) : of([])
+  }));
   readonly limit$ = new BehaviorSubject<number>(10);
   readonly page$ = new BehaviorSubject<number>(0);
   readonly emitter = new EventEmitter();
@@ -20,6 +27,7 @@ export class ProductsListComponent implements OnInit {
   readonly sorter$ = new BehaviorSubject<string>(`name`);
   readonly request$ = combineLatest({
     emitter: this.emitter$,
+    search: this.search$,
     sort: this.sorter$,
     direction: this.direction$,
     page: this.page$,
@@ -49,6 +57,7 @@ export class ProductsListComponent implements OnInit {
     this.request$.subscribe(res => {
       this.getData({
         preview: true,
+        search: res.search || undefined,
         sort: {
           property: res.sort as BaseProductProperty,
           direction: res.direction,

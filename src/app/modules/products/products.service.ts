@@ -3,7 +3,7 @@ import { GetProductsOptions, ProductModel, ProductPrevModel } from "../../shared
 import { Observable } from "rxjs";
 import { HttpService } from "../../shared/services/http.service";
 import { Paginated } from "../../shared/models/paginated.model";
-import { AddProductDto, UpdateProductDto } from "../../shared/dto/products.dto";
+import { AddProductDto, Autocomplete, UpdateProductDto } from "../../shared/dto/products.dto";
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +16,10 @@ export class ProductsService {
 
   public getProducts<T extends (ProductModel | ProductPrevModel)>(options?: GetProductsOptions): Observable<Paginated<T> | null> {
     return this.http.post<Paginated<T>, GetProductsOptions>(`store/products`, options);
+  }
+
+  public autocomplete(search: string): Observable<Autocomplete[] | null> {
+    return this.http.get<Autocomplete[]>(`store/autocomplete/${search}`);
   }
 
   public getProductById(id: string): Observable<ProductModel | null> {
