@@ -27,25 +27,6 @@
           tuiTextfield
           type="text"
         />
-        <ng-container *tuiLet="autocomplete$ | async as autocomplete">
-          <ng-container *ngIf="autocomplete?.length">
-            <tui-data-list *tuiDataList>
-              <button
-                size="xs"
-                *ngFor="let item of autocomplete"
-                tuiOption
-              >
-                <div class="search-item">
-                  <tui-avatar
-                    size="xs"
-                    [avatarUrl]="item.media ? 'http://localhost:5000/storage/images/' + item.media : 'assets/images/no-image.png'"
-                  ></tui-avatar>
-                  <span class="tui-space_left-2">{{ item.name }}</span>
-                </div>
-              </button>
-            </tui-data-list>
-          </ng-container>
-        </ng-container>
       </tui-input>
       <button
         size="s"

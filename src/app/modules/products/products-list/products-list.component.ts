@@ -3,10 +3,9 @@ import { ApiDataModel } from "../../../shared/models/api-data.model";
 import { GetProductsOptions, ProductPrevModel } from "../../../shared/models/product.model";
 import { ProductsService } from "../products.service";
 import { Paginated } from "../../../shared/models/paginated.model";
-import { BehaviorSubject, combineLatest, debounceTime, map, Observable, of, startWith, switchMap } from "rxjs";
+import { BehaviorSubject, combineLatest, debounceTime, startWith } from "rxjs";
 import { BaseProductProperty } from "../../../shared/enums/base-product-property.emum";
 import { FormControl } from "@angular/forms";
-import { Autocomplete } from "../../../shared/dto/products.dto";
 
 @Component({
   selector: 'app-products-list',
@@ -16,9 +15,6 @@ import { Autocomplete } from "../../../shared/dto/products.dto";
 export class ProductsListComponent implements OnInit {
   readonly search = new FormControl('');
   readonly search$ = this.search.valueChanges.pipe(debounceTime(200), startWith(''));
-  readonly autocomplete$: Observable<Autocomplete[]> = this.search$.pipe(switchMap((search: string | null) => {
-    return search?.length ? this.productsService.autocomplete(search).pipe(map(res => res || [])) : of([])
-  }));
   readonly limit$ = new BehaviorSubject<number>(10);
   readonly page$ = new BehaviorSubject<number>(0);
   readonly emitter = new EventEmitter();
