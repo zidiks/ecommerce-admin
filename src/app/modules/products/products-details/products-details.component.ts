@@ -61,7 +61,7 @@ export class ProductsDetailsComponent implements OnInit {
     media: [[], maxFilesLength(this.maxMediaLength)],
     price: [null, Validators.required],
     brand: [null, Validators.required],
-    description: [null],
+    description: [null, Validators.required],
     categoryId: [null],
     productTypeId: [null],
     productProps: this.formBuilder.group({}),
