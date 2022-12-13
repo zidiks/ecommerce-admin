@@ -108,10 +108,8 @@
           </ng-container>
         </tr>
       </ng-container>
-      <ng-container *ngIf="articlesData | apiLoadingState : 'Empty'">
-        <tr>
-          <app-data-empty></app-data-empty>
-        </tr>
+      <ng-container *ngIf="articlesData?.data | apiLoadingState : 'Empty'">
+        <app-data-empty></app-data-empty>
       </ng-container>
       </tbody>
     </table>

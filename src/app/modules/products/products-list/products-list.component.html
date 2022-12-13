@@ -159,7 +159,7 @@
           </ng-container>
         </tr>
       </ng-container>
-      <ng-container *ngIf="productsData | apiLoadingState : 'Empty'">
+      <ng-container *ngIf="productsData?.data | apiLoadingState : 'Empty'">
         <app-data-empty></app-data-empty>
       </ng-container>
       </tbody>
