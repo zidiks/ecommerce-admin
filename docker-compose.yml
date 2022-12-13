@@ -1,0 +1,9 @@
+version: '3'
+services:
+  hue.EC-Parf.cloud-ADMIN-FE:
+    image: ecommerce-admin
+    build: .
+    environment:
+      NODE_ENV: production
+    ports:
+      - 80:80
