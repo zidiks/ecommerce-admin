@@ -12,7 +12,7 @@ import {
   ProductTypePrevModel,
   ProductTypePropertyModel
 } from "../../../shared/models/type-property.model";
-import { forkJoin, map, Observable, of, switchMap } from "rxjs";
+import { combineLatest, forkJoin, map, Observable, of, startWith, switchMap } from "rxjs";
 import { BrandsService } from "../../brands/brands.service";
 import { CategoriesService } from "../../categories/categories.service";
 import { EMPTY_ARRAY, TuiContextWithImplicit, TuiHandler, tuiPure, TuiStringHandler } from "@taiga-ui/cdk";
@@ -28,6 +28,7 @@ import * as randomBytes from "randombytes";
 import { ResultMediaData } from "../../../shared/models/images.model";
 import { AddImagesResponseDto } from "../../../shared/dto/images.dto";
 import { SubmitService } from "../../../shared/services/submit.service";
+import { environment } from "../../../../environments/environment";
 
 const MAX_MEDIA_LENGTH = 10;
 
@@ -55,15 +56,20 @@ export class ProductsDetailsComponent implements OnInit {
   public linearCategoriesData: CategoryLinearModel[] = [];
   public loading = false;
   public maxMediaLength = MAX_MEDIA_LENGTH;
+  public currency = environment.currency;
 
   public formGroup: FormGroup = this.formBuilder.group({
     name: [null, Validators.required],
     media: [[], maxFilesLength(this.maxMediaLength)],
     price: [null, Validators.required],
+    totalPrice: [null, Validators.required],
     brand: [null, Validators.required],
     description: [null, Validators.required],
     categoryId: [null],
     productTypeId: [null],
+    isNew: [false, Validators.required],
+    isRec: [false, Validators.required],
+    discount: [0],
     productProps: this.formBuilder.group({}),
   });
 
@@ -98,6 +104,15 @@ export class ProductsDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.refreshData();
+    combineLatest([
+      this.f['discount'].valueChanges.pipe(startWith(0)),
+      this.f['price'].valueChanges,
+    ]).subscribe((value) => {
+      const price = value[1] || 0;
+      const discount = price * ((value[0] || 0) / 100);
+      const roundedDiscount = Math.ceil(discount * 100) / 100;
+      this.f['totalPrice'].setValue(price - roundedDiscount);
+    });
     this.f['productTypeId'].valueChanges.subscribe((value: string) => {
       if (value) {
         this.setPropertiesControls(value);
@@ -118,7 +133,11 @@ export class ProductsDetailsComponent implements OnInit {
   }
 
   public refreshData(): void {
-    this.formGroup.reset();
+    this.formGroup.reset({
+      isNew: false,
+      isRec: false,
+      discount: 0,
+    });
     this.productData = undefined;
     forkJoin({
       product: this.productId ? this.productsService.getProductById(this.productId) : of(null),
@@ -142,10 +161,13 @@ export class ProductsDetailsComponent implements OnInit {
               name: productData.name,
               media: mediaRes.filter(mediaItem => mediaItem) || [],
               price: productData.price,
+              totalPrice: productData.totalPrice,
               brand: productData.brand?._id,
               description: productData.description,
               categoryId: productData.categoryId,
               productTypeId: productData.productTypeId,
+              isNew: productData.isNew,
+              isRec: productData.isRec,
             });
           });
         });
@@ -259,6 +281,7 @@ export class ProductsDetailsComponent implements OnInit {
             .map(([productTypePropertyId, value]: [string, PropertyValue]) =>
               ({ productTypePropertyId, value }))
         };
+        delete payload.discount;
         if (this.productId) {
           this.productsService.updateProduct(this.productId.toString(), payload as UpdateProductDto).subscribe(
             res => {

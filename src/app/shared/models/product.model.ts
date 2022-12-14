@@ -7,10 +7,13 @@ export interface ProductModel extends ApiId, ApiTimestamp {
   name: string;
   media: string[];
   price: number;
+  totalPrice: number;
   brand?: BrandModel;
   description: string;
   categoryId: string;
   productTypeId: string;
+  isNew: boolean;
+  isRec: boolean;
   productProps: ProductPropertyValueModel[];
 }
 
@@ -18,9 +21,12 @@ export interface ProductPrevModel extends ApiId, ApiTimestamp {
   name: string;
   media: string[];
   price: number;
+  totalPrice: number;
   brand?: BrandModel;
   description: string;
   categoryName: string;
+  isNew: boolean;
+  isRec: boolean;
 }
 
 export interface ProductPropertyValueModel {

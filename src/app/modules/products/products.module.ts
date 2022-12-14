@@ -7,7 +7,7 @@ import { ProductsDetailsComponent } from './products-details/products-details.co
 import {
     TuiAvatarModule,
     TuiBadgeModule,
-    TuiBreadcrumbsModule, TuiFieldErrorPipeModule, TuiInputFilesModule,
+    TuiBreadcrumbsModule, TuiCheckboxBlockModule, TuiFieldErrorPipeModule, TuiInputFilesModule,
     TuiInputModule,
     TuiInputNumberModule,
     TuiSelectModule,
@@ -74,6 +74,7 @@ import { PaginationIndexModule } from "../../shared/pipes/pagination-index/pagin
         DataEmptyModule,
         PaginationIndexModule,
         TuiAvatarModule,
+        TuiCheckboxBlockModule,
     ]
 })
 export class ProductsModule { }
