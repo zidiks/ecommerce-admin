@@ -1,8 +1,9 @@
 version: '3'
 services:
   hue.EC-Parf.cloud-ADMIN-FE:
-    image: ecommerce-admin
-    build: .
+    image: ghcr.io/zidiks/ecommerce-admin/ecommerce-admin:develop
+    container_name: admin-fe
+    restart: always
     environment:
       NODE_ENV: production
     ports:
