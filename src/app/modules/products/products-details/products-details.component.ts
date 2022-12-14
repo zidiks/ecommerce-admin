@@ -162,6 +162,7 @@ export class ProductsDetailsComponent implements OnInit {
               media: mediaRes.filter(mediaItem => mediaItem) || [],
               price: productData.price,
               totalPrice: productData.totalPrice,
+              discount: productData.discount || 0,
               brand: productData.brand?._id,
               description: productData.description,
               categoryId: productData.categoryId,
@@ -281,7 +282,6 @@ export class ProductsDetailsComponent implements OnInit {
             .map(([productTypePropertyId, value]: [string, PropertyValue]) =>
               ({ productTypePropertyId, value }))
         };
-        delete payload.discount;
         if (this.productId) {
           this.productsService.updateProduct(this.productId.toString(), payload as UpdateProductDto).subscribe(
             res => {

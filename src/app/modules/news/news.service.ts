@@ -13,8 +13,8 @@ export class NewsService {
     private http: HttpService,
   ) { }
 
-  public getArticles(): Observable<Paginated<ArticleResponseDto[]> | null> {
-    return this.http.get<Paginated<ArticleResponseDto[]>>('article');
+  public getArticles(): Observable<Paginated<ArticleResponseDto> | null> {
+    return this.http.get<Paginated<ArticleResponseDto>>('article');
   }
 
   public getArticleById(id: string): Observable<ArticleResponseDto | null> {

@@ -8,6 +8,7 @@ export interface ProductModel extends ApiId, ApiTimestamp {
   media: string[];
   price: number;
   totalPrice: number;
+  discount: number;
   brand?: BrandModel;
   description: string;
   categoryId: string;
