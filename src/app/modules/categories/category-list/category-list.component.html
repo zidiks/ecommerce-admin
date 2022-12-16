@@ -61,7 +61,7 @@
               >
                 <button
                   tuiOption
-                  (click)="showEditDialog(value); dropdown.toggle(false)"
+                  (click)="showEditDialog(value, value.parent || null); dropdown.toggle(false)"
                 >
                   Изменить
                   <tui-svg
