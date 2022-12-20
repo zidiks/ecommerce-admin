@@ -136,14 +136,14 @@
                   <div class="product__price-line">
                     <div class="product__price-number">
                       <tui-money
-                        currency="RUB"
+                        currency="BYN"
                         [value]="cartItem.product.price"
                       ></tui-money>
                     </div>
                     <div class="product__price-count">x {{ cartItem.count }}</div>
                     <div class="product__price-total" [class.product__price-total-through]="cartItem.discount">
                       <tui-money
-                        currency="RUB"
+                        currency="BYN"
                         [value]="cartItem.count * cartItem.product.price"
                       ></tui-money>
                     </div>
@@ -153,7 +153,7 @@
                       <span class="product__discount-percent">-{{ cartItem.discount | tuiFormatNumber }}%</span>
                       <tui-money
                         class="product__discount-value"
-                        currency="RUB"
+                        currency="BYN"
                         [value]="(cartItem.count * cartItem.product.price) * ((100 - cartItem.discount) / 100)"
                       ></tui-money>
                     </div>
@@ -165,7 +165,7 @@
                   <span class="total__line-name">Первичная стоимость</span>
                   <span class="total__line-value">
                   <tui-money
-                    currency="RUB"
+                    currency="BYN"
                     [value]="orderData.subTotalPrice"
                   ></tui-money>
                 </span>
@@ -178,7 +178,7 @@
                   <span class="total__line-name">Итоговая стоимость</span>
                   <span class="total__line-value">
                   <tui-money
-                    currency="RUB"
+                    currency="BYN"
                     [value]="orderData.totalPrice"
                   ></tui-money>
                 </span>
