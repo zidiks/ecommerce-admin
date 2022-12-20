@@ -2,6 +2,7 @@ import { SettingsItemModel } from "../../../shared/models/settings.model";
 import { PaymentComponent } from "../payment/payment.component";
 import { DeliveryComponent } from "../delivery/delivery.component";
 import { OrderStateComponent } from "../order-state/order-state.component";
+import { DiscountComponent } from "../discount/discount.component";
 
 export const settingsList: SettingsItemModel[] = [
   {
@@ -24,5 +25,12 @@ export const settingsList: SettingsItemModel[] = [
     component: OrderStateComponent,
     path: 'order-state',
     icon: 'tuiIconCommentLarge'
+  },
+  {
+    name: 'Дисконтная программа',
+    description: 'Настройка условий дисконтной программы',
+    component: DiscountComponent,
+    path: 'discount',
+    icon: 'tuiIconSettingsLarge'
   },
 ];

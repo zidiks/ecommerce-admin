@@ -7,12 +7,12 @@ import { PaymentComponent } from './payment/payment.component';
 import { OrderStateComponent } from './order-state/order-state.component';
 import { DeliveryComponent } from './delivery/delivery.component';
 import {
-    TuiBadgeModule,
-    TuiBreadcrumbsModule,
-    TuiDataListDropdownManagerModule, TuiDataListWrapperModule,
-    TuiInputModule, TuiInputTagModule,
-    TuiIslandModule, TuiMultiSelectModule, TuiSelectModule,
-    TuiTextAreaModule
+  TuiBadgeModule,
+  TuiBreadcrumbsModule,
+  TuiDataListDropdownManagerModule, TuiDataListWrapperModule,
+  TuiInputModule, TuiInputNumberModule, TuiInputTagModule,
+  TuiIslandModule, TuiMultiSelectModule, TuiSelectModule,
+  TuiTextAreaModule
 } from "@taiga-ui/kit";
 import {
   TuiButtonModule,
@@ -29,6 +29,8 @@ import { PaymentDialogComponent } from './payment/payment-dialog/payment-dialog.
 import { ReactiveFormsModule } from "@angular/forms";
 import { TuiLetModule } from "@taiga-ui/cdk";
 import { OrderStateDialogComponent } from './order-state/order-state-dialog/order-state-dialog.component';
+import { DiscountComponent } from './discount/discount.component';
+import { DiscountDialogComponent } from './discount/discount-dialog/discount-dialog.component';
 
 @NgModule({
   declarations: [
@@ -39,33 +41,36 @@ import { OrderStateDialogComponent } from './order-state/order-state-dialog/orde
     DeliveryComponent,
     DeliveryDialogComponent,
     PaymentDialogComponent,
-    OrderStateDialogComponent
+    OrderStateDialogComponent,
+    DiscountComponent,
+    DiscountDialogComponent
   ],
-    imports: [
-        CommonModule,
-        SettingsRoutingModule,
-        TuiBreadcrumbsModule,
-        TuiLinkModule,
-        TuiIslandModule,
-        TuiSvgModule,
-        ApiLoadingStateModule,
-        TuiLoaderModule,
-        TuiButtonModule,
-        DataEmptyModule,
-        TuiDataListDropdownManagerModule,
-        TuiDropdownModule,
-        TuiDataListModule,
-        ReactiveFormsModule,
-        TuiInputModule,
-        TuiTextAreaModule,
-        TuiTextfieldControllerModule,
-        TuiInputTagModule,
-        TuiLabelModule,
-        TuiMultiSelectModule,
-        TuiLetModule,
-        TuiDataListWrapperModule,
-        TuiSelectModule,
-        TuiBadgeModule,
-    ]
+  imports: [
+    CommonModule,
+    SettingsRoutingModule,
+    TuiBreadcrumbsModule,
+    TuiLinkModule,
+    TuiIslandModule,
+    TuiSvgModule,
+    ApiLoadingStateModule,
+    TuiLoaderModule,
+    TuiButtonModule,
+    DataEmptyModule,
+    TuiDataListDropdownManagerModule,
+    TuiDropdownModule,
+    TuiDataListModule,
+    ReactiveFormsModule,
+    TuiInputModule,
+    TuiTextAreaModule,
+    TuiTextfieldControllerModule,
+    TuiInputTagModule,
+    TuiLabelModule,
+    TuiMultiSelectModule,
+    TuiLetModule,
+    TuiDataListWrapperModule,
+    TuiSelectModule,
+    TuiBadgeModule,
+    TuiInputNumberModule,
+  ]
 })
 export class SettingsModule { }
