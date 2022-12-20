@@ -123,7 +123,7 @@
               <div class="product" *ngFor="let cartItem of orderData.cartItems">
                 <div class="product__img">
                   <tui-avatar
-                    [avatarUrl]="cartItem.product.media[0] || 'assets/images/no-image.png'"
+                    [avatarUrl]="cartItem.product.media[0] ? 'http://92.255.111.60:3000/storage/images/' + cartItem.product.media[0] : 'assets/images/no-image.png'"
                   >
                   </tui-avatar>
                 </div>
