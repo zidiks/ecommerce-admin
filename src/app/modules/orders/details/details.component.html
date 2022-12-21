@@ -172,7 +172,12 @@
                 </div>
                 <div class="total__line total__line-discount" *ngIf="orderData.totalDiscount">
                   <span class="total__line-name">Общая скидка</span>
-                  <span class="total__line-value">{{ orderData.totalDiscount | tuiFormatNumber }}%</span>
+                  <span class="total__line-value">
+                    <tui-money
+                      currency="BYN"
+                      [value]="orderData.totalDiscount"
+                    ></tui-money>
+                  </span>
                 </div>
                 <div class="total__line total__line-total">
                   <span class="total__line-name">Итоговая стоимость</span>
