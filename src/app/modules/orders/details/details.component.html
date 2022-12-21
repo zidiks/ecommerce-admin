@@ -141,20 +141,20 @@
                       ></tui-money>
                     </div>
                     <div class="product__price-count">x {{ cartItem.count }}</div>
-                    <div class="product__price-total" [class.product__price-total-through]="cartItem.discount">
+                    <div class="product__price-total" [class.product__price-total-through]="cartItem.product.discount">
                       <tui-money
                         currency="BYN"
                         [value]="cartItem.count * cartItem.product.price"
                       ></tui-money>
                     </div>
                   </div>
-                  <div class="product__price-line" *ngIf="cartItem.discount">
+                  <div class="product__price-line" *ngIf="cartItem.product.discount">
                     <div class="product__discount">
-                      <span class="product__discount-percent">-{{ cartItem.discount | tuiFormatNumber }}%</span>
+                      <span class="product__discount-percent">-{{ cartItem.product.discount | tuiFormatNumber }}%</span>
                       <tui-money
                         class="product__discount-value"
                         currency="BYN"
-                        [value]="(cartItem.count * cartItem.product.price) * ((100 - cartItem.discount) / 100)"
+                        [value]="(cartItem.count * cartItem.product.price) * ((100 - cartItem.product.discount) / 100)"
                       ></tui-money>
                     </div>
                   </div>
