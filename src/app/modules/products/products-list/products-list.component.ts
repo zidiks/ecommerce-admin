@@ -6,6 +6,7 @@ import { Paginated } from "../../../shared/models/paginated.model";
 import { BehaviorSubject, combineLatest, debounceTime, startWith } from "rxjs";
 import { BaseProductProperty } from "../../../shared/enums/base-product-property.emum";
 import { FormControl } from "@angular/forms";
+import { environment } from "../../../../environments/environment";
 
 @Component({
   selector: 'app-products-list',
@@ -13,6 +14,7 @@ import { FormControl } from "@angular/forms";
   styleUrls: ['./products-list.component.scss']
 })
 export class ProductsListComponent implements OnInit {
+  public currency = environment.currency;
   readonly search = new FormControl('');
   readonly search$ = this.search.valueChanges.pipe(debounceTime(200), startWith(''));
   readonly limit$ = new BehaviorSubject<number>(10);

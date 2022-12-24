@@ -71,13 +71,14 @@ export class CategoryListComponent implements OnInit {
     });
   }
 
-  public showEditDialog(category: CategoryModel): void {
+  public showEditDialog(category: CategoryModel, parent?: CategoryModel): void {
     const dialog = this.dialogService.open<CategoryBaseModel>(
       new PolymorpheusComponent(CategoryDialogComponent, this.injector),
       {
         label: 'Категория',
         data: {
-          categoryData: category
+          categoryData: category,
+          parentData: parent
         }
       }
     );

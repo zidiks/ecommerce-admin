@@ -5,10 +5,14 @@ export interface AddProductDto {
   name: string;
   media: string[];
   price: number;
+  totalPrice: number;
+  discount: number;
   brand: string;
   description: string;
   categoryId: string;
   productTypeId: string;
+  isNew: boolean;
+  isRec: boolean;
   productProps: ProductPropertyValueDto[];
 }
 

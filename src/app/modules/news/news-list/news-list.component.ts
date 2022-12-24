@@ -12,7 +12,7 @@ import { Paginated } from "../../../shared/models/paginated.model";
 export class NewsListComponent implements OnInit {
   public page = 0;
   public size = 10;
-  public articlesData: ApiDataModel<Paginated<ArticleResponseDto[]>>;
+  public articlesData: ApiDataModel<Paginated<ArticleResponseDto>>;
   public breadcrumbs = [
     {
       caption: `Главная`,
@@ -36,8 +36,9 @@ export class NewsListComponent implements OnInit {
 
   public refreshData(): void {
     this.articlesData = undefined;
-    this.newsService.getArticles().subscribe((res: Paginated<ArticleResponseDto[]> | null) => {
+    this.newsService.getArticles().subscribe((res: Paginated<ArticleResponseDto> | null) => {
       this.articlesData = res || null;
+      console.log(this.articlesData);
     });
   }
 

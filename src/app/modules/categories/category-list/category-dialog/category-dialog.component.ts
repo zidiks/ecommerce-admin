@@ -23,7 +23,7 @@ export class CategoryDialogComponent implements OnInit {
   public loading = false;
 
   public formGroup: FormGroup = this.formBuilder.group( {
-    parent: [ this.parentData?._id || this.categoryData?.parent?._id || 'Корень каталога' ],
+    parent: [ this.parentData?._id || this.categoryData?.parent?._id || null ],
     name : [ this.categoryData?.name, Validators.required ],
     handle : [ this.categoryData?.handle, Validators.required ],
     description : [ this.categoryData?.description ],
@@ -100,7 +100,7 @@ export class CategoryDialogComponent implements OnInit {
           description: formValue.description,
           media: [],
           productTypeId: formValue.type,
-          root: this.parentData ? undefined : true,
+          root: this.parentData || formValue.parent ? undefined : true,
         }).subscribe(
           res => this.context.completeWith(res),
           err => this.context.completeWith(null),

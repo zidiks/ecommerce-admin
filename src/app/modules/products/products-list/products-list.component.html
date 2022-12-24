@@ -129,7 +129,7 @@
           *tuiCell="'price'"
           tuiTd
         >
-          {{ item.price | tuiFormatNumber: {decimalLimit: 2, decimalSeparator: '.'} }} {{ 'RUB' | tuiCurrency }}
+          {{ item.totalPrice | tuiFormatNumber: {decimalLimit: 2, decimalSeparator: '.'} }} {{ currency | tuiCurrency }}
         </td>
         <td
           *tuiCell="'categoryId'"
