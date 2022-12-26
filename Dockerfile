@@ -6,3 +6,5 @@ RUN npm cache clean --force
 COPY . .
 RUN npm run build
 RUN npm prune --production
+
+COPY --from=build /usr/src/app/dist/app /usr/share/nginx/html
