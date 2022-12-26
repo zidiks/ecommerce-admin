@@ -78,6 +78,13 @@
         <th
           tuiTh
           tuiSortable
+          *tuiHead="'isStock'"
+        >
+          В наличии
+        </th>
+        <th
+          tuiTh
+          tuiSortable
           *tuiHead="'price'"
         >
           Цена
@@ -124,6 +131,12 @@
           tuiTd
         >
           {{ item.name }}
+        </td>
+        <td
+          *tuiCell="'isStock'"
+          tuiTd
+        >
+          {{ item.isStock ? 'Да' : 'Нет' }}
         </td>
         <td
           *tuiCell="'price'"

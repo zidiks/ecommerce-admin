@@ -45,7 +45,7 @@ export class ProductsListComponent implements OnInit {
     },
   ];
 
-  readonly columns = ['media', 'name', 'price', 'categoryId', 'brand'];
+  readonly columns = ['media', 'name', 'isStock', 'price', 'categoryId', 'brand'];
 
   constructor(
     private productsService: ProductsService,

@@ -90,7 +90,7 @@
           *tuiCell="'id'"
           tuiTd
         >
-          {{ item._id }}
+          {{ item.orderCode }}
         </td>
         <td
           *tuiCell="'startDate'"
@@ -102,7 +102,7 @@
           *tuiCell="'total'"
           tuiTd
         >
-          {{ item.totalPrice | tuiFormatNumber: {decimalLimit: 2, decimalSeparator: '.'} }} {{ 'RUB' | tuiCurrency }}
+          {{ item.totalPrice | tuiFormatNumber: {decimalLimit: 2, decimalSeparator: '.'} }} {{ 'BYN' | tuiCurrency }}
         </td>
         <td
           *tuiCell="'customer'"

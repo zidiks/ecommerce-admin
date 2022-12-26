@@ -24,8 +24,6 @@ export interface OrderResponseDto extends AddOrderRequestDto, ApiId, ApiTimestam
 export interface OrderCartItemDto {
   product: ProductModel;
   count: number;
-  discount: number;
-  total: number;
 }
 
 export interface OrderCustomerDto {

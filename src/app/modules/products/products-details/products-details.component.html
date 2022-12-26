@@ -93,51 +93,6 @@
               </tui-select>
             </div>
             <div class="tui-form__multi-field">
-              <tui-input-number
-                formControlName="price"
-                [postfix]="currency | tuiCurrency"
-              >
-                Цена
-              </tui-input-number>
-            </div>
-          </div>
-          <div class="tui-form__row tui-form__row_multi-fields">
-            <div class="tui-form__multi-field">
-              <tui-checkbox-block
-                formControlName="isNew"
-                size="l"
-              >
-                Новинка
-              </tui-checkbox-block>
-            </div>
-            <div class="tui-form__multi-field">
-              <tui-checkbox-block
-                formControlName="isRec"
-                size="l"
-              >
-                Рекомендуемое
-              </tui-checkbox-block>
-            </div>
-            <div class="tui-form__multi-field">
-              <tui-input-number
-                formControlName="discount"
-                [postfix]="'%'"
-              >
-                Скидка
-              </tui-input-number>
-            </div>
-            <div class="tui-form__multi-field">
-              <tui-input-number
-                [readOnly]="true"
-                [postfix]="currency | tuiCurrency"
-                formControlName="totalPrice"
-              >
-                Итоговая цена
-              </tui-input-number>
-            </div>
-          </div>
-          <div class="tui-form__row tui-form__row_multi-fields">
-            <div class="tui-form__multi-field">
               <tui-select
                 class="b-form"
                 [valueContent]="categoryContent"
@@ -185,7 +140,7 @@
                 formControlName="productTypeId"
                 [tuiTextfieldLabelOutside]="!items?.length"
               >
-                Сущность
+                Тип товара
                 <ng-template tuiDataList>
                   <tui-data-list *ngIf="items?.length; else loading">
                     <button
@@ -204,6 +159,59 @@
                   <tui-loader size="m" class="tui-space_vertical-3 loader"></tui-loader>
                 </ng-template>
               </tui-select>
+            </div>
+          </div>
+          <div class="tui-form__row tui-form__row_multi-fields">
+            <div class="tui-form__multi-field">
+              <tui-input-number
+                formControlName="price"
+                [postfix]="currency | tuiCurrency"
+              >
+                Цена
+              </tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number
+                formControlName="discount"
+                [postfix]="'%'"
+              >
+                Скидка
+              </tui-input-number>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-input-number
+                [readOnly]="true"
+                [postfix]="currency | tuiCurrency"
+                formControlName="totalPrice"
+              >
+                Итоговая цена
+              </tui-input-number>
+            </div>
+          </div>
+          <div class="tui-form__row tui-form__row_multi-fields">
+            <div class="tui-form__multi-field">
+              <tui-checkbox-block
+                formControlName="isStock"
+                size="l"
+              >
+                В наличии
+              </tui-checkbox-block>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-checkbox-block
+                formControlName="isNew"
+                size="l"
+              >
+                Новинка
+              </tui-checkbox-block>
+            </div>
+            <div class="tui-form__multi-field">
+              <tui-checkbox-block
+                formControlName="isRec"
+                size="l"
+              >
+                Рекомендуемое
+              </tui-checkbox-block>
             </div>
           </div>
           <div class="tui-form__row">

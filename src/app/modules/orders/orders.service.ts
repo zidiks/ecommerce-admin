@@ -20,6 +20,10 @@ export class OrdersService {
     return this.http.put<OrderResponseDto, UpdateOrderRequestDto>('store/order', id, payload);
   }
 
+  public deleteOrder(id: string): Observable<OrderResponseDto | null> {
+    return this.http.delete<OrderResponseDto>('store/order', id);
+  }
+
   public getOrderById(id: string): Observable<OrderResponseDto | null> {
     return this.http.get<OrderResponseDto>(`store/order/${id}`).pipe(
       map((order: OrderResponseDto) => {

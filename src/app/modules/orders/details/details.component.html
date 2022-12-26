@@ -27,6 +27,19 @@
         {{ 'Сохранить' }}
       </button>
       <button
+        *ngIf="orderId"
+        size="s"
+        tuiButton
+        type="button"
+        appearance="secondary-destructive"
+        icon="tuiIconTrash"
+        class="tui-space_right-3"
+        [showLoader]="([orderData, statesData ] | apiLoadingState : 'Pending' : true) || waitUpdating"
+        (click)="showDeleteDialog()"
+      >
+        Удалить
+      </button>
+      <button
         size="s"
         tuiIconButton
         type="button"
@@ -49,9 +62,9 @@
         <div class="content-part">
           <div class="content-part__header">
             <div class="content-part__title">
-              <h2>#{{ orderId }}</h2>
+              <h2>#{{ orderData.orderCode }}</h2>
               <tui-svg
-                (click)="copyToClipboard(orderId)"
+                (click)="copyToClipboard(orderData.orderCode)"
                 tuiHint="Скопировать"
                 tuiHintDirection="top"
                 src="tuiIconCheckList"
@@ -120,10 +133,10 @@
           </div>
           <div class="content-part__content">
             <div class="products">
-              <div class="product" *ngFor="let cartItem of orderData.cartItems">
+              <div class="product" [routerLink]="'/products/details/' + cartItem.product._id" *ngFor="let cartItem of orderData.cartItems">
                 <div class="product__img">
                   <tui-avatar
-                    [avatarUrl]="cartItem.product.media[0] || 'assets/images/no-image.png'"
+                    [avatarUrl]="cartItem.product.media[0] ? 'http://92.255.111.60:3000/storage/images/' + cartItem.product.media[0] : 'assets/images/no-image.png'"
                   >
                   </tui-avatar>
                 </div>
@@ -136,25 +149,25 @@
                   <div class="product__price-line">
                     <div class="product__price-number">
                       <tui-money
-                        currency="RUB"
+                        currency="BYN"
                         [value]="cartItem.product.price"
                       ></tui-money>
                     </div>
                     <div class="product__price-count">x {{ cartItem.count }}</div>
-                    <div class="product__price-total" [class.product__price-total-through]="cartItem.discount">
+                    <div class="product__price-total" [class.product__price-total-through]="cartItem.product.discount">
                       <tui-money
-                        currency="RUB"
+                        currency="BYN"
                         [value]="cartItem.count * cartItem.product.price"
                       ></tui-money>
                     </div>
                   </div>
-                  <div class="product__price-line" *ngIf="cartItem.discount">
+                  <div class="product__price-line" *ngIf="cartItem.product.discount">
                     <div class="product__discount">
-                      <span class="product__discount-percent">-{{ cartItem.discount | tuiFormatNumber }}%</span>
+                      <span class="product__discount-percent">-{{ cartItem.product.discount | tuiFormatNumber }}%</span>
                       <tui-money
                         class="product__discount-value"
-                        currency="RUB"
-                        [value]="(cartItem.count * cartItem.product.price) * ((100 - cartItem.discount) / 100)"
+                        currency="BYN"
+                        [value]="(cartItem.count * cartItem.product.price) * ((100 - cartItem.product.discount) / 100)"
                       ></tui-money>
                     </div>
                   </div>
@@ -165,20 +178,25 @@
                   <span class="total__line-name">Первичная стоимость</span>
                   <span class="total__line-value">
                   <tui-money
-                    currency="RUB"
+                    currency="BYN"
                     [value]="orderData.subTotalPrice"
                   ></tui-money>
                 </span>
                 </div>
                 <div class="total__line total__line-discount" *ngIf="orderData.totalDiscount">
                   <span class="total__line-name">Общая скидка</span>
-                  <span class="total__line-value">{{ orderData.totalDiscount | tuiFormatNumber }}%</span>
+                  <span class="total__line-value">
+                    <tui-money
+                      currency="BYN"
+                      [value]="orderData.totalDiscount"
+                    ></tui-money>
+                  </span>
                 </div>
                 <div class="total__line total__line-total">
                   <span class="total__line-name">Итоговая стоимость</span>
                   <span class="total__line-value">
                   <tui-money
-                    currency="RUB"
+                    currency="BYN"
                     [value]="orderData.totalPrice"
                   ></tui-money>
                 </span>
@@ -204,6 +222,10 @@
               <div class="delivery-box">
                 <span class="delivery-param">Адрес доставки</span>
                 <span class="delivery-value">{{ orderData.delivery.deliveryAddress }}</span>
+              </div>
+              <div class="delivery-box" *ngFor="let item of orderData.delivery.deliveryData">
+                <span class="delivery-param">{{ item.name }}</span>
+                <span class="delivery-value">{{ item.value }}</span>
               </div>
             </div>
           </div>

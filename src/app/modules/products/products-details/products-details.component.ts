@@ -69,6 +69,7 @@ export class ProductsDetailsComponent implements OnInit {
     productTypeId: [null],
     isNew: [false, Validators.required],
     isRec: [false, Validators.required],
+    isStock: [true, Validators.required],
     discount: [0],
     productProps: this.formBuilder.group({}),
   });
@@ -136,6 +137,7 @@ export class ProductsDetailsComponent implements OnInit {
     this.formGroup.reset({
       isNew: false,
       isRec: false,
+      isStock: true,
       discount: 0,
     });
     this.productData = undefined;
@@ -169,6 +171,7 @@ export class ProductsDetailsComponent implements OnInit {
               productTypeId: productData.productTypeId,
               isNew: productData.isNew,
               isRec: productData.isRec,
+              isStock: productData.isStock,
             });
           });
         });
