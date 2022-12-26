@@ -13,6 +13,7 @@ export interface AddProductDto {
   productTypeId: string;
   isNew: boolean;
   isRec: boolean;
+  isStock: boolean;
   productProps: ProductPropertyValueDto[];
 }
 

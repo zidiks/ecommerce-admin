@@ -44,7 +44,7 @@ table {
     }
     tr {
       display: grid;
-      grid-template-columns: 2.5fr 2fr 3fr 2fr 2fr;
+      grid-template-columns: 1.5fr 2fr 3.5fr 2fr 2fr;
       cursor: pointer;
       &>td, th {
         display: flex;

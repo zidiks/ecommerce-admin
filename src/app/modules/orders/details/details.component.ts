@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { Clipboard } from '@angular/cdk/clipboard';
 import { TuiAlertService, TuiHostedDropdownComponent, TuiNotification } from "@taiga-ui/core";
 import { HistoryDataItem, HistoryDataItemWithCode } from "../../../shared/models/order.model";
@@ -13,6 +13,7 @@ import { OrderHistory } from "../../../shared/enums/order-history.enum";
 import { OrderResponseDto, UpdateOrderRequestDto } from "../../../shared/dto/order.dto";
 import { OrderStateService } from "../../settings/order-state/order-state.service";
 import { OrderStateResponseDto } from "../../../shared/dto/order-state.dto";
+import { SubmitService } from "../../../shared/services/submit.service";
 
 @Component({
   selector: 'app-details',
@@ -40,12 +41,14 @@ export class DetailsComponent implements OnInit {
   @ViewChild(TuiHostedDropdownComponent) dropdownElement?: TuiHostedDropdownComponent;
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private clipboard: Clipboard,
     @Inject(TuiAlertService) private readonly alertService: TuiAlertService,
     private orderService: OrdersService,
     private orderStateService: OrderStateService,
     private formBuilder: FormBuilder,
+    private submitService: SubmitService,
   ) {
     this.orderId = this.route.snapshot.params['id'];
     this.breadcrumbs = [
@@ -71,6 +74,24 @@ export class DetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.refreshData();
+  }
+
+  public showDeleteDialog(): void {
+    if (this.orderData) {
+      this.submitService.submitDialog('Удалить', `Вы действительно хотите удалить заказ: ${this.orderData.orderCode}?`).subscribe({
+        next: (res) => {
+          if (res && this.orderData) {
+            this.waitUpdating = true;
+            this.orderService.deleteOrder(this.orderData._id).subscribe((res) => {
+              if (this.orderData && res) {
+                this.alertService.open(`Заказ ${this.orderData.orderCode} удален`, {label: `Успешно`, status: TuiNotification.Success, autoClose: 5000}).subscribe();
+                this.router.navigate(['/orders'])
+              }
+            });
+          }
+        },
+      })
+    }
   }
 
   public setOrderState({label, description, color}: OrderStateResponseDto): void {

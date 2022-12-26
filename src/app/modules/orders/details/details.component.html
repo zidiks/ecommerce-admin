@@ -27,6 +27,19 @@
         {{ 'Сохранить' }}
       </button>
       <button
+        *ngIf="orderId"
+        size="s"
+        tuiButton
+        type="button"
+        appearance="secondary-destructive"
+        icon="tuiIconTrash"
+        class="tui-space_right-3"
+        [showLoader]="([orderData, statesData ] | apiLoadingState : 'Pending' : true) || waitUpdating"
+        (click)="showDeleteDialog()"
+      >
+        Удалить
+      </button>
+      <button
         size="s"
         tuiIconButton
         type="button"
@@ -49,9 +62,9 @@
         <div class="content-part">
           <div class="content-part__header">
             <div class="content-part__title">
-              <h2>#{{ orderId }}</h2>
+              <h2>#{{ orderData.orderCode }}</h2>
               <tui-svg
-                (click)="copyToClipboard(orderId)"
+                (click)="copyToClipboard(orderData.orderCode)"
                 tuiHint="Скопировать"
                 tuiHintDirection="top"
                 src="tuiIconCheckList"
@@ -120,7 +133,7 @@
           </div>
           <div class="content-part__content">
             <div class="products">
-              <div class="product" *ngFor="let cartItem of orderData.cartItems">
+              <div class="product" [routerLink]="'/products/details/' + cartItem.product._id" *ngFor="let cartItem of orderData.cartItems">
                 <div class="product__img">
                   <tui-avatar
                     [avatarUrl]="cartItem.product.media[0] ? 'http://92.255.111.60:3000/storage/images/' + cartItem.product.media[0] : 'assets/images/no-image.png'"
@@ -209,6 +222,10 @@
               <div class="delivery-box">
                 <span class="delivery-param">Адрес доставки</span>
                 <span class="delivery-value">{{ orderData.delivery.deliveryAddress }}</span>
+              </div>
+              <div class="delivery-box" *ngFor="let item of orderData.delivery.deliveryData">
+                <span class="delivery-param">{{ item.name }}</span>
+                <span class="delivery-value">{{ item.value }}</span>
               </div>
             </div>
           </div>

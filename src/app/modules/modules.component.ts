@@ -48,17 +48,6 @@ export class ModulesComponent {
       route: '/types',
     },
     {
-      icon: 'tuiIconChartBar',
-      name: 'Аналитика',
-      route: '/analytics',
-    },
-    {
-      icon: 'tuiIconUsers',
-      name: 'Пользователи',
-      route: '/users',
-      disabled: true,
-    },
-    {
       icon: 'tuiIconSettings',
       name: 'Настройки',
       route: '/settings',
