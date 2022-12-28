@@ -14,6 +14,7 @@ import { OrderResponseDto, UpdateOrderRequestDto } from "../../../shared/dto/ord
 import { OrderStateService } from "../../settings/order-state/order-state.service";
 import { OrderStateResponseDto } from "../../../shared/dto/order-state.dto";
 import { SubmitService } from "../../../shared/services/submit.service";
+import { environment } from "../../../../environments/environment";
 
 @Component({
   selector: 'app-details',
@@ -30,6 +31,7 @@ export class DetailsComponent implements OnInit {
   public historySelectedType: HistoryDataItemWithCode | undefined;
   public waitUpdating = false;
   public statePickerOpen = false;
+  public env = environment;
 
   public historyFormGroup: FormGroup = this.formBuilder.group({
     type: [historyData[OrderHistory.Message], Validators.required],
