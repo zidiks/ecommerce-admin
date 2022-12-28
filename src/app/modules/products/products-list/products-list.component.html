@@ -121,7 +121,7 @@
         >
           <img
             class="product-item-img"
-            [src]="item.media[0] ? 'http://92.255.111.60:3000/storage/images/' + item.media[0] : 'assets/images/no-image.png'"
+            [src]="item.media[0] ? (env.https ? 'https://' : 'http://') + env.host + ':' + env.port + '/storage/images/' + item.media[0] : 'assets/images/no-image.png'"
             default = "assets/images/no-image.png"
             [alt]="item.name"
           >

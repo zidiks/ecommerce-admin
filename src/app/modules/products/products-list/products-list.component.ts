@@ -44,6 +44,7 @@ export class ProductsListComponent implements OnInit {
       routerLink: `/products`,
     },
   ];
+  public env = environment;
 
   readonly columns = ['media', 'name', 'isStock', 'price', 'categoryId', 'brand'];
 
