@@ -89,6 +89,7 @@ export class PropertiesDetailsComponent implements OnInit {
 
   public ngOnInit(): void {
     this.f['type'].valueChanges.pipe(pairwise()).subscribe(([prev, next]: [ProductTypePropertyType, ProductTypePropertyType]) => {
+      this.f['units'].reset();
       if (ProductTypePropertyType.NumberSelect === next) {
         this.f['options'].clearValidators();
         this.f['options'].setValidators(this.createControlValidator(this.tagDigitsValidator));
