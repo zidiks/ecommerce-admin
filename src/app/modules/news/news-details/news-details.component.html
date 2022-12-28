@@ -30,6 +30,19 @@
       <button
         *ngIf="articleId"
         size="s"
+        tuiButton
+        type="button"
+        appearance="secondary-destructive"
+        icon="tuiIconTrash"
+        class="tui-space_right-3"
+        [showLoader]="(articleData | apiLoadingState : 'Pending') || loading"
+        (click)="showDeleteDialog()"
+      >
+        Удалить
+      </button>
+      <button
+        *ngIf="articleId"
+        size="s"
         tuiIconButton
         type="button"
         appearance="secondary"
