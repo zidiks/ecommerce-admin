@@ -40,6 +40,7 @@ export class PropertiesDetailsComponent implements OnInit {
     showCard: [false],
     showFilter: [false],
     type: [null, Validators.required],
+    units: [null],
     options: [ [] ],
   });
 
@@ -121,6 +122,7 @@ export class PropertiesDetailsComponent implements OnInit {
               showFilter: res.showFilter,
               type: res.type,
               options: res.options || [],
+              units: res.units || undefined,
             });
           });
         }

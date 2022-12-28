@@ -78,6 +78,13 @@
               </ng-template>
             </tui-select>
           </div>
+          <div *ngIf="f['type'].value === productTypePropertyType.NumberInput || f['type'].value === productTypePropertyType.NumberSelect" class="tui-form__multi-field">
+            <tui-input
+              formControlName="units"
+            >
+              Единицы измерения
+            </tui-input>
+          </div>
         </div>
         <div class="tui-form__row">
           <tui-text-area
