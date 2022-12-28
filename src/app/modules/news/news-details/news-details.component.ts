@@ -17,6 +17,7 @@ import { EDITOR_TOOLS } from "./editor-tools.const";
 import { map, Observable, of, switchMap } from "rxjs";
 import { ResultMediaData } from "../../../shared/models/images.model";
 import * as randomBytes from "randombytes";
+import { SubmitService } from "../../../shared/services/submit.service";
 
 @Component({
   selector: 'app-news-details',
@@ -56,6 +57,7 @@ export class NewsDetailsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private newsService: NewsService,
     private imagesService: ImagesService,
+    private submitService: SubmitService,
     @Inject(TuiAlertService) private readonly alertService: TuiAlertService,
   ) {
     this.articleId = this.route.snapshot.params['id'];
@@ -149,6 +151,24 @@ export class NewsDetailsComponent implements OnInit {
           });
         }
       });
+    }
+  }
+
+  public showDeleteDialog(): void {
+    if (this.articleData) {
+      this.submitService.submitDialog('Удалить', `Вы действительно хотите удалить новость: ${this.articleData.title}?`).subscribe({
+        next: (res) => {
+          if (res && this.articleData) {
+            this.loading = true;
+            this.newsService.deleteArticle(this.articleData._id).subscribe((res) => {
+              if (this.articleData && res) {
+                this.alertService.open(`Новость ${this.articleData.title} удалена`, {label: `Успешно`, status: TuiNotification.Success, autoClose: 5000}).subscribe();
+                this.router.navigate(['/news']);
+              }
+            });
+          }
+        },
+      })
     }
   }
 
