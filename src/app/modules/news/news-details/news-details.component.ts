@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, Injector, OnInit } from '@angular/core';
 import { ApiDataModel } from "../../../shared/models/api-data.model";
 import { AddArticleRequestDto, ArticleResponseDto, UpdateArticleRequestDto } from "../../../shared/dto/article.dto";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -8,9 +8,10 @@ import { ImagesService } from "../../../shared/services/images.service";
 import { TuiAlertService, TuiNotification } from "@taiga-ui/core";
 import { TuiFileLike } from "@taiga-ui/kit";
 import {
-  defaultEditorExtensions,
+  createImageEditorExtension, defaultEditorExtensions,
   TUI_EDITOR_CONTENT_PROCESSOR,
   TUI_EDITOR_EXTENSIONS,
+  TUI_IMAGE_LOADER,
   tuiLegacyEditorConverter
 } from "@taiga-ui/addon-editor";
 import { EDITOR_TOOLS } from "./editor-tools.const";
@@ -18,6 +19,7 @@ import { map, Observable, of, switchMap } from "rxjs";
 import { ResultMediaData } from "../../../shared/models/images.model";
 import * as randomBytes from "randombytes";
 import { SubmitService } from "../../../shared/services/submit.service";
+import { imageLoader } from "./image-loader";
 
 @Component({
   selector: 'app-news-details',
@@ -26,11 +28,23 @@ import { SubmitService } from "../../../shared/services/submit.service";
   providers: [
     {
       provide: TUI_EDITOR_EXTENSIONS,
-      useValue: defaultEditorExtensions,
+      deps: [Injector],
+      useFactory: (injector: Injector) => [
+        import('@taiga-ui/addon-editor/extensions/image-editor').then(
+          ({createImageEditorExtension}) =>
+            createImageEditorExtension(injector),
+        ),
+        ...defaultEditorExtensions,
+      ],
     },
     {
       provide: TUI_EDITOR_CONTENT_PROCESSOR,
       useValue: tuiLegacyEditorConverter,
+    },
+    {
+      provide: TUI_IMAGE_LOADER,
+      useFactory: imageLoader,
+      deps: [ImagesService],
     },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -44,7 +58,7 @@ export class NewsDetailsComponent implements OnInit {
   public editorTools = EDITOR_TOOLS;
 
   public formGroup: FormGroup = this.formBuilder.group({
-    title: [null, Validators.required],
+    title: [null],
     description: [null, Validators.required],
     content: ['', Validators.required],
     media: [null, Validators.required],
