@@ -1,7 +1,6 @@
 import { TuiEditorTool } from "@taiga-ui/addon-editor";
 
 export const EDITOR_TOOLS: TuiEditorTool[] = [
-  TuiEditorTool.Undo,
   TuiEditorTool.Align,
   TuiEditorTool.Clear,
   TuiEditorTool.Bold,
@@ -9,7 +8,7 @@ export const EDITOR_TOOLS: TuiEditorTool[] = [
   TuiEditorTool.Color,
   TuiEditorTool.Hilite,
   TuiEditorTool.HR,
-  // TuiEditorTool.Img,
+  TuiEditorTool.Img,
   TuiEditorTool.Italic,
   TuiEditorTool.Link,
   TuiEditorTool.List,
