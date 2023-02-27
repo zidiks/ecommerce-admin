@@ -6,6 +6,8 @@ import {DiscountService} from "./discount.service";
 import {ApiLoadingState} from "../../../shared/enums/api-loading-state.enum";
 import {PolymorpheusComponent} from "@tinkoff/ng-polymorpheus";
 import {DiscountDialogComponent} from "./discount-dialog/discount-dialog.component";
+import {environment} from "../../../../environments/environment";
+import {DiscountDialogFixPriceComponent} from "./discount-dialog-fix-price/discount-dialog-fix-price.component";
 
 @Component({
   selector: 'app-discount',
@@ -15,6 +17,7 @@ import {DiscountDialogComponent} from "./discount-dialog/discount-dialog.compone
 export class DiscountComponent implements OnInit {
   public discountConfig: ApiDataModel<DiscountConfigResponseDto>
   public apiLoadingState = ApiLoadingState;
+  public currency = environment.currency;
   public breadcrumbs = [
     {
       caption: `Главная`,
@@ -64,6 +67,29 @@ export class DiscountComponent implements OnInit {
           this.alertService
             .open(
                 `Количество товаров ${data.minCount}, процент скидки ${data.discount}`,
+              {label: `Успешно`, status: TuiNotification.Success, autoClose: 5000})
+            .subscribe();
+          this.refreshData();
+        }
+      },
+    });
+  }
+
+  public showFixPriceEditDialog(data: DiscountConfigResponseDto): void {
+    const dialog = this.dialogService.open<DiscountConfigResponseDto>(
+      new PolymorpheusComponent(DiscountDialogFixPriceComponent, this.injector),
+      {
+        label: 'Дисконтная программа (фикс. цена)',
+        size: 'l',
+        data,
+      }
+    );
+    dialog.subscribe({
+      next: (data: DiscountConfigResponseDto | null) => {
+        if (data) {
+          this.alertService
+            .open(
+              `Количество товаров ${data.minCount}, цена за ед. товара ${data.discount}`,
               {label: `Успешно`, status: TuiNotification.Success, autoClose: 5000})
             .subscribe();
           this.refreshData();

@@ -38,7 +38,6 @@ export class NewsListComponent implements OnInit {
     this.articlesData = undefined;
     this.newsService.getArticles().subscribe((res: Paginated<ArticleResponseDto> | null) => {
       this.articlesData = res || null;
-      console.log(this.articlesData);
     });
   }
 
