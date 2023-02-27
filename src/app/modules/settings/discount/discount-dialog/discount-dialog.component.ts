@@ -32,7 +32,14 @@ export class DiscountDialogComponent {
     if (this.formGroup.valid) {
       this.loading = true;
       if (this.discountConfig._id){
-        this.discountService.updateDiscountConfig(this.discountConfig._id, this.formGroup.value as DiscountConfigDto).subscribe(
+        const payload: DiscountConfigDto = {
+          minCount: this.formGroup.value.minCount,
+          discount: this.formGroup.value.discount,
+          fixPriceMinCount: this.discountConfig.fixPriceMinCount,
+          fixPriceCategories: this.discountConfig.fixPriceCategories,
+          fixPrice: this.discountConfig.fixPrice,
+        }
+        this.discountService.updateDiscountConfig(this.discountConfig._id, payload).subscribe(
           res => this.context.completeWith(res),
           err => this.context.completeWith(null),
         );

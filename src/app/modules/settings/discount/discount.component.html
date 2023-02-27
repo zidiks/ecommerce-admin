@@ -84,6 +84,47 @@
             </tui-data-list>
           </ng-template>
         </a>
+        <a *ngIf="discountConfig"
+           size="l"
+           tuiIsland
+           [hoverable]="true"
+           #dropdown="tuiDropdown"
+           tuiDropdownContext
+           [tuiDropdown]="contextMenu"
+           (click)="showFixPriceEditDialog(discountConfig!); dropdown.toggle(false)"
+        >
+          <div class="tui-island__content">
+            <figure class="tui-island__figure">
+              <div class="some-figure">
+                <tui-svg src="tuiIconSettingsLarge"></tui-svg>
+              </div>
+            </figure>
+            <div>
+              <h3 class="tui-island__title">Товаров: {{ discountConfig.fixPriceMinCount }}</h3>
+              <p class="tui-island__paragraph">Цена за единицу: {{ discountConfig.fixPrice | tuiFormatNumber: {decimalLimit: 2, decimalSeparator: '.'} }} {{ currency | tuiCurrency }}</p>
+            </div>
+          </div>
+          <ng-template
+            #contextMenu
+          >
+            <tui-data-list
+              role="menu"
+              tuiDataListDropdownManager
+              class="context-menu"
+              (click)="showEditDialog(discountConfig); dropdown.toggle(false)"
+            >
+              <button
+                tuiOption
+              >
+                Изменить
+                <tui-svg
+                  class="icon"
+                  src="tuiIconDraft"
+                ></tui-svg>
+              </button>
+            </tui-data-list>
+          </ng-template>
+        </a>
       </div>
     </ng-container>
     <div *ngSwitchCase="apiLoadingState.Empty">
