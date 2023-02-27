@@ -103,7 +103,6 @@ export class DiscountDialogFixPriceComponent implements OnInit {
           fixPriceCategories: Array.from(this.formGroup.value.categories),
           fixPrice: this.formGroup.value.fixPrice,
         }
-        console.log(payload);
         this.discountService.updateDiscountConfig(this.discountConfig._id, payload).subscribe(
           res => this.context.completeWith(res),
           err => this.context.completeWith(null),
