@@ -26,6 +26,7 @@ import { OrderHistoryModule } from "../../shared/pipes/order-history/order-histo
 import { ApiLoadingStateModule } from "../../shared/pipes/api-loading-state/api-loading-state.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { DataEmptyModule } from "../../shared/components/data-empty/data-empty.module";
+import { PaginationIndexModule } from "../../shared/pipes/pagination-index/pagination-index.module";
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { DataEmptyModule } from "../../shared/components/data-empty/data-empty.m
         TuiInputModule,
         TuiTextfieldControllerModule,
         DataEmptyModule,
+        PaginationIndexModule,
     ]
 })
 export class OrdersModule { }
