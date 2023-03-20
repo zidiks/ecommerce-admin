@@ -17,7 +17,7 @@ export class ProductsListComponent implements OnInit {
   public currency = environment.currency;
   readonly search = new FormControl('');
   readonly search$ = this.search.valueChanges.pipe(debounceTime(200), startWith(''));
-  readonly limit$ = new BehaviorSubject<number>(10);
+  readonly limit$ = new BehaviorSubject<number>(20);
   readonly page$ = new BehaviorSubject<number>(0);
   readonly emitter = new EventEmitter();
   readonly emitter$ = this.emitter.asObservable();

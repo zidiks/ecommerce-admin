@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from "rxjs";
 import { HttpService } from "../../shared/services/http.service";
 import { OrderResponseDto, UpdateOrderRequestDto } from "../../shared/dto/order.dto";
+import { GetOrdersOptions } from "../../shared/models/order.model";
+import { Paginated } from "../../shared/models/paginated.model";
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +14,8 @@ export class OrdersService {
     private http: HttpService,
   ) { }
 
-  public getOrders(): Observable<OrderResponseDto[] | null> {
-    return this.http.get<OrderResponseDto[]>('store/orders');
+  public getOrders(options?: GetOrdersOptions): Observable<Paginated<OrderResponseDto> | null> {
+    return this.http.post<Paginated<OrderResponseDto>, GetOrdersOptions>('store/orders', options);
   }
 
   public updateOrder(id: string, payload: UpdateOrderRequestDto): Observable<OrderResponseDto | null> {

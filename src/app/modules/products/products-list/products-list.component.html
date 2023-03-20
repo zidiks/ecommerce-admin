@@ -179,7 +179,7 @@
     </table>
     <tui-table-pagination
       *ngIf="productsData | apiLoadingState : 'Success'"
-      [items]="[1, 10, 20, 50]"
+      [items]="[10, 20, 50, 100]"
       [total]="productsData?.metadata?.total || 0"
       [page]="page$ | async | paginationIndex"
       [size]="(limit$ | async) || 0"

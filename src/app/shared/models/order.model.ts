@@ -1,4 +1,5 @@
 import { OrderHistory } from "../enums/order-history.enum";
+import { BaseOrderPropertyEnum } from "../enums/base-order-property.enum";
 
 export interface HistoryDataItem {
   type: OrderHistory;
@@ -12,4 +13,15 @@ export interface HistoryDataItemWithCode {
   color: string;
   label: string;
   icons: string;
+}
+
+export interface GetOrdersOptions {
+  sort?: {
+    property: BaseOrderPropertyEnum;
+    direction: -1 | 1;
+  };
+  pagination?: {
+    page: number;
+    limit: number;
+  }
 }

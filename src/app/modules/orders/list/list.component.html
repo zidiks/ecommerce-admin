@@ -40,6 +40,10 @@
       tuiTable
       class="table"
       [columns]="columns"
+      [direction]="(direction$ | async) || 1"
+      [tuiSortBy]="sorter$ | async"
+      (tuiSortByChange)="sorter$.next($event!.toString())"
+      (directionChange)="direction$.next($event)"
     >
       <thead>
       <tr tuiThGroup>
@@ -52,32 +56,36 @@
         </th>
         <th
           tuiTh
-          *tuiHead="'startDate'"
+          tuiSortable
+          *tuiHead="'createdAt'"
         >
           Дата
         </th>
         <th
           tuiTh
+          tuiSortable
           *tuiHead="'customer'"
         >
           Покупатель
         </th>
         <th
           tuiTh
-          *tuiHead="'total'"
+          tuiSortable
+          *tuiHead="'totalPrice'"
         >
           Стоимость
         </th>
         <th
           tuiTh
-          *tuiHead="'status'"
+          tuiSortable
+          *tuiHead="'state'"
         >
           Статус
         </th>
       </tr>
       </thead>
       <tbody
-        *tuiLet="(ordersData || []) | tuiTableSort as sortedData"
+        *tuiLet="(ordersData?.data || []) | tuiTableSort as sortedData"
         tuiTbody
         [data]="sortedData"
       >
@@ -93,13 +101,13 @@
           {{ item.orderCode }}
         </td>
         <td
-          *tuiCell="'startDate'"
+          *tuiCell="'createdAt'"
           tuiTd
         >
           {{ item.createdAt  | date }}
         </td>
         <td
-          *tuiCell="'total'"
+          *tuiCell="'totalPrice'"
           tuiTd
         >
           {{ item.totalPrice | tuiFormatNumber: {decimalLimit: 2, decimalSeparator: '.'} }} {{ 'BYN' | tuiCurrency }}
@@ -117,7 +125,7 @@
           </div>
         </td>
         <td
-          *tuiCell="'status'"
+          *tuiCell="'state'"
           tuiTd
         >
           <tui-badge
@@ -149,9 +157,12 @@
     </table>
     <tui-table-pagination
       *ngIf="ordersData | apiLoadingState : 'Success'"
-      [total]="ordersData?.length || 0"
-      [(page)]="page"
-      [(size)]="size"
+      [items]="[10, 20, 50, 100]"
+      [total]="ordersData?.metadata?.total || 0"
+      [page]="page$ | async | paginationIndex"
+      [size]="(limit$ | async) || 0"
+      (pageChange)="changePage($event + 1)"
+      (sizeChange)="changeSize($event)"
     ></tui-table-pagination>
   </div>
 </div>
